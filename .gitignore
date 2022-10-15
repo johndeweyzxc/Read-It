@@ -1,0 +1,7 @@
+ui/node_modules
+
+db/logs/mongod.log
+db/mongodb.config
+
+api/node_modules
+api/route.rest
