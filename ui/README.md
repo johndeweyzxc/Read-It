@@ -1,3 +1,15 @@
 ## How to run UI
 
-On your terminal do "npm start". In the src/Configs directory there is a file IP_ADDR.js, you need to change the local IP address to the IP address of the api server or else it would not be able to communicate with the api server. By default the UI server listens at PORT 3000.
+1. Create an ip.js file on src directory, this is where you store the LAN IP Address of the REST API server.
+
+```javascript
+// LAN IP Address of REST API server
+// The localIP must be same with api/ip.js
+export const localIP = "192.168.1.1";
+```
+
+2. Run the UI server
+
+```
+$ npm start
+```

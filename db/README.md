@@ -1,3 +1,26 @@
 ## How to run the Database
 
-To run the database simply do "mongod -f mongod.config". The mongod.config file is the configuration for the mongodb server database. You need to change the value of dbpath at line 8 to point to the directory where you want to store the data of the database. You also need to change the value of logpath to point to the mongod.log file in the logs directory, this where the database logs information. By default the the server listen at localhost at PORT 5000.
+1. Create a mongodb.config to store database configuration
+
+```
+## Specify IP address, listens only to localhost and not on LAN.
+bind_ip = localhost
+
+## Specify PORT
+port = 5000
+
+## Path to which mongodb will store data
+dbpath = C:\Specify\your\path\here\MongodData
+
+## Path to the log file
+logpath = C:\The\path\to\mongodb\mongod.log
+
+## Append every logs to the file instead of overwriting with new logs
+logappend = true
+```
+
+2. Run the database server
+
+```
+$ mongod -f mongodb.config
+```
