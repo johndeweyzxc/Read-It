@@ -19,7 +19,7 @@ logpath = C:\The\path\to\mongodb\mongod.log
 logappend = true
 ```
 
-2. Run the database server
+2. Run the Database server
 
 ```
 $ mongod -f mongodb.config

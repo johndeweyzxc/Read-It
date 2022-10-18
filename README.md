@@ -6,25 +6,25 @@ Read It, is a social media app where a user can create, read, update and delete 
 
 <h3>How to run?</h3>
 
-1. Launch Database server
+1. Go to db direcotry and launch Database server
 
 ```
-$ mongod -f mongod.config
+$ mongod -f mongodb.config
 ```
 
-2. Launch API Rest server
-
-```
-$ npm start
-```
-
-3. Launch the React UI server
+2. Go to api directory and launch REST API server
 
 ```
 $ npm start
 ```
 
-<h2>Technologies Used</h2>
+3. Go to ui directory and launch UI server
+
+```
+$ npm start
+```
+
+<h2>Tech Stack</h2>
 
 <li>React JS v18.2.0</li>
 <li>Express JS v4.18.1</li>
