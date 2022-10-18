@@ -5,8 +5,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import Header from "./Header/Header";
 import Messages from "./Messages/Messages";
 import UserContent from "./UserContent";
-import { HomeDiv, LoadingScreen, LoadingText } from "./Home";
-import { localIP } from "../../Configs/IP_ADDR";
+import { HomeDiv, LoadingScreen, LoadingText } from "./GeneralStyles";
+import { localIP } from "../../ip";
 
 // This a user page when a user wants to visit a profile of another user
 export default function User() {

@@ -3,7 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 // App imports
-import { localIP } from "../../../Configs/IP_ADDR";
+import { localIP } from "../../../ip";
 import { Header, Title as HeaderTitle, Footer } from "./NewPost";
 import {
   EditPostDiv as EPostDiv,

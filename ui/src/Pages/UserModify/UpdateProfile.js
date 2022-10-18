@@ -12,8 +12,8 @@ import {
   RegisterInputs,
   RegisterLabel,
   RegisterButton,
-} from "./Register";
-import { localIP } from "../../Configs/IP_ADDR";
+} from "./GeneralStyles";
+import { localIP } from "../../ip";
 
 const UpdateProfileDiv = styled(RegisterDiv)``;
 

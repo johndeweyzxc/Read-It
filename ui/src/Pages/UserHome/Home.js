@@ -8,38 +8,10 @@ import Content from "./Contents/Content";
 import Messages from "./Messages/Messages";
 import UpdatePost from "./Contents/UpdatePost";
 import DeletePostView from "./Contents/DeletePost";
-import { localIP } from "../../Configs/IP_ADDR";
+import { localIP } from "../../ip";
 import { SettingsButtons, Buttons } from "./Header/Settings";
 import { SubmitPost } from "./Contents/NewPost";
-
-export const HomeDiv = styled.div`
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: auto;
-`;
-
-export const LoadingScreen = styled.div`
-  position: absolute;
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: 100vh;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  background-color: #fff;
-  z-index: 3;
-`;
-
-export const LoadingText = styled.div`
-  margin: 0;
-  padding: 0;
-  font-size: 1.5rem;
-  font-family: "JetBrains mono", monospace;
-  letter-spacing: 1px;
-  text-decoration: underline;
-`;
+import { HomeDiv, LoadingScreen, LoadingText } from "./GeneralStyles";
 
 const UpdatePostDiv = styled.div`
   position: fixed;

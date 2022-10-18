@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 // App imports
-import { localIP } from "../../../Configs/IP_ADDR";
+import { localIP } from "../../../ip";
 
 export const NewPostDiv = styled.div`
   margin: 0;

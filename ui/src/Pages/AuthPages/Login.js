@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 // App imports
 import Welcome from "./Welcome";
 import LoginForm from "./LoginForm";
-import { localIP } from "../../Configs/IP_ADDR";
+import { localIP } from "../../ip";
 
 const AppMain = styled.div`
   margin: 0;

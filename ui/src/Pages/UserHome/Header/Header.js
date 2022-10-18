@@ -3,7 +3,6 @@ import React from "react";
 import styled from "styled-components";
 // App imports
 import TopHeader from "./TopHeader";
-// import BotHeader from "./BotHeader";
 import Settings from "./Settings";
 
 const HeaderDiv = styled.div`
@@ -28,13 +27,6 @@ const TopHeaderDiv = styled.div`
     justify-content: space-between;
   }
 `;
-
-// const BotHeaderDiv = styled.div`
-//   margin: 0;
-//   padding: 0;
-//   box-shadow: 0 0 1px;
-//   background-color: #fff;
-// `;
 
 export default function Header({
   showMessages,
@@ -61,15 +53,6 @@ export default function Header({
       </TopHeaderDiv>
     );
   };
-
-  // This is under development
-  // const BotHeaderContainer = () => {
-  //   return (
-  //     <BotHeaderDiv>
-  //       <BotHeader />
-  //     </BotHeaderDiv>
-  //   );
-  // }
 
   return (
     <HeaderDiv>

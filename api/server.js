@@ -3,6 +3,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
+// App imports
+const localIP = require("./ip");
 require("dotenv").config();
 
 // Routers;
@@ -31,7 +33,7 @@ function setupServer() {
   // Localhost
   const localHost = "http://localhost:3000";
   // Local area network
-  const IP = "192.168.1.8";
+  const IP = localIP;
   const PORT = "4000";
   const lan = `http://${IP}:${PORT}`;
 
