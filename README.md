@@ -6,7 +6,7 @@ Read It, is a social media app where a user can create, read, update and delete 
 
 <h3>How to run?</h3>
 
-1. Go to db direcotry and launch Database server
+1. Go to db directory and launch Database server
 
 ```
 $ mongod -f mongodb.config
