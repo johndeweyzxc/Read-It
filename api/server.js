@@ -15,13 +15,12 @@ const createPost = require("./routes/Create/CreatePost");
 const register = require("./routes/Create/Register");
 const userUpdate = require("./routes/Update/UserUpdate");
 const updatePost = require("./routes/Update/UpdatePost");
-// const interactPost = require("./routes/Update/InteractPost");
 const deletePost = require("./routes/Delete/DeletePost");
 
 // Connect to the database
 function connectDatabase() {
   // The default database url is mongodb://localhost:5000/ReadIt
-  mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
+  mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true});
   const database = mongoose.connection;
   database.on("error", (error) => console.log(error));
   database.once("open", () =>
@@ -49,7 +48,7 @@ function setupServer() {
 
   // Server root
   app.get("/", (req, res) => {
-    return res.status(404).json({ message: "Unauthorized access" });
+    return res.status(404).json({message: "Unauthorized access"});
   });
 
   app.use("/Register", register);
@@ -60,8 +59,6 @@ function setupServer() {
   app.use("/UserUpdate", userUpdate);
 
   app.use("/CreatePost", createPost);
-  // This is under development
-  // app.use("/InteractPost", interactPost);
   app.use("/UpdatePost", updatePost);
 
   app.use("/DeletePost", deletePost);

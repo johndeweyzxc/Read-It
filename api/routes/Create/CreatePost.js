@@ -13,12 +13,13 @@ async function createNewPost(tokenid, showpublic, postcontent) {
   let currentPosts;
 
   try {
-    user = await users.findOne({ PersistentId: tokenid });
+    user = await users.findOne({PersistentId: tokenid});
   } catch (error) {
-    return { statusCode: 500, message: error };
+    return {statusCode: 500, message: error};
   }
 
   if (user === null) {
+    // Invalid token id, returns a 401 status
     return {
       statusCode: 401,
       message: "Cannot create a new post, invalid token",
@@ -42,29 +43,33 @@ async function createNewPost(tokenid, showpublic, postcontent) {
   try {
     savedPost = await newUserPost.save();
   } catch (error) {
-    // The user might violate the model schema for the user post.
+    // The user might violate the model schema for the user post model.
     if (error.name === "ValidationError") {
       let invalidInputs = {};
       Object.keys(error.errors).forEach((key) => {
         invalidInputs[key] = error.errors[key].message;
       });
-      return { statusCode: 400, message: invalidInputs };
+      return {statusCode: 400, message: invalidInputs};
     }
 
-    return { statusCode: 500, message: error };
+    return {statusCode: 500, message: error};
   }
 
-  // Link the post to the user
+  // unShift means add the post id to the list of created post of the user
   currentPosts.unshift(savedPost._id);
   try {
-    user.set({ CreatedPosts: currentPosts });
+    user.set({CreatedPosts: currentPosts});
     await user.save();
-    return { statusCode: 201, message: savedPost };
+
+    // Respond with a new created post
+    return {statusCode: 201, message: savedPost};
   } catch (error) {
-    return { statusCode: 500, message: error.message };
+    return {statusCode: 500, message: error.message};
   }
 }
 
+// The user must have the same token id in the database
+// otherwise it is an invalid request
 createPost.post("/", async (req, res) => {
   let tokenId = req.body.TokenId;
   let postContent = req.body.PostContent;
@@ -75,10 +80,11 @@ createPost.post("/", async (req, res) => {
   let message = newPost.message;
 
   if (statusCode === 500) {
-    return res.status(500).json({ message: "Internal server error" });
+    // Do not send the specific error message
+    return res.status(500).json({message: "Internal server error"});
   } else {
     console.log(message);
-    return res.status(statusCode).json({ message: message });
+    return res.status(statusCode).json({message: message});
   }
 });
 

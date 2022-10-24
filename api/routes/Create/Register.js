@@ -24,16 +24,16 @@ async function createNewAccount(
 
   try {
     // Checks if the username is already in the database
-    const userExists = await user.exists({ UserName: username });
+    const userExists = await user.exists({UserName: username});
     if (userExists) {
       return {
         statusCode: 401,
-        message: { UserName: "Username already exists" },
+        message: {UserName: "Username already exists"},
       };
     }
   } catch (error) {
     console.log(error);
-    return { statusCode: 500, message: error.message };
+    return {statusCode: 500, message: error.message};
   }
 
   // Create new user using the User model
@@ -50,9 +50,10 @@ async function createNewAccount(
   });
 
   try {
-    NewUser.set({ PersistentId: newPersistentToken });
+    NewUser.set({PersistentId: newPersistentToken});
     await NewUser.save();
-    return { statusCode: 201, message: { token: newPersistentToken } };
+    // Returns a token to be use for some authentication like creating a post
+    return {statusCode: 201, message: {token: newPersistentToken}};
   } catch (error) {
     if (error.name === "ValidationError") {
       let invalidInputs = {};
@@ -61,9 +62,9 @@ async function createNewAccount(
         invalidInputs[key] = error.errors[key].message;
       });
 
-      return { statusCode: 400, message: invalidInputs };
+      return {statusCode: 400, message: invalidInputs};
     }
-    return { statusCode: 500, message: error.message };
+    return {statusCode: 500, message: error.message};
   }
 }
 
@@ -90,9 +91,9 @@ register.post("/", async (req, res) => {
   let message = newUser.message;
 
   if (statusCode === 500) {
-    return res.status(500).json({ message: "Internal Server Error" });
+    return res.status(500).json({message: "Internal Server Error"});
   } else {
-    return res.status(statusCode).json({ message: message });
+    return res.status(statusCode).json({message: message});
   }
 });
 
