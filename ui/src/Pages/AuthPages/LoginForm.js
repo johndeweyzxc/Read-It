@@ -1,155 +1,106 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import React, {useRef} from "react";
+import {useNavigate} from "react-router-dom";
 
-const LoginFormParent = styled.div`
-  margin: 0;
-  padding: 0;
-  height: 85vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  @media screen and (max-width: 970px) {
-    margin-top: 2rem;
-    align-items: flex-start;
-  }
-`;
-
-const LoginFormInput = styled.form`
-  margin: 0;
-  padding: 2rem;
-  border: 1px solid #7c7c7c;
-  border-radius: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 0 3px;
-`;
-
-const LoginFormTextBox = styled.input`
-  margin: 0;
-  width: 25vw;
-  margin-bottom: ${(props) => props.marginBottom};
-  border: 2px solid #eb4141;
-  border-radius: 0.5rem;
-  padding: 0.55rem;
-  outline: none;
-  font-size: 1.25rem;
-  font-family: "JetBrains Mono", monospace;
-  @media screen and (max-width: 970px) {
-    width: 40vw;
-    font-size: 1rem;
-  }
-  @media screen and (max-width: 600px) {
-    width: 60vw;
-  }
-`;
-
-const LoginFormHr = styled.hr`
-  margin: 0;
-  padding: 0;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  width: 100%;
-`;
-
-const LoginFormForgot = styled.div`
-  margin: 0;
-  padding: 0;
-  margin-bottom: 1rem;
-  text-align: center;
-  font-size: 1rem;
-  font-family: "JetBrains Mono", monospace;
-  text-decoration: underline;
-  &:hover {
-    cursor: pointer;
-  }
-  @media screen and (max-width: 970px) {
-    font-size: 0.8rem;
-  }
-`;
-
-const LoginFormButton = styled.button`
-  margin: 0;
-  padding: 0.5rem;
-  width: 70%;
-  font-size: 1rem;
-  font-family: "JetBrains Mono", monospace;
-  font-weight: ${(props) => props.fontWeight};
-  letter-spacing: 1px;
-  background-color: ${(props) => props.backgroundColor};
-  border: ${(props) => props.boxBorder};
-  border-radius: 0.5rem;
-  color: #fff;
-  align-self: center;
-  &:hover {
-    cursor: pointer;
-    box-shadow: 0 0 2px;
-  }
-  @media screen and (max-width: 970px) {
-    font-size: 0.8rem;
-  }
-  @media screen and (max-width: 400px) {
-    width: 80%;
-  }
-`;
-
-export default function LoginForm({
-  username,
-  password,
-  loginRequest,
-  registerLocation,
-  passResetLoc,
-}) {
+export default function LoginForm2({localIP}) {
   const navigate = useNavigate();
+  const username = useRef();
+  const password = useRef();
+
+  // API post request to the server to login will happen here.
+  const loginRequest = async () => {
+    const apiServerLogin = `http://${localIP}:4000/Login`;
+    let response;
+
+    try {
+      response = await fetch(apiServerLogin, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          UserName: username.current.value,
+          Password: password.current.value,
+        }),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    if (response) {
+      const result = await response.json();
+      const token = result.message.token;
+
+      if (response.status === 201) {
+        // Store the token in the local storage, we will use this token for some authentication
+        localStorage.setItem("tokenId", JSON.stringify(token));
+
+        navigate("/Home");
+      } else {
+        alert("Wrong username or password");
+      }
+    }
+  };
 
   return (
-    <LoginFormParent>
-      <LoginFormInput>
-        <LoginFormTextBox
+    <div
+      className='
+        h-[85vh] w-screen flex justify-center 
+        items-center laptop:mt-8 laptop:items-start'
+    >
+      <div
+        className='p-8 border-[1px] border-solid 
+          border-ShallowGrey rounded-lg flex flex-col shadow'
+      >
+        <input
+          className='w-[25vw] mb-4 border-2 border-solid border-Ponkan
+          rounded-lg p-2 outline-none text-lg font-JetBrains laptop:w-[40vw]
+          laptop:text-base tablet:w-[60vw]'
           name={"userName"}
           type={"text"}
-          marginBottom={"1rem"}
-          placeholder="Username"
+          placeholder={"Username"}
           ref={username}
         />
-        <LoginFormTextBox
+        <input
+          className='w-[25vw] mb-2 border-2 border-solid border-Ponkan
+            rounded-lg p-2 outline-none text-lg font-JetBrains laptop:w-[40vw]
+            laptop:text-base tablet:w-[60vw]'
           name={"passWord"}
           type={"password"}
-          marginBottom={"0.5rem"}
-          placeholder="Password"
+          placeholder='Password'
           ref={password}
         />
 
-        <LoginFormForgot
+        <div
+          className='mb-4 p-2 text-center text-base font-JetBrains
+          underline hover:cursor-pointer laptop:text-sm'
           onClick={() => {
-            navigate(passResetLoc);
+            navigate("/PasswordReset");
           }}
         >
           Forgot your password?
-        </LoginFormForgot>
-        <LoginFormButton
+        </div>
+        <button
+          className='w-[70%] p-2 text-base font-JetBrains font-bold tracking-wide
+            bg-Cherry border border-solid border-Cherry rounded-lg
+            text-white self-center hover:cursor-pointer shadow'
           type={"button"}
           onClick={loginRequest}
-          backgroundColor={"#eb4141"}
-          boxBorder={"1px solid #eb4141"}
-          fontWeight={"600"}
         >
           Login
-        </LoginFormButton>
-        <LoginFormHr></LoginFormHr>
-        <LoginFormButton
+        </button>
+
+        <div className='mt-4 mb-4 w-full h-[1px] bg-ShallowGrey' />
+
+        <button
+          className='w-[70%] p-2 text-base font-JetBrains font-medium tracking-wide
+        bg-black border border-solid border-black rounded-lg
+        text-white self-center hover:cursor-pointer shadow'
           type={"button"}
-          onClick={() => {
-            navigate(registerLocation);
-          }}
-          backgroundColor={"#000"}
-          boxBorder={"1px solid #000"}
-          fontWeight={"medium"}
+          onClick={() => navigate("/Register")}
         >
           Create New Account
-        </LoginFormButton>
-      </LoginFormInput>
-    </LoginFormParent>
+        </button>
+      </div>
+    </div>
   );
 }
