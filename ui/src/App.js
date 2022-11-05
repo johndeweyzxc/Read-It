@@ -1,7 +1,6 @@
-// Dependency imports
 import React from "react";
-import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
-// App imports
+import {Routes, Route, BrowserRouter as Router} from "react-router-dom";
+
 import Login from "./Pages/AuthPages/Login";
 import PasswordReset from "./Pages/AuthPages/PasswordReset";
 import Home from "./Pages/UserHome/Home";
@@ -16,21 +15,21 @@ export default function App() {
     <Router>
       <Routes>
         <>
-          <Route path="/" element={<Login />} />
-          <Route path="/Register" element={<Register />} />
-          <Route path="/PasswordReset" element={<PasswordReset />} />
+          <Route path='/' element={<Login />} />
+          <Route path='/Register' element={<Register />} />
+          <Route path='/PasswordReset' element={<PasswordReset />} />
         </>
         <>
-          <Route path="/Home" element={<Home />} />
-          <Route path="/UpdateProfile" element={<UpdateProfile />} />
+          <Route path='/Home' element={<Home />} />
+          <Route path='/UpdateProfile' element={<UpdateProfile />} />
         </>
         <>
-          <Route path="/User" element={<Login />} />
-          <Route path="/User/:Username" element={<User />} />
+          <Route path='/User' element={<Login />} />
+          <Route path='/User/:Username' element={<User />} />
         </>
         <>
-          <Route path="/ServerError" element={<ServerError />} />
-          <Route path="*" element={<ErrorNotFound />} />
+          <Route path='/ServerError' element={<ServerError />} />
+          <Route path='*' element={<ErrorNotFound />} />
         </>
       </Routes>
     </Router>
