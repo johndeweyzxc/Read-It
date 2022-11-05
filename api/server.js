@@ -1,13 +1,11 @@
-// Dependency imports
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
-// App imports
+
 const localIP = require("./ip");
 require("dotenv").config();
 
-// Routers;
 const login = require("./routes/Read/Login");
 const user = require("./routes/Read/User");
 const home = require("./routes/Read/Home");
@@ -17,9 +15,8 @@ const userUpdate = require("./routes/Update/UserUpdate");
 const updatePost = require("./routes/Update/UpdatePost");
 const deletePost = require("./routes/Delete/DeletePost");
 
-// Connect to the database
+// Default database url is mongodb://localhost:5000/ReadIt
 function connectDatabase() {
-  // The default database url is mongodb://localhost:5000/ReadIt
   mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true});
   const database = mongoose.connection;
   database.on("error", (error) => console.log(error));
@@ -29,11 +26,13 @@ function connectDatabase() {
 }
 
 function setupServer() {
+  const PORT = "3000";
+
   // Localhost
-  const localHost = "http://localhost:3000";
+  const localHost = `http://localhost:${PORT}`;
+
   // Local area network
   const IP = localIP;
-  const PORT = "4000";
   const lan = `http://${IP}:${PORT}`;
 
   // Allow origins from the UI server
@@ -46,7 +45,6 @@ function setupServer() {
 
   app.use(express.json());
 
-  // Server root
   app.get("/", (req, res) => {
     return res.status(404).json({message: "Unauthorized access"});
   });
@@ -68,11 +66,8 @@ function setupServer() {
   // DATABASE server port: 5000
 
   app.listen(4000, () => {
-    console.log(`\nLocal: ${localHost}`);
-    console.log(`On Your Network: ${lan}\n`);
-
     console.log(
-      `Rest API Server started, listening on ${IP} on PORT ${PORT}\n`
+      `\nRest API Server started, listening at ${IP} on PORT ${PORT}`
     );
   });
 }
