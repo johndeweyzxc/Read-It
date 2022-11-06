@@ -1,145 +1,65 @@
 import React from "react";
-import styled from "styled-components";
 
-const PasswordResetDiv = styled.div`
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: 100vh;
-  @media screen and (max-width: 600px) {
-    height: auto;
-  }
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-const Form = styled.form`
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const Title = styled.div`
-  margin: 0;
-  padding: 0;
-  margin-top: 1rem;
-  margin-bottom: 1.5rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  padding-bottom: 0.5rem;
-  font-size: 1.75rem;
-  @media screen and (max-width: 400px) {
-    font-size: 1.25rem;
-  }
-  font-family: "JetBrains mono", monospace;
-  border-bottom: 1px solid #000;
-`;
-
-const InputSection = styled.div`
-  margin: 0;
-  padding: 0;
-  display: flex;
-  @media screen and (max-width: 600px) {
-    flex-direction: column;
-  }
-`;
-
-const InputDiv = styled.div`
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  margin-left: 0.5rem;
-  margin-right: 1rem;
-`;
-
-const Inputs = styled.input`
-  margin: 0;
-  margin-bottom: 1rem;
-  padding: 0.5rem;
-  width: 25vw;
-  font-size: 1.25rem;
-  @media screen and (max-width: 1000px) {
-    font-size: 1rem;
-    width: 30vw;
-  }
-  @media screen and (max-width: 700px) {
-    width: 35vw;
-  }
-  @media screen and (max-width: 600px) {
-    width: 70vw;
-  }
-  border: none;
-  border-bottom: 1px solid #eb4141;
-  font-family: "JetBrains mono", monospace;
-  outline: none;
-`;
-
-const Label = styled.label`
-  margin: 0;
-  padding: 0;
-  margin-bottom: 0.25rem;
-  font-size: 1rem;
-  font-family: "JetBrains mono", monospace;
-`;
-
-const VerifyButton = styled.button`
-  margin: 0;
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
-  padding: 0.5rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  font-family: "JetBrains mono", monospace;
-  font-size: 1rem;
-  letter-spacing: 1px;
-  background-color: #eb4141;
-  border: 1px solid #eb4141;
-  border-radius: 0.5rem;
-  color: #fff;
-  &:hover {
-    cursor: pointer;
-  }
-`;
+import "./styles.css";
 
 export default function PasswordReset() {
   return (
-    <PasswordResetDiv>
-      <Form>
-        <Title>Reset your Password</Title>
-        <InputSection>
-          <InputDiv>
-            <Label>Email: </Label>
-            <Inputs type={"text"} placeholder={"johndewey22@gmail.com"} />
-          </InputDiv>
-          <InputDiv>
-            <Label>Email OTP: </Label>
-            <Inputs type={"text"} placeholder={"OTP Code"} />
-          </InputDiv>
-        </InputSection>
+    <div className='w-screen h-screen tablet:h-auto flex flex-col justify-center'>
+      <form className='flex flex-col items-center'>
+        <div
+          className='mt-4 mb-6 pl-8 pr-8 pb-2 text-3xl phone:text-lg
+        font-JetBrains border-b-[1px] border-solid border-black'
+        >
+          Reset your Password
+        </div>
 
-        <InputSection>
-          <InputDiv>
-            <Label>Phone Number: </Label>
-            <Inputs type={"text"} placeholder={"09993241123"} />
-          </InputDiv>
-          <InputDiv>
-            <Label>Phone Number OTP: </Label>
-            <Inputs type={"text"} placeholder={"OTP Code"} />
-          </InputDiv>
-        </InputSection>
-        <VerifyButton
-          type={"button"}
-          onClick={() => {
-            alert("This feature is under development");
-          }}
+        <div className='flex tablet:flex-col'>
+          <div className='inputSection'>
+            <label className='labelStyle'>Email: </label>
+            <input
+              className='inputStyle'
+              type={"text"}
+              placeholder={"johndewey22@gmail.com"}
+            />
+          </div>
+          <div className='inputSection'>
+            <label className='labelStyle'>Email OTP: </label>
+            <input
+              className='inputStyle'
+              type={"text"}
+              placeholder={"OTP Code"}
+            />
+          </div>
+        </div>
+
+        <div className='flex tablet:flex-col'>
+          <div className='inputSection'>
+            <label className='labelStyle'>Phone Number: </label>
+            <input
+              className='inputStyle'
+              type={"text"}
+              placeholder={"09993241123"}
+            />
+          </div>
+          <div className='inputSection'>
+            <label className='labelStyle'>Phone Number OTP: </label>
+            <input
+              className='inputStyle'
+              type={"text"}
+              placeholder={"OTP Code"}
+            />
+          </div>
+        </div>
+
+        <button
+          className='mt-2 mb-4 p-2 pl-8 pr-8 font-JetBrains text-base tracking-wide
+        bg-Cherry border border-solid border-Cherry rounded-lg text-white
+        hover:cursor-pointer'
+          onClick={() => alert("This feature is under development")}
         >
           Verify
-        </VerifyButton>
-      </Form>
-    </PasswordResetDiv>
+        </button>
+      </form>
+    </div>
   );
 }
