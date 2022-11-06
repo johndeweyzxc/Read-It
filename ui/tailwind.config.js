@@ -7,6 +7,7 @@ module.exports = {
         laptop: {max: "970px"},
         tablet: {max: "600px"},
         stablet: {max: "500px"},
+        phone: {max: "400px"},
       },
       fontFamily: {
         JetBrains: ["JetBrains mono", "sans-serif"],
