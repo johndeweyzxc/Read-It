@@ -1,54 +1,8 @@
-// Dependency imports
-import { React, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-// App imports
-import VerifyUser from "./VerifyUser";
-import {
-  RegisterDiv,
-  RegisterTitle,
-  RegisterInputSection,
-  RegisterInputDiv,
-  RegisterInputs,
-  RegisterLabel,
-  RegisterButton,
-} from "./GeneralStyles";
-import { localIP } from "../../ip";
+import React, {useRef} from "react";
+import {useNavigate} from "react-router-dom";
 
-const UpdateProfileDiv = styled(RegisterDiv)``;
-
-const UpdateProfileForm = styled.form`
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-`;
-
-const UpdateTitle = styled(RegisterTitle)``;
-const ProfileInputSection = styled(RegisterInputSection)``;
-const ProfileInputDiv = styled(RegisterInputDiv)``;
-
-const ProfileInputs = styled(RegisterInputs)`
-  border: 1px solid #eb4141;
-  border-radius: 0.5rem;
-  @media screen and (max-width: 820px) {
-    width: 40vw;
-  }
-  @media screen and (max-width: 420px) {
-    width: 80vw;
-  }
-`;
-
-const ProfileLabel = styled(RegisterLabel)``;
-
-const ButtonDiv = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-evenly;
-`;
-
-const UpdateButton = styled(RegisterButton)``;
+import "./styles.css";
+import {localIP} from "../../ip";
 
 export default function UpdateProfile() {
   const navigate = useNavigate();
@@ -158,104 +112,172 @@ export default function UpdateProfile() {
     }
   };
 
+  const VerifyUser = () => {
+    return (
+      <div className='Verify-UserDiv' ref={verifyUserRef}>
+        <div className='Verify-Form'>
+          <div className='flex flex-col'>
+            <label className='Verify-Label'>Current username: </label>
+            <input
+              className='Verify-Input'
+              ref={verifyUsernameRef}
+              type={"text"}
+              placeholder={"Username"}
+            />
+          </div>
+
+          <div className='flex flex-col'>
+            <label className='Verify-Label'>Current password: </label>
+            <input
+              className='Verify-Input'
+              ref={verifyPasswordRef}
+              type={"password"}
+              placeholder={"Password"}
+            />
+          </div>
+
+          <div className='flex justify-evenly'>
+            <button
+              className='Verify-Button'
+              type={"button"}
+              onClick={showUpdateView}
+            >
+              Back
+            </button>
+            <button
+              className='Verify-Button'
+              type={"button"}
+              onClick={sendUpdate}
+            >
+              Update
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
-      <UpdateProfileDiv ref={updateProfileRef}>
-        <UpdateTitle>Update your profile</UpdateTitle>
-        <UpdateProfileForm>
-          <ProfileInputSection>
-            <ProfileInputDiv>
-              <ProfileLabel>First Name: </ProfileLabel>
-              <ProfileInputs
+      <div
+        className='w-screen h-screen tablet:h-auto 
+        flex flex-col justify-center'
+        ref={updateProfileRef}
+      >
+        <div
+          className='mt-8 mb-8 pl-8 pr-8 pb-2 text-3xl
+          font-JetBrains self-center border-b-[1px] border-solid
+          border-black phone:text-xl'
+        >
+          Update your profile
+        </div>
+
+        <form className='flex flex-col self-center'>
+          <div className='flex tablet:flex-col'>
+            <div className='flex flex-col ml-2 mr-4'>
+              <label className='Register-Label'>First Name: </label>
+              <input
+                className='Register-Input'
                 ref={firstNameRef}
                 type={"text"}
                 placeholder={"John Dewey"}
               />
-            </ProfileInputDiv>
-            <ProfileInputDiv>
-              <ProfileLabel>Last Name: </ProfileLabel>
-              <ProfileInputs
+            </div>
+
+            <div className='flex flex-col ml-2 mr-4'>
+              <label className='Register-Label'>Last Name: </label>
+              <input
+                className='Register-Input'
                 ref={lastNameRef}
                 type={"text"}
-                placeholder={"Altura"}
+                placeholder={"Ventura"}
               />
-            </ProfileInputDiv>
-          </ProfileInputSection>
+            </div>
+          </div>
 
-          <ProfileInputSection>
-            <ProfileInputDiv>
-              <ProfileLabel>Username: </ProfileLabel>
-              <ProfileInputs
+          <div className='flex tablet:flex-col'>
+            <div className='flex flex-col ml-2 mr-4'>
+              <label className='Register-Label'>Username: </label>
+              <input
+                className='Register-Input'
                 ref={userNameRef}
                 type={"text"}
                 placeholder={"johndewey112"}
               />
-            </ProfileInputDiv>
-            <ProfileInputDiv>
-              <ProfileLabel>Birthday: </ProfileLabel>
-              <ProfileInputs ref={birthDayRef} type={"date"} />
-            </ProfileInputDiv>
-          </ProfileInputSection>
+            </div>
 
-          <ProfileInputSection>
-            <ProfileInputDiv>
-              <ProfileLabel>Email: </ProfileLabel>
-              <ProfileInputs
+            <div className='flex flex-col ml-2 mr-4'>
+              <label className='Register-Label'>Birthday: </label>
+              <input
+                className='Register-Input'
+                ref={birthDayRef}
+                type={"date"}
+              />
+            </div>
+          </div>
+
+          <div className='flex tablet:flex-col'>
+            <div className='flex flex-col ml-2 mr-4'>
+              <label className='Register-Label'>Email: </label>
+              <input
+                className='Register-Input'
                 ref={emailRef}
                 type={"text"}
                 placeholder={"johndewey22@gmail.com"}
               />
-            </ProfileInputDiv>
-            <ProfileInputDiv>
-              <ProfileLabel>Phone Number: </ProfileLabel>
-              <ProfileInputs
+            </div>
+
+            <div className='flex flex-col ml-2 mr-4'>
+              <label className='Register-Label'>Phone Number: </label>
+              <input
+                className='Register-Input'
                 ref={phoneRef}
                 type={"text"}
-                placeholder="09993241123"
+                placeholder={"09993241123"}
               />
-            </ProfileInputDiv>
-          </ProfileInputSection>
+            </div>
+          </div>
 
-          <ProfileInputSection>
-            <ProfileInputDiv>
-              <ProfileLabel>Password: </ProfileLabel>
-              <ProfileInputs
+          <div className='flex tablet:flex-col'>
+            <div className='flex flex-col ml-2 mr-4'>
+              <label className='Register-Label'>Password: </label>
+              <input
+                className='Register-Input'
                 ref={passWordRef}
                 type={"password"}
                 placeholder={"New Password"}
               />
-            </ProfileInputDiv>
-            <ProfileInputDiv>
-              <ProfileLabel>Confirm Password: </ProfileLabel>
-              <ProfileInputs
+            </div>
+            <div className='flex flex-col ml-2 mr-4'>
+              <label className='Register-Label'>Confirm Password: </label>
+              <input
+                className='Register-Input'
                 ref={confirmPasswordRef}
                 type={"password"}
                 placeholder={"Confirm New Password"}
               />
-            </ProfileInputDiv>
-          </ProfileInputSection>
-          <ButtonDiv>
-            <UpdateButton
+            </div>
+          </div>
+
+          <div className='w-full flex justify-evenly'>
+            <button
+              className='Register-Button'
               type={"button"}
-              onClick={() => {
-                navigate("/Home");
-              }}
+              onClick={() => navigate("/Home")}
             >
               Back
-            </UpdateButton>
-            <UpdateButton type={"button"} onClick={showVerify}>
+            </button>
+            <button
+              className='Register-Button'
+              type={"button"}
+              onClick={showVerify}
+            >
               Next
-            </UpdateButton>
-          </ButtonDiv>
-        </UpdateProfileForm>
-      </UpdateProfileDiv>
-      <VerifyUser
-        verifyUser={verifyUserRef}
-        verifyUsername={verifyUsernameRef}
-        verifyPassword={verifyPasswordRef}
-        sendUpdate={sendUpdate}
-        showUpdateView={showUpdateView}
-      />
+            </button>
+          </div>
+        </form>
+      </div>
+      <VerifyUser />
     </>
   );
 }
