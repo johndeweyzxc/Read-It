@@ -1,0 +1,121 @@
+.Register-Label {
+    margin-bottom: 0.25rem;
+    font-size: 1.25rem;
+    font-family: 'JetBrains mono', monospace;
+}
+
+.Register-Input {
+    padding: 0.5rem;
+    width: 25vw;
+    margin-bottom: 1rem;
+    border: none;
+    border-bottom: 1px solid #eb4141;
+    outline: none;
+    font-size: 1.25rem;
+    font-family: "JetBrains Mono", monospace;
+    @media screen and (max-width: 600px) {
+        width: 70vw;
+    }
+    @media screen and (max-width: 400px) {
+        font-size: 1rem;
+    }
+}
+
+.Register-Button {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    padding: 0.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    align-self: center;
+    font-size: 1rem;
+    font-family: "JetBrains mono", monospace;
+    letter-spacing: 1px;
+    background-color: #eb4141;
+    border: 1px solid #eb4141;
+    border-radius: 0.5rem;
+    color: #fff;
+    @media screen and (max-width: 400px) {
+        font-size: 0.9rem;
+    }
+}
+
+.Register-Button:hover {
+    cursor: pointer;
+}
+
+.Verify-UserDiv {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    font-family: "JetBrains mono", monospace;
+}
+
+.Verify-Form {
+    padding: 2rem;
+    border: 1px solid #7c7c7c;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 1px;
+    background-color: #fff;
+    @media screen and (max-width: 420px) {
+        padding: 1rem;
+    }
+}
+
+.Verify-Label {
+    margin-bottom: 0.25rem;
+    font-size: 1.15rem;
+    @media screen and (max-width: 420px) {
+        font-size: 0.8rem;
+    }
+}
+
+.Verify-Input {
+    padding: 0.5rem;
+    width: 25vw;
+    margin-bottom: 1rem;
+    border: 1px solid #eb4141;
+    border-radius: 0.5rem;
+    outline: none;
+    font-size: 1.25rem;
+    font-family: "JetBrains mono", monospace;
+    @media screen and (max-width: 1000px) {
+        width: 40vw;
+    }
+    @media screen and (max-width: 700px) {
+        width: 50vw;
+    }
+    @media screen and (max-width: 420px) {
+        width: 70vw;
+        font-size: 0.8rem;
+    }
+}
+
+.Verify-Button {
+    margin-top: 1rem;
+    padding: 0.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    align-self: center;
+    font-size: 1rem;
+    font-family: "JetBrains Mono", monospace;
+    letter-spacing: 1px;
+    background-color: #eb4141;
+    border: 1px solid #eb4141;
+    border-radius: 0.5rem;
+    color: #fff;
+    @media screen and (max-width: 420px) {
+        margin-top: 0.5rem;
+        font-size: 0.8rem;
+    }
+}
+
+.Verify-Button:hover {
+    cursor: pointer;
+}
