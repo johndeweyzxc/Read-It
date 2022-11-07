@@ -78,12 +78,12 @@ export default function Login() {
     return (
       <div
         className='
-          h-[85vh] w-screen flex justify-center 
+          h-[85vh] w-screen flex justify-center
           items-center laptop:mt-8 laptop:items-start'
       >
         <div
-          className='p-8 border-[1px] border-solid 
-            border-ShallowGrey rounded-lg flex flex-col shadow'
+          className='p-8 border-[1px] border-solid border-ShallowGrey 
+          rounded-lg flex flex-col shadow-xl'
         >
           <input
             className='w-[25vw] mb-4 border-2 border-solid border-Ponkan
