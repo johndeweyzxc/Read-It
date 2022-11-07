@@ -1,26 +1,11 @@
-// Dependency imports
-import React, { useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-// App imports
-import { localIP } from "../../ip";
-import {
-  RegisterDiv,
-  RegisterTitle,
-  RegisterInputSection,
-  RegisterInputDiv,
-  RegisterInputs,
-  RegisterLabel,
-  RegisterButton,
-} from "./GeneralStyles";
+import React, {useRef} from "react";
+import {useNavigate} from "react-router-dom";
 
-const RegisterForm = styled(RegisterDiv)`
-  align-items: center;
-`;
+import "./styles.css";
+import {localIP} from "../../ip";
 
 export default function Register() {
   const navigate = useNavigate();
-
   const TOKEN_ID = "tokenId";
 
   // Reference to user inputs
@@ -83,87 +68,107 @@ export default function Register() {
   };
 
   return (
-    <>
-      <RegisterDiv>
-        <RegisterTitle>Create a New Account</RegisterTitle>
-        <RegisterForm>
-          <RegisterInputSection>
-            <RegisterInputDiv>
-              <RegisterLabel>First Name: </RegisterLabel>
-              <RegisterInputs
-                ref={firstNameRef}
-                type={"text"}
-                placeholder={"John Dewey"}
-              />
-            </RegisterInputDiv>
-            <RegisterInputDiv>
-              <RegisterLabel>Last Name: </RegisterLabel>
-              <RegisterInputs
-                ref={lastNameRef}
-                type={"text"}
-                placeholder={"Altura"}
-              />
-            </RegisterInputDiv>
-          </RegisterInputSection>
+    <div
+      className='w-screen h-screen tablet:h-auto flex flex-col
+    justify-center'
+    >
+      <div
+        className='mt-8 mb-8 pl-8 pr-8 pb-2 text-3xl text-JetBrains 
+      self-center border-b-[1px] border-solid border-black'
+      >
+        Create A New Account
+      </div>
 
-          <RegisterInputSection>
-            <RegisterInputDiv>
-              <RegisterLabel>Username: </RegisterLabel>
-              <RegisterInputs
-                ref={userNameRef}
-                type={"text"}
-                placeholder={"johndewey112"}
-              />
-            </RegisterInputDiv>
-            <RegisterInputDiv>
-              <RegisterLabel>Birthday: </RegisterLabel>
-              <RegisterInputs ref={birthDayRef} type={"date"} />
-            </RegisterInputDiv>
-          </RegisterInputSection>
+      <div
+        className='w-screen h-screen tablet:h-auto flex flex-col
+      justify-center items-center'
+      >
+        <div className='flex tablet:flex-col'>
+          <div className='flex flex-col ml-2 mr-4'>
+            <label className='Register-Label'>First Name: </label>
+            <input
+              className='Register-Input'
+              ref={firstNameRef}
+              type={"text"}
+              placeholder={"John Dewey"}
+            />
+          </div>
 
-          <RegisterInputSection>
-            <RegisterInputDiv>
-              <RegisterLabel>Email: </RegisterLabel>
-              <RegisterInputs
-                ref={emailRef}
-                type={"text"}
-                placeholder={"johndewey22@gmail.com"}
-              />
-            </RegisterInputDiv>
-            <RegisterInputDiv>
-              <RegisterLabel>Phone Number: </RegisterLabel>
-              <RegisterInputs
-                ref={phoneRef}
-                type={"text"}
-                placeholder="09993241123"
-              />
-            </RegisterInputDiv>
-          </RegisterInputSection>
+          <div className='flex flex-col ml-2 mr-4'>
+            <label className='Register-Label'>Last Name: </label>
+            <input
+              className='Register-Input'
+              ref={lastNameRef}
+              type={"text"}
+              placeholder={"Ventura"}
+            />
+          </div>
+        </div>
 
-          <RegisterInputSection>
-            <RegisterInputDiv>
-              <RegisterLabel>Password: </RegisterLabel>
-              <RegisterInputs
-                ref={passWordRef}
-                type={"password"}
-                placeholder={"New Password"}
-              />
-            </RegisterInputDiv>
-            <RegisterInputDiv>
-              <RegisterLabel>Confirm Password: </RegisterLabel>
-              <RegisterInputs
-                ref={confirmPasswordRef}
-                type={"password"}
-                placeholder={"Confirm New Password"}
-              />
-            </RegisterInputDiv>
-          </RegisterInputSection>
+        <div className='flex tablet:flex-col'>
+          <div className='flex flex-col ml-2 mr-4'>
+            <label className='Register-Label'>Username: </label>
+            <input
+              className='Register-Input'
+              ref={userNameRef}
+              type={"text"}
+              placeholder={"johndewey112"}
+            />
+          </div>
 
-          <RegisterButton type={"button"} onClick={sendForm}>
-            Register
-          </RegisterButton>
-        </RegisterForm>
-      </RegisterDiv>
-    </>
+          <div className='flex flex-col ml-2 mr-4'>
+            <label className='Register-Label'>Birthday: </label>
+            <input className='Register-Input' ref={birthDayRef} type={"date"} />
+          </div>
+        </div>
+
+        <div className='flex tablet:flex-col'>
+          <div className='flex flex-col ml-2 mr-4'>
+            <label className='Register-Label'>Email: </label>
+            <input
+              className='Register-Input'
+              ref={emailRef}
+              type={"text"}
+              placeholder={"johndewey22@gmail.com"}
+            />
+          </div>
+
+          <div className='flex flex-col ml-2 mr-4'>
+            <label className='Register-Label'>Phone Number: </label>
+            <input
+              className='Register-Input'
+              ref={phoneRef}
+              type={"text"}
+              placeholder={"09993241123"}
+            />
+          </div>
+        </div>
+
+        <div className='flex tablet:flex-col'>
+          <div className='flex flex-col ml-2 mr-4'>
+            <label className='Register-Label'>Password: </label>
+            <input
+              className='Register-Input'
+              ref={passWordRef}
+              type={"password"}
+              placeholder={"New Password"}
+            />
+          </div>
+          <div className='flex flex-col ml-2 mr-4'>
+            <label className='Register-Label'>Confirm Password: </label>
+            <input
+              className='Input'
+              ref={confirmPasswordRef}
+              type={"password"}
+              placeholder={"Confirm New Password"}
+            />
+          </div>
+        </div>
+
+        <button className='Register-Button' type={"button"} onClick={sendForm}>
+          Register
+        </button>
+      </div>
+    </div>
   );
 }
