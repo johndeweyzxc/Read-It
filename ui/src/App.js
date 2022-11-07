@@ -7,8 +7,18 @@ import Home from "./Pages/UserHome/Home";
 import User from "./Pages/UserHome/User";
 import Register from "./Pages/UserModify/Register";
 import UpdateProfile from "./Pages/UserModify/UpdateProfile";
-import ErrorNotFound from "./Pages/ErrorPages/NotFound";
-import ServerError from "./Pages/ErrorPages/ServerError";
+
+function NotFound() {
+  return <div className='m-4'>404 Error not found</div>;
+}
+
+function ServerError() {
+  return (
+    <div className='m-4'>
+      500 Internal Server Error, contact the administrator
+    </div>
+  );
+}
 
 export default function App() {
   return (
@@ -29,7 +39,7 @@ export default function App() {
         </>
         <>
           <Route path='/ServerError' element={<ServerError />} />
-          <Route path='*' element={<ErrorNotFound />} />
+          <Route path='*' element={<NotFound />} />
         </>
       </Routes>
     </Router>
