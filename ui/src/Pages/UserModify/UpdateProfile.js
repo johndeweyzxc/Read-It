@@ -10,14 +10,14 @@ export default function UpdateProfile() {
   const verifyUserRef = useRef();
 
   // Reference to user inputs for updating info
-  const firstNameRef = useRef();
-  const lastNameRef = useRef();
-  const birthDayRef = useRef();
-  const userNameRef = useRef();
-  const passWordRef = useRef();
-  const emailRef = useRef();
-  const phoneRef = useRef();
-  const confirmPasswordRef = useRef();
+  const fname = useRef();
+  const lname = useRef();
+  const bday = useRef();
+  const uname = useRef();
+  const pword = useRef();
+  const email = useRef();
+  const phone = useRef();
+  const confirmPword = useRef();
 
   // Reference to user inputs for verifying
   const verifyUsernameRef = useRef();
@@ -40,30 +40,26 @@ export default function UpdateProfile() {
 
   // API post request to the server will happen here
   const sendUpdate = async () => {
-    const apiUpdateUser = `http://${localIP}:4000/UserUpdate`;
-
     let response;
-    const currentUsername = verifyUsernameRef.current.value;
-    const currentPassword = verifyPasswordRef.current.value;
 
-    if (!(passWordRef.current.value === confirmPasswordRef.current.value)) {
+    if (!(pword.current.value === confirmPword.current.value)) {
       alert("Those passwords did not match");
       return;
     }
 
     const changes = {
-      FirstName: firstNameRef.current.value,
-      LastName: lastNameRef.current.value,
-      UserName: userNameRef.current.value,
-      BirthDay: birthDayRef.current.value,
-      Email: emailRef.current.value,
-      PhoneNumber: phoneRef.current.value,
-      Password: passWordRef.current.value,
+      FirstName: fname.current.value,
+      LastName: lname.current.value,
+      UserName: uname.current.value,
+      BirthDay: bday.current.value,
+      Email: email.current.value,
+      PhoneNumber: phone.current.value,
+      Password: pword.current.value,
     };
 
     const updates = {
-      UserNameVerify: currentUsername,
-      PasswordVerify: currentPassword,
+      UserNameVerify: verifyUsernameRef.current.value,
+      PasswordVerify: verifyPasswordRef.current.value,
     };
 
     // Loop through changes object to check if input has a value
@@ -81,7 +77,7 @@ export default function UpdateProfile() {
     }
 
     try {
-      response = await fetch(apiUpdateUser, {
+      response = await fetch(`http://${localIP}:4000/UserUpdate`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -168,7 +164,7 @@ export default function UpdateProfile() {
               <label className='Register-Label'>First Name: </label>
               <input
                 className='Register-Input'
-                ref={firstNameRef}
+                ref={fname}
                 type={"text"}
                 placeholder={"John Dewey"}
               />
@@ -178,7 +174,7 @@ export default function UpdateProfile() {
               <label className='Register-Label'>Last Name: </label>
               <input
                 className='Register-Input'
-                ref={lastNameRef}
+                ref={lname}
                 type={"text"}
                 placeholder={"Ventura"}
               />
@@ -190,7 +186,7 @@ export default function UpdateProfile() {
               <label className='Register-Label'>Username: </label>
               <input
                 className='Register-Input'
-                ref={userNameRef}
+                ref={uname}
                 type={"text"}
                 placeholder={"johndewey112"}
               />
@@ -198,11 +194,7 @@ export default function UpdateProfile() {
 
             <div className='flex flex-col ml-2 mr-4'>
               <label className='Register-Label'>Birthday: </label>
-              <input
-                className='Register-Input'
-                ref={birthDayRef}
-                type={"date"}
-              />
+              <input className='Register-Input' ref={bday} type={"date"} />
             </div>
           </div>
 
@@ -211,7 +203,7 @@ export default function UpdateProfile() {
               <label className='Register-Label'>Email: </label>
               <input
                 className='Register-Input'
-                ref={emailRef}
+                ref={email}
                 type={"text"}
                 placeholder={"johndewey22@gmail.com"}
               />
@@ -221,7 +213,7 @@ export default function UpdateProfile() {
               <label className='Register-Label'>Phone Number: </label>
               <input
                 className='Register-Input'
-                ref={phoneRef}
+                ref={phone}
                 type={"text"}
                 placeholder={"09993241123"}
               />
@@ -233,7 +225,7 @@ export default function UpdateProfile() {
               <label className='Register-Label'>Password: </label>
               <input
                 className='Register-Input'
-                ref={passWordRef}
+                ref={pword}
                 type={"password"}
                 placeholder={"New Password"}
               />
@@ -242,7 +234,7 @@ export default function UpdateProfile() {
               <label className='Register-Label'>Confirm Password: </label>
               <input
                 className='Register-Input'
-                ref={confirmPasswordRef}
+                ref={confirmPword}
                 type={"password"}
                 placeholder={"Confirm New Password"}
               />
