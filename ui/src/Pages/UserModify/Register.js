@@ -27,21 +27,24 @@ export default function Register() {
     }
 
     try {
-      response = await fetch(`http://${process.env.REST_IP}:4000/Register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          FirstName: firstNameRef.current.value,
-          LastName: lastNameRef.current.value,
-          Birthday: birthDayRef.current.value,
-          UserName: userNameRef.current.value,
-          Password: passWordRef.current.value,
-          Email: emailRef.current.value,
-          PhoneNumber: phoneRef.current.value,
-        }),
-      });
+      response = await fetch(
+        `http://${process.env.REACT_APP_REST_IP}:4000/Register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            FirstName: firstNameRef.current.value,
+            LastName: lastNameRef.current.value,
+            Birthday: birthDayRef.current.value,
+            UserName: userNameRef.current.value,
+            Password: passWordRef.current.value,
+            Email: emailRef.current.value,
+            PhoneNumber: phoneRef.current.value,
+          }),
+        }
+      );
     } catch (error) {
       console.log(error);
     }

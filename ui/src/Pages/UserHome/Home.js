@@ -121,7 +121,7 @@ export default function Home() {
 
   // Run at first render to fetch data from the server
   useEffect(() => {
-    const apiFetchPosts = `http://${process.env.REST_IP}:4000/Home`;
+    const apiFetchPosts = `http://${process.env.REACT_APP_REST_IP}:4000/Home`;
     let response;
     const storedToken = JSON.parse(localStorage.getItem(TOKEN_ID));
 

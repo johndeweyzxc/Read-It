@@ -8,7 +8,7 @@ export default function Login() {
 
   // API post request to the server to login will happen here.
   const loginRequest = async () => {
-    const apiServerLogin = `http://${process.env.REST_IP}:4000/Login`;
+    const apiServerLogin = `http://${process.env.REACT_APP_REST_IP}:4000/Login`;
     let response;
 
     try {

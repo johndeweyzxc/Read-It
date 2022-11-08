@@ -76,13 +76,16 @@ export default function UpdateProfile() {
     }
 
     try {
-      response = await fetch(`http://${process.env.REST_IP}:4000/UserUpdate`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updates),
-      });
+      response = await fetch(
+        `http://${process.env.REACT_APP_REST_IP}:4000/UserUpdate`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updates),
+        }
+      );
     } catch (error) {
       console.log(error);
     }

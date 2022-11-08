@@ -75,7 +75,7 @@ export default function DeletePost({PostId, setFeedList, CancelDeletePost}) {
     }
 
     const storedToken = JSON.parse(localStorage.getItem(TOKEN_ID));
-    const apiServerDeletePost = `http://${process.env.REST_IP}:4000/DeletePost`;
+    const apiServerDeletePost = `http://${process.env.REACT_APP_REST_IP}:4000/DeletePost`;
     let response;
     onGoingRequest = true;
 

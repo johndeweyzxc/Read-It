@@ -161,7 +161,7 @@ export default function NewPost({setFeedList}) {
     }
 
     const storedToken = JSON.parse(localStorage.getItem(TOKEN_ID));
-    const apiServerCreatePost = `http://${process.env.REST_IP}:4000/CreatePost`;
+    const apiServerCreatePost = `http://${process.env.REACT_APP_REST_IP}:4000/CreatePost`;
     let response;
     onGoingRequest = true;
 

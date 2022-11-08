@@ -59,7 +59,7 @@ export default function User() {
 
   // Run at first render to fetch data from the server
   useEffect(() => {
-    const apiFetchUser = `http://${process.env.REST_IP}:4000/User/${Username}`;
+    const apiFetchUser = `http://${process.env.REACT_APP_REST_IP}:4000/User/${Username}`;
     const storedToken = JSON.parse(localStorage.getItem(TOKEN_ID));
     if (!storedToken) {
       navigate("/");

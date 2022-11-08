@@ -86,7 +86,7 @@ export default function UpdatePost({
     }
 
     const storedToken = JSON.parse(localStorage.getItem(TOKEN_ID));
-    const apiServerUpdatePost = `http://${process.env.REST_IP}:4000/UpdatePost`;
+    const apiServerUpdatePost = `http://${process.env.REACT_APP_REST_IP}:4000/UpdatePost`;
     let response;
     onGoingRequest = true;
 
