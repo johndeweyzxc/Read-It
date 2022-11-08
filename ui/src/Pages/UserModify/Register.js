@@ -154,10 +154,11 @@ export default function Register() {
               placeholder={"New Password"}
             />
           </div>
+
           <div className='flex flex-col ml-2 mr-4'>
             <label className='Register-Label'>Confirm Password: </label>
             <input
-              className='Input'
+              className='Register-Input'
               ref={confirmPasswordRef}
               type={"password"}
               placeholder={"Confirm New Password"}
