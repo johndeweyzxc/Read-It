@@ -9,7 +9,7 @@
     width: 25vw;
     margin-bottom: 1rem;
     border: none;
-    border-bottom: 1px solid #eb4141;
+    border-bottom: 1px solid #dd2476;
     outline: none;
     font-size: 1.25rem;
     font-family: "JetBrains Mono", monospace;
@@ -31,8 +31,8 @@
     font-size: 1rem;
     font-family: "JetBrains mono", monospace;
     letter-spacing: 1px;
-    background-color: #eb4141;
-    border: 1px solid #eb4141;
+    background-color: #dd2476;
+    border: 1px solid #dd2476;
     border-radius: 0.5rem;
     color: #fff;
     @media screen and (max-width: 400px) {
@@ -108,7 +108,7 @@
     padding: 0.5rem;
     width: 25vw;
     margin-bottom: 1rem;
-    border: 1px solid #eb4141;
+    border: 1px solid #dd2476;
     border-radius: 0.5rem;
     outline: none;
     font-size: 1.25rem;
@@ -134,8 +134,8 @@
     font-size: 1rem;
     font-family: "JetBrains Mono", monospace;
     letter-spacing: 1px;
-    background-color: #eb4141;
-    border: 1px solid #eb4141;
+    background-color: #dd2476;
+    border: 1px solid #dd2476;
     border-radius: 0.5rem;
     color: #fff;
     @media screen and (max-width: 420px) {
