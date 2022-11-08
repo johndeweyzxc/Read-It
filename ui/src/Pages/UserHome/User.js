@@ -1,16 +1,15 @@
 // Dependency imports
-import { React, useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import {React, useEffect, useRef, useState} from "react";
+import {useNavigate, useParams} from "react-router-dom";
 // App imports
 import Header from "./Header/Header";
 import Messages from "./Messages/Messages";
 import UserContent from "./UserContent";
-import { HomeDiv, LoadingScreen, LoadingText } from "./GeneralStyles";
-import { localIP } from "../../ip";
+import {HomeDiv, LoadingScreen, LoadingText} from "./GeneralStyles";
 
 // This a user page when a user wants to visit a profile of another user
 export default function User() {
-  const { Username } = useParams();
+  const {Username} = useParams();
   const navigate = useNavigate();
   const messagesRef = useRef();
   const settingsFloatRef = useRef();
@@ -60,7 +59,7 @@ export default function User() {
 
   // Run at first render to fetch data from the server
   useEffect(() => {
-    const apiFetchUser = `http://${localIP}:4000/User/${Username}`;
+    const apiFetchUser = `http://${process.env.REST_IP}:4000/User/${Username}`;
     const storedToken = JSON.parse(localStorage.getItem(TOKEN_ID));
     if (!storedToken) {
       navigate("/");
@@ -75,7 +74,7 @@ export default function User() {
           headers: {
             "Content-type": "application/json",
           },
-          body: JSON.stringify({ TokenId: storedToken }),
+          body: JSON.stringify({TokenId: storedToken}),
         });
       } catch (error) {
         console.log(error);

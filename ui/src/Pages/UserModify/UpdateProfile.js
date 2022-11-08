@@ -2,7 +2,6 @@ import React, {useRef} from "react";
 import {useNavigate} from "react-router-dom";
 
 import "./styles.css";
-import {localIP} from "../../ip";
 
 export default function UpdateProfile() {
   const navigate = useNavigate();
@@ -77,7 +76,7 @@ export default function UpdateProfile() {
     }
 
     try {
-      response = await fetch(`http://${localIP}:4000/UserUpdate`, {
+      response = await fetch(`http://${process.env.REST_IP}:4000/UserUpdate`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

@@ -1,10 +1,9 @@
 // Dependency imports
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import styled from "styled-components";
 // App imports
-import { localIP } from "../../../ip";
-import { Header, Title as HeaderTitle, Footer } from "./NewPost";
+import {Header, Title as HeaderTitle, Footer} from "./NewPost";
 import {
   EditPostDiv as EPostDiv,
   SubmitUpdates,
@@ -52,7 +51,7 @@ const ButtonContainer = styled(BContainer)`
   justify-content: space-evenly;
 `;
 
-export default function DeletePost({ PostId, setFeedList, CancelDeletePost }) {
+export default function DeletePost({PostId, setFeedList, CancelDeletePost}) {
   const navigate = useNavigate();
   const TOKEN_ID = "tokenId";
   let onGoingRequest = false;
@@ -76,7 +75,7 @@ export default function DeletePost({ PostId, setFeedList, CancelDeletePost }) {
     }
 
     const storedToken = JSON.parse(localStorage.getItem(TOKEN_ID));
-    const apiServerDeletePost = `http://${localIP}:4000/DeletePost`;
+    const apiServerDeletePost = `http://${process.env.REST_IP}:4000/DeletePost`;
     let response;
     onGoingRequest = true;
 

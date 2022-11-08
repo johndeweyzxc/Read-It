@@ -2,7 +2,6 @@ import React, {useRef} from "react";
 import {useNavigate} from "react-router-dom";
 
 import "./styles.css";
-import {localIP} from "../../ip";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -20,8 +19,6 @@ export default function Register() {
 
   // API post request to the server will happen here
   const sendForm = async () => {
-    const apiServerRegister = `http://${localIP}:4000/Register`;
-
     let response;
 
     if (!(passWordRef.current.value === confirmPasswordRef.current.value)) {
@@ -30,7 +27,7 @@ export default function Register() {
     }
 
     try {
-      response = await fetch(apiServerRegister, {
+      response = await fetch(`http://${process.env.REST_IP}:4000/Register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

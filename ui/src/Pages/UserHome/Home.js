@@ -1,6 +1,6 @@
 // Dependency imports
-import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, {useEffect, useRef, useState} from "react";
+import {useNavigate} from "react-router-dom";
 import styled from "styled-components";
 // App imports
 import Header from "./Header/Header";
@@ -8,10 +8,9 @@ import Content from "./Contents/Content";
 import Messages from "./Messages/Messages";
 import UpdatePost from "./Contents/UpdatePost";
 import DeletePostView from "./Contents/DeletePost";
-import { localIP } from "../../ip";
-import { SettingsButtons, Buttons } from "./Header/Settings";
-import { SubmitPost } from "./Contents/NewPost";
-import { HomeDiv, LoadingScreen, LoadingText } from "./GeneralStyles";
+import {SettingsButtons, Buttons} from "./Header/Settings";
+import {SubmitPost} from "./Contents/NewPost";
+import {HomeDiv, LoadingScreen, LoadingText} from "./GeneralStyles";
 
 const UpdatePostDiv = styled.div`
   position: fixed;
@@ -122,7 +121,7 @@ export default function Home() {
 
   // Run at first render to fetch data from the server
   useEffect(() => {
-    const apiFetchPosts = `http://${localIP}:4000/Home`;
+    const apiFetchPosts = `http://${process.env.REST_IP}:4000/Home`;
     let response;
     const storedToken = JSON.parse(localStorage.getItem(TOKEN_ID));
 

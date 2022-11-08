@@ -1,9 +1,8 @@
 // Dependency imports
-import React, { useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import React, {useRef} from "react";
+import {useNavigate} from "react-router-dom";
 import styled from "styled-components";
 // App imports
-import { localIP } from "../../../ip";
 import {
   Header,
   Title,
@@ -87,7 +86,7 @@ export default function UpdatePost({
     }
 
     const storedToken = JSON.parse(localStorage.getItem(TOKEN_ID));
-    const apiServerUpdatePost = `http://${localIP}:4000/UpdatePost`;
+    const apiServerUpdatePost = `http://${process.env.REST_IP}:4000/UpdatePost`;
     let response;
     onGoingRequest = true;
 

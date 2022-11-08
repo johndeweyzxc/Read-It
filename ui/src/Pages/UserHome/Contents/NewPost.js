@@ -1,9 +1,8 @@
 // Dependency imports
-import React, { useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import React, {useRef} from "react";
+import {useNavigate} from "react-router-dom";
 import styled from "styled-components";
 // App imports
-import { localIP } from "../../../ip";
 
 export const NewPostDiv = styled.div`
   margin: 0;
@@ -146,7 +145,7 @@ export const Input = styled.input`
   }
 `;
 
-export default function NewPost({ setFeedList }) {
+export default function NewPost({setFeedList}) {
   const navigate = useNavigate();
   const TOKEN_ID = "tokenId";
   const textInputRef = useRef();
@@ -162,7 +161,7 @@ export default function NewPost({ setFeedList }) {
     }
 
     const storedToken = JSON.parse(localStorage.getItem(TOKEN_ID));
-    const apiServerCreatePost = `http://${localIP}:4000/CreatePost`;
+    const apiServerCreatePost = `http://${process.env.REST_IP}:4000/CreatePost`;
     let response;
     onGoingRequest = true;
 
