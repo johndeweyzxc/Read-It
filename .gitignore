@@ -1,5 +1,5 @@
 ui/node_modules
-ui/src/ip.js
+ui/src/.env
 
 db/logs/mongod.log
 db/mongodb.config
