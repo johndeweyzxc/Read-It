@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from "react";
 import {useNavigate} from "react-router-dom";
 
-import {localIP} from "../../ip";
+import {localIP} from "./ip";
 
 export default function Login() {
   const navigate = useNavigate();
