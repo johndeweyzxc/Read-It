@@ -159,18 +159,8 @@ export default function UpdateProfile() {
 
   return (
     <>
-      <div
-        className='w-screen h-screen tablet:h-auto 
-        flex flex-col justify-center'
-        ref={updateProfileRef}
-      >
-        <div
-          className='mt-8 mb-8 pl-8 pr-8 pb-2 text-3xl
-          font-JetBrains self-center border-b-[1px] border-solid
-          border-black phone:text-xl'
-        >
-          Update your profile
-        </div>
+      <div className='Update-div' ref={updateProfileRef}>
+        <div className='Update-Title'>Update your profile</div>
 
         <form className='flex flex-col self-center'>
           <div className='flex tablet:flex-col'>
