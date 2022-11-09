@@ -7,17 +7,6 @@
     border-bottom: 1px solid #eb4141;
     font-family: "JetBrains mono", monospace;
     outline: none;
-    
-    @media screen and (max-width: 1000px) {
-        font-size: 1rem;
-        width: 30vw;
-    }
-    @media screen and (max-width: 700px) {
-        width: 35vw;
-    }
-    @media screen and (max-width: 600px) {
-        width: 70vw;
-    }
 }
 
 .inputSection {
@@ -31,4 +20,21 @@
     margin-bottom: 0.25rem;
     font-size: 1rem;
     font-family: "JetBrains mono", monospace;
+}
+
+@media screen and (max-width: 1000px) {
+    .inputStyle {
+        font-size: 1rem;
+        width: 30vw;
+    }
+}
+@media screen and (max-width: 700px) {
+    .inputStyle {
+        width: 35vw;
+    }
+}
+@media screen and (max-width: 600px) {
+    .inputStyle {
+        width: 70vw;
+    }
 }
