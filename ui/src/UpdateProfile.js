@@ -1,7 +1,7 @@
 import React, {useRef} from "react";
 import {useNavigate} from "react-router-dom";
 
-import "./styles.css";
+import "./Styles/register.css";
 
 export default function UpdateProfile() {
   const navigate = useNavigate();
