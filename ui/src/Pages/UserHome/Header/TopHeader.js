@@ -102,7 +102,7 @@ const SearchText = styled.input`
 `;
 
 const HeaderIcons = styled.div`
-  margin-right: 4rem;
+  margin-right: 2rem;
   align-self: center;
   display: flex;
   @media screen and (max-width: 600px) {
@@ -128,7 +128,7 @@ const IconsToolTip = styled.div`
 const IconsPicture = styled.img`
   padding: 5px;
   border-radius: 3px;
-  height: 1.5rem;
+  height: 2rem;
   aspect-ratio: 1;
   &:hover {
     background-color: #b4b4b477;
