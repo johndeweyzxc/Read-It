@@ -73,7 +73,7 @@ export default function Home() {
 
   // This shows the messages when user clicked the messages in the header, currently underdevelopment.
   const showMessages = () => {
-    alert("This features is currently not available");
+    alert("This feature is currently not available");
   };
 
   // This shows the navigation settings when user clicked the settings in the header
