@@ -80,8 +80,8 @@ export default function Register() {
       </div>
 
       <div
-        className='w-screen h-screen tablet:h-auto flex flex-col
-      justify-center items-center'
+        className='w-screen h-screen flex flex-col justify-center 
+        items-center tablet:h-auto btablet:justify-start'
       >
         <div className='flex tablet:flex-col'>
           <div className='flex flex-col ml-2 mr-4'>
