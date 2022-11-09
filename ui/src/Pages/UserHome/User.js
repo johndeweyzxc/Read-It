@@ -3,7 +3,6 @@ import {React, useEffect, useRef, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 // App imports
 import Header from "./Header/Header";
-import Messages from "./Messages/Messages";
 import UserContent from "./UserContent";
 import {HomeDiv, LoadingScreen, LoadingText} from "./GeneralStyles";
 
@@ -11,7 +10,6 @@ import {HomeDiv, LoadingScreen, LoadingText} from "./GeneralStyles";
 export default function User() {
   const {Username} = useParams();
   const navigate = useNavigate();
-  const messagesRef = useRef();
   const settingsFloatRef = useRef();
 
   const TOKEN_ID = "tokenId";
@@ -22,23 +20,14 @@ export default function User() {
   const [TotalLikes, setTotalLikes] = useState(0);
   const [CakeDay, setCakeDay] = useState("");
 
-  let showedMessage = false;
   let showedSettings = false;
 
   function hideAll() {
     settingsFloatRef.current.style.display = "none";
-    messagesRef.current.style.display = "none";
   }
 
   const showMessages = () => {
-    hideAll();
-    if (showedMessage) {
-      hideAll();
-      showedMessage = false;
-    } else {
-      messagesRef.current.style.display = "block";
-      showedMessage = true;
-    }
+    alert("This feature is currently not available");
   };
 
   const showSettings = () => {
@@ -110,7 +99,6 @@ export default function User() {
           settingsFloatRef={settingsFloatRef}
           UserName={UserName}
         />
-        <Messages messagesRef={messagesRef} />
       </>
     );
   };

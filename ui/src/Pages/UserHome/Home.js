@@ -5,7 +5,6 @@ import styled from "styled-components";
 // App imports
 import Header from "./Header/Header";
 import Content from "./Contents/Content";
-import Messages from "./Messages/Messages";
 import UpdatePost from "./Contents/UpdatePost";
 import DeletePostView from "./Contents/DeletePost";
 import {SettingsButtons, Buttons} from "./Header/Settings";
@@ -51,7 +50,6 @@ export default function Home() {
   const navigate = useNavigate();
   const deletePostRef = useRef();
   const updatePostRef = useRef();
-  const messagesRef = useRef();
   const settingsFloatRef = useRef();
   const mobileMenuRef = useRef();
 
@@ -66,25 +64,16 @@ export default function Home() {
 
   const [updateInfo, setUpdateInfo] = useState();
 
-  let showedMessage = false;
   let showedSettings = false;
 
-  // Hides settings and messages
+  // Hides settings
   function hideAll() {
     settingsFloatRef.current.style.display = "none";
-    messagesRef.current.style.display = "none";
   }
 
   // This shows the messages when user clicked the messages in the header, currently underdevelopment.
   const showMessages = () => {
-    hideAll();
-    if (showedMessage) {
-      hideAll();
-      showedMessage = false;
-    } else {
-      messagesRef.current.style.display = "block";
-      showedMessage = true;
-    }
+    alert("This features is under development");
   };
 
   // This shows the navigation settings when user clicked the settings in the header
@@ -288,7 +277,6 @@ export default function Home() {
             CancelDeletePost={CancelDeletePost}
           />
         </DeletePostDiv>
-        <Messages messagesRef={messagesRef} />
         <HomeContent />
       </HomeDiv>
     );
