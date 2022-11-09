@@ -4,10 +4,12 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        laptop: {max: "970px"},
-        tablet: {max: "600px"},
-        stablet: {max: "500px"},
-        phone: {max: "400px"},
+        laptop: {max: "1280px"},
+        btablet: {max: "920px"},
+        tablet: {max: "820px"},
+        stablet: {max: "540px"},
+        phone: {max: "420px"},
+        sphone: {max: "280px"},
       },
       fontFamily: {
         JetBrains: ["JetBrains mono", "sans-serif"],
