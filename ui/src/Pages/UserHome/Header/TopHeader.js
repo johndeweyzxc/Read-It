@@ -102,12 +102,9 @@ const SearchText = styled.input`
 `;
 
 const HeaderIcons = styled.div`
-  margin-right: 2rem;
+  margin-right: 0.5rem;
   align-self: center;
   display: flex;
-  @media screen and (max-width: 600px) {
-    margin-right: 2rem;
-  }
 `;
 
 const IconsToolTip = styled.div`
