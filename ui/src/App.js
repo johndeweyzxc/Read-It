@@ -5,8 +5,8 @@ import "./Styles/login.css";
 import Login from "./Login";
 import Home from "./Pages/UserHome/Home";
 import User from "./Pages/UserHome/User";
-import Register from "./Pages/UserModify/Register";
-import UpdateProfile from "./Pages/UserModify/UpdateProfile";
+import Register from "./Register";
+import UpdateProfile from "./UpdateProfile";
 
 function PasswordReset() {
   return (
