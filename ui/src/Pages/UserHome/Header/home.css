@@ -16,4 +16,9 @@
         @apply w-full h-full outline-none border-none bg-[#dbdbdb00] text-base font-JetBrains
         placeholder:text-[#6d6d6dcc] placeholder:text-sm phone:text-sm phone:placeholder:text-xs;
     }
+
+    .LinkButton {
+        @apply pl-4 pr-4 pt-3 pb-3 text-base font-JetBrains text-right hover:cursor-pointer
+        hover:bg-BgGrey;
+    }
 }

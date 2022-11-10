@@ -1,17 +1,10 @@
 // Dependency imports
 import React from "react";
 import styled from "styled-components";
+import {Link} from "react-router-dom";
 // App imports
 import TopHeader from "./TopHeader";
-import Settings from "./Settings";
-
-const HeaderDiv = styled.div`
-  position: fixed;
-  margin: 0;
-  padding: 0;
-  z-index: 2;
-  filter: blur(0px);
-`;
+import "./home.css";
 
 const TopHeaderDiv = styled.div`
   margin: 0;
@@ -40,6 +33,31 @@ export default function Header({
     alert("Fetch data error, some components might not render properly");
   }
 
+  const UnderDev = () => {
+    alert("This feature is under development");
+  };
+
+  const Menus = () => {
+    return (
+      <div className='fixed hidden right-16 shadow-sm' ref={settingsFloatRef}>
+        <div className='flex flex-col bg-white border-[1px] border-solid border-ShallowGrey'>
+          <Link to={"/UpdateProfile"} className='LinkButton'>
+            Update Profile
+          </Link>
+          <Link to={"/Home"} onClick={UnderDev} className='LinkButton'>
+            Preferences
+          </Link>
+          <Link to={"/Home"} onClick={UnderDev} className='LinkButton'>
+            Privacy Policy
+          </Link>
+          <Link to={"/Home"} onClick={UnderDev} className='LinkButton'>
+            Terms and Condition
+          </Link>
+        </div>
+      </div>
+    );
+  };
+
   const TopHeaderContainer = () => {
     return (
       <TopHeaderDiv>
@@ -55,9 +73,9 @@ export default function Header({
   };
 
   return (
-    <HeaderDiv>
+    <div className='fixed z-[2] filter blur-none'>
       <TopHeaderContainer />
-      <Settings settingsFloatRef={settingsFloatRef} />
-    </HeaderDiv>
+      <Menus />
+    </div>
   );
 }
