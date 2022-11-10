@@ -6,4 +6,4 @@ db/mongodb.config
 
 api/node_modules
 api/route.rest
-api/ip.js
+api/.env
