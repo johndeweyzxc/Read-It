@@ -1,145 +1,11 @@
 import React from "react";
-import styled from "styled-components";
+
+import "./home.css";
 import SearchIcon from "./Assets/search-icon.png";
 import MessagesIcon from "./Assets/message-icon.png";
 import SettingsIcon from "./Assets/settings-icon.png";
 import LogoutIcon from "./Assets/logout-icon.png";
 import MenuIcon from "./Assets/menu-icon.png";
-
-const TextHeader = styled.div`
-  margin-right: 4rem;
-  min-height: 5vh;
-  font-size: 2rem;
-  font-family: "JetBrains mono", sans-serif;
-  color: #ff4722;
-  align-self: center;
-  letter-spacing: 1px;
-  font-weight: bold;
-  display: block;
-  @media screen and (max-width: 960px) {
-    display: none;
-  }
-`;
-
-const UserHeaderInfo = styled.div`
-  display: flex;
-  margin-right: 6rem;
-  @media screen and (max-width: 880px) {
-    margin-right: 1rem;
-  }
-  @media screen and (max-width: 300px) {
-    display: none;
-  }
-`;
-
-const Name = styled.div`
-  align-self: center;
-  font-family: "JetBrains Mono", monospace; ;
-`;
-
-const UserName = styled.div`
-  font-size: 1.15rem;
-  color: #000;
-  &:hover {
-    cursor: pointer;
-    text-decoration: underline;
-  }
-  @media screen and (max-width: 400px) {
-    font-size: 0.8rem;
-  }
-`;
-
-const SearchDiv = styled.div`
-  height: 2rem;
-  width: 30vw;
-  align-self: center;
-  display: flex;
-  align-items: center;
-  background-color: #d8d8d83f;
-  border: 1px solid #d8d8d83f;
-  border-radius: 5px;
-  margin-right: auto;
-  @media screen and (max-width: 880px) {
-    width: 40vw;
-    margin-right: 2rem;
-    flex-grow: 1;
-  }
-  @media screen and (max-width: 600px) {
-    margin-right: 1rem;
-  }
-  &:hover {
-    border: 1px solid #238aff;
-  }
-`;
-
-const SearchIcons = styled.img`
-  margin: 0.5rem;
-  height: 1rem;
-  aspect-ratio: 1;
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-const SearchText = styled.input`
-  width: 100%;
-  height: 100%;
-  outline: none;
-  border: none;
-  background-color: #dbdbdb00;
-  font-size: 1rem;
-  font-family: "JetBrains Mono", monospace;
-  ::placeholder {
-    color: #6d6d6dcc;
-    font-size: 0.8rem;
-  }
-  @media screen and (max-width: 400px) {
-    font-size: 0.8rem;
-    ::placeholder {
-      font-size: 0.7rem;
-    }
-  }
-`;
-
-const HeaderIcons = styled.div`
-  margin-right: 0.5rem;
-  align-self: center;
-  display: flex;
-`;
-
-const IconsPicture = styled.img`
-  padding: 5px;
-  border-radius: 3px;
-  height: 2rem;
-  aspect-ratio: 1;
-  &:hover {
-    background-color: #b4b4b477;
-  }
-`;
-
-const Icons = styled.div`
-  margin-right: 1rem;
-  &:hover {
-    cursor: pointer;
-  }
-  @media screen and (max-width: 600px) {
-    display: none;
-  }
-`;
-
-const MenuIcons = styled.div`
-  display: none;
-  @media screen and (max-width: 600px) {
-    display: block;
-  }
-`;
-
-const MenuIconsPicture = styled.img`
-  padding: 5px;
-  border-radius: 3px;
-  height: 1.5rem;
-  aspect-ratio: 1;
-`;
 
 export default function TopHeaderContent({
   showMessages,
@@ -150,50 +16,82 @@ export default function TopHeaderContent({
 }) {
   const UserHeaderContainer = () => {
     return (
-      <UserHeaderInfo>
-        <Name>
-          <UserName>@{UserNameInfo}</UserName>
-        </Name>
-      </UserHeaderInfo>
+      <div className='flex mr-24 tablet:mr-4 sphone:hidden'>
+        <div className='self-center font-JetBrains'>
+          <div
+            className='text-lg color-white 
+          hover:cursor-pointer underline
+          phone:text-sm'
+          >
+            @{UserNameInfo}
+          </div>
+        </div>
+      </div>
     );
   };
 
   const SearchBarContainer = () => {
     return (
-      <SearchDiv>
-        <SearchIcons src={SearchIcon} />
-        <SearchText
-          placeholder={"Search a User"}
-          onClick={() => {
-            alert("This feature is under development");
-          }}
+      <div className='SearchDiv'>
+        <img
+          className='mr-2 ml-2 h-4 aspect-square hover:cursor-pointer'
+          alt={"Search"}
+          src={SearchIcon}
         />
-      </SearchDiv>
+        <input
+          className='SearchInput'
+          placeholder={"Seach a User"}
+          onClick={() => alert("This feature is under development")}
+        />
+      </div>
     );
   };
 
   const HeaderIconsContainer = () => {
     return (
-      <HeaderIcons>
-        <Icons onClick={showMessages}>
-          <IconsPicture src={MessagesIcon} />
-        </Icons>
-        <Icons onClick={showSettings}>
-          <IconsPicture src={SettingsIcon} />
-        </Icons>
-        <Icons onClick={logoutAccount}>
-          <IconsPicture src={LogoutIcon} />
-        </Icons>
-        <MenuIcons>
-          <MenuIconsPicture onClick={showMenu} src={MenuIcon} />
-        </MenuIcons>
-      </HeaderIcons>
+      <div className='mr-2 self-center flex'>
+        <div className='mr-4 hover:cursor-pointer stablet:hidden'>
+          <img
+            className='p-1 rounded-sm h-8 aspect-square hover:bg-BgGrey'
+            src={MessagesIcon}
+            alt={"Messages"}
+            onClick={showMessages}
+          />
+        </div>
+
+        <div className='mr-4 hover:cursor-pointer stablet:hidden'>
+          <img
+            className='p-1 rounded-sm h-8 aspect-square hover:bg-BgGrey'
+            src={SettingsIcon}
+            alt={"Settings"}
+            onClick={showSettings}
+          />
+        </div>
+
+        <div className='mr-4 hover:cursor-pointer stablet:hidden'>
+          <img
+            className='p-1 rounded-sm h-8 aspect-square hover:bg-BgGrey'
+            src={LogoutIcon}
+            alt={"Logout"}
+            onClick={logoutAccount}
+          />
+        </div>
+
+        <div className='hidden stablet:block'>
+          <img
+            className='p1 rounded-sm h-6 aspect-square'
+            src={MenuIcon}
+            alt={"Menu"}
+            onClick={showMenu}
+          />
+        </div>
+      </div>
     );
   };
 
   return (
     <>
-      <TextHeader>Read It</TextHeader>
+      <div className='TextHeader'>Read It</div>
       <UserHeaderContainer />
       <SearchBarContainer />
       <HeaderIconsContainer />
