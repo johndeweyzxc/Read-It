@@ -1,12 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import styled from "styled-components";
 
 export const SettingsDiv = styled.div`
   position: fixed;
   display: none;
   right: 4rem;
-  background-color: #00000000;
   box-shadow: 0 0 2px;
 `;
 
@@ -17,7 +16,6 @@ export const SettingsButtons = styled.div`
   flex-direction: column;
   background-color: #fff;
   border: 1px solid #7c7c7c;
-  border-top: none;
 `;
 
 export const Buttons = styled(Link)`
@@ -27,10 +25,6 @@ export const Buttons = styled(Link)`
   padding-bottom: 0.75rem;
   font-size: 1rem;
   font-family: "Noto Sans", monospace;
-  background-color: #fff;
-  text-decoration: none;
-  color: #000;
-  text-align: center;
   &:hover {
     cursor: pointer;
     background-color: #b4b4b477;
@@ -38,7 +32,7 @@ export const Buttons = styled(Link)`
 `;
 
 // This is a popped out list of navigations when settings is clicked from the header
-export default function Settings({ settingsFloatRef }) {
+export default function Settings({settingsFloatRef}) {
   const UnderDev = () => {
     alert("This feature is under development");
   };
