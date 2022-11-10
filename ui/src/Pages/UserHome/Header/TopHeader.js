@@ -107,21 +107,6 @@ const HeaderIcons = styled.div`
   display: flex;
 `;
 
-const IconsToolTip = styled.div`
-  position: absolute;
-  padding: 0.5rem;
-  background-color: #000;
-  color: #fff;
-  border: 1px solid #000;
-  border-radius: 3px;
-  font-size: 0.8rem;
-  font-family: "JetBrains mono", monospace;
-  visibility: hidden;
-  display: block;
-  letter-spacing: 1px;
-  z-index: 1;
-`;
-
 const IconsPicture = styled.img`
   padding: 5px;
   border-radius: 3px;
@@ -134,9 +119,6 @@ const IconsPicture = styled.img`
 
 const Icons = styled.div`
   margin-right: 1rem;
-  & ${IconsPicture}:hover + ${IconsToolTip} {
-    visibility: visible;
-  }
   &:hover {
     cursor: pointer;
   }
@@ -195,15 +177,12 @@ export default function TopHeaderContent({
       <HeaderIcons>
         <Icons onClick={showMessages}>
           <IconsPicture src={MessagesIcon} />
-          <IconsToolTip>Messages</IconsToolTip>
         </Icons>
         <Icons onClick={showSettings}>
           <IconsPicture src={SettingsIcon} />
-          <IconsToolTip>Settings</IconsToolTip>
         </Icons>
         <Icons onClick={logoutAccount}>
           <IconsPicture src={LogoutIcon} />
-          <IconsToolTip>Log out</IconsToolTip>
         </Icons>
         <MenuIcons>
           <MenuIconsPicture onClick={showMenu} src={MenuIcon} />
