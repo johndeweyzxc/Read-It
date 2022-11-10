@@ -1,40 +1,17 @@
-.inputStyle {
-    margin-bottom: 1rem;
-    padding: 0.5rem;
-    width: 25vw;
-    font-size: 1.25rem;
-    border: none;
-    border-bottom: 1px solid #eb4141;
-    font-family: "JetBrains mono", monospace;
-    outline: none;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-.inputSection {
-    margin-left: 0.5rem;
-    margin-right: 1rem;
-    display: flex;
-    flex-direction: column;
-}
-
-.labelStyle {
-    margin-bottom: 0.25rem;
-    font-size: 1rem;
-    font-family: "JetBrains mono", monospace;
-}
-
-@media screen and (max-width: 1000px) {
+@layer components {
     .inputStyle {
-        font-size: 1rem;
-        width: 30vw;
+        @apply mb-4 p-2 w-[25vw] text-xl border-b-[1px] border-solid 
+        border-Cherry font-JetBrains outline-none btablet:text-base 
+        btablet:w-[30vw] tablet:w-[35vw] stablet:w-[70vw];
     }
-}
-@media screen and (max-width: 700px) {
-    .inputStyle {
-        width: 35vw;
+    .inputSection {
+        @apply ml-2 mr-4 flex flex-col;
     }
-}
-@media screen and (max-width: 600px) {
-    .inputStyle {
-        width: 70vw;
+    .labelStyle {
+        @apply mb-1 text-base font-JetBrains;
     }
 }
