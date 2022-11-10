@@ -74,7 +74,8 @@ export default function Register() {
     >
       <div
         className='mt-8 mb-8 pl-8 pr-8 pb-2 text-3xl text-JetBrains 
-      self-center border-b-[1px] border-solid border-black'
+        self-center border-b-[1px] border-solid border-black phone:text-2xl
+        sphone:text-lg'
       >
         Create A New Account
       </div>
