@@ -1,0 +1,67 @@
+.TextHeader {
+    margin-right: 4rem;
+    min-height: 5vh;
+    font-size: 2rem;
+    font-family: "JetBrains mono", sans-serif;
+    color: #ff4722;
+    align-self: center;
+    letter-spacing: 1px;
+    font-weight: bold;
+    display: block;
+}
+
+.SearchDiv {
+    height: 2rem;
+    width: 30vw;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    background-color: #d8d8d83f;
+    border: 1px solid #d8d8d83f;
+    border-radius: 5px;
+    margin-right: auto;
+}
+
+.SearchDiv:hover {
+    border: 1px solid #238aff;
+}
+
+.SearchInput {
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border: none;
+    background-color: #dbdbdb00;
+    font-size: 1rem;
+    font-family: "JetBrains Mono", monospace;
+}
+
+.SearchInput::placeholder {
+    color: #6d6d6dcc;
+    font-size: 0.8rem;
+}
+
+@media screen and (max-width: 920px) {
+    .TextHeader {
+        display: none;
+    }
+    .SearchDiv {
+        width: 40vw;
+        margin-right: 2rem;
+        flex-grow: 1;
+    }
+}
+@media screen and (max-width: 540px) {
+    .SearchDiv {
+        margin-right: 1rem;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .SearchInput {
+        font-size: 0.8rem;
+    }
+    .SearchInput::placeholder {
+        font-size: 0.7rem;
+    }
+}
