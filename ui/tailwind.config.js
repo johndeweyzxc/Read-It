@@ -18,6 +18,7 @@ module.exports = {
         Cherry: "#dd2476",
         Ponkan: "#ff512f",
         ShallowGrey: "#7c7c7c",
+        BgGrey: "#b4b4b477",
       },
     },
   },
