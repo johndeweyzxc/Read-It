@@ -10,6 +10,10 @@
     .UserName {
         @apply text-lg hover:cursor-pointer underline phone:text-sm;
     }
+    .HeaderDiv {
+        @apply pb-2 pt-2 pl-4 pr-4 w-screen flex border-b-[1px] border-solid border-[#999999c5]
+        bg-white stablet:justify-between;
+    }
     .SearchDiv {
         @apply h-8 mr-auto w-[30vw] self-center flex items-center bg-[#d8d8d83f] border-[1px]
         border-solid border-[#d8d8d83f] rounded-md hover:border-[#238aff] btablet:w-[40vw]
