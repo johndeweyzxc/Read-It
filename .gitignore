@@ -1,3 +1,5 @@
+.prettierrc
+
 ui/node_modules
 ui/.env
 
