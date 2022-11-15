@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .FeedDiv {
+        @apply mb-4 border-[1px] border-solid border-[#999999c5] rounded-sm font-JetBrains bg-white
+        shadow hover:cursor-pointer hover:border-[#494949c5];
+    }
+    .FeedContent {
+        @apply p-2 mb-1 text-base font-JetBrains stablet:text-sm;
+    }
+    .FeedFooter {
+        @apply p-2 text-base flex justify-between border-t-[1px] border-solid border-[#999999c5]
+        font-JetBrains;
+    }
+    .Container {
+        @apply mr-2 self-center flex hover:text-[#238aff];
+    }
+}

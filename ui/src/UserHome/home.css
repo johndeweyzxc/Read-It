@@ -30,28 +30,4 @@
         @apply pl-4 pr-4 pt-3 pb-3 text-base font-JetBrains text-right hover:cursor-pointer
         hover:bg-BgGrey;
     }
-
-    .FeedDiv {
-        @apply mb-4 border-[1px] border-solid border-[#999999c5] rounded-sm font-JetBrains bg-white
-        shadow hover:cursor-pointer hover:border-[#494949c5];
-    }
-    .FeedContent {
-        @apply p-2 mb-1 text-base font-JetBrains stablet:text-sm;
-    }
-    .FeedFooter {
-        @apply p-2 text-base flex justify-between border-t-[1px] border-solid border-[#999999c5]
-        font-JetBrains;
-    }
-    .Container {
-        @apply mr-2 self-center flex hover:text-[#238aff];
-    }
-    .Likes {
-        @apply mr-2 self-center flex text-[#2525259d] text-sm hover:text-[#238aff];
-    }
-    .Icon {
-        @apply p-2 aspect-square h-4 self-center phone:hidden;
-    }
-    .Modify {
-        @apply mr-2 self-center flex text-[#2525259d] text-sm hover:text-[#238aff] phone:hidden
-    }
 }
