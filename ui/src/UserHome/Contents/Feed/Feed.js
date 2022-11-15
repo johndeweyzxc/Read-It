@@ -1,9 +1,8 @@
 import React from "react";
-
 import Header from "./Header";
 import EditIcon from "../Assets/Edit-icon.png";
 import TrashIcon from "../Assets/Trash-icon.png";
-import "../../home.css";
+import "../../feed.css";
 
 export default function Feed({
   feedInfo,
@@ -43,17 +42,29 @@ export default function Feed({
 
       return (
         <div className="FeedFooter">
-          <div className="Likes">
+          <div className="mr-2 self-center flex text-[#2525259d] text-sm hover:text-[#238aff]">
             {feedLikes} {feedLikes > 1 ? "Likes" : "Like"}
           </div>
           <div className="Container">
             <div className="Container" onClick={ShowEdit}>
-              <img className="Icon" src={EditIcon} alt={"Edit this post"} />
-              <div className="Modify">Edit</div>
+              <img
+                className="p-2 aspect-square h-8 self-center phone:hidden"
+                src={EditIcon}
+                alt={"Edit this post"}
+              />
+              <div className="mr-2 self-center flex text-[#2525259d] text-sm hover:text-[#238aff] phone:hidden">
+                Edit
+              </div>
             </div>
             <div className="Container" onClick={ShowDelete}>
-              <img className="Icon" src={TrashIcon} alt={"Delete this post"} />
-              <div className="Modify">Delete</div>
+              <img
+                className="p-2 aspect-square h-8 self-center phone:hidden"
+                src={TrashIcon}
+                alt={"Delete this post"}
+              />
+              <div className="mr-2 self-center flex text-[#2525259d] text-sm hover:text-[#238aff] phone:hidden">
+                Delete
+              </div>
             </div>
           </div>
         </div>
