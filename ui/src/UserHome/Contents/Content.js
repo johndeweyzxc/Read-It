@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 // App imports
 import SideInfo from "./SideInfo";
-import Feed from "./Feed/Feed";
+import Feed from "./Feed";
 import NewPost from "./NewPost";
 
 export const HomeContentDiv = styled.div`
@@ -104,12 +104,7 @@ export default function HomeContent({
 
   return (
     <HomeContentDiv>
-      <SideInfo
-        fullName={FullName}
-        userName={UserName}
-        totalLikes={TotalLikes}
-        cakeDay={CakeDay}
-      />
+      <SideInfo fullName={FullName} userName={UserName} totalLikes={TotalLikes} cakeDay={CakeDay} />
       <MainFeed>
         <NewPost setFeedList={setFeedList} />
         <Feeds />

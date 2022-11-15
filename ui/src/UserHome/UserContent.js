@@ -1,22 +1,11 @@
 // Dependency imports
 import React from "react";
 // App imports
-import {
-  HomeContentDiv,
-  MainFeed,
-  FeedList,
-  EmptyFeed,
-} from "./Contents/Content";
-import Feed from "./Contents/Feed/Feed";
+import { HomeContentDiv, MainFeed, FeedList, EmptyFeed } from "./Contents/Content";
+import Feed from "./Contents/Feed";
 import SideInfo from "./Contents/SideInfo";
 
-export default function UserContent({
-  feedList,
-  UserName,
-  FullName,
-  TotalLikes,
-  CakeDay,
-}) {
+export default function UserContent({ feedList, UserName, FullName, TotalLikes, CakeDay }) {
   const requiredProps = [feedList, UserName, FullName, TotalLikes, CakeDay];
   // Iterate through the props to check if there is an undefined data
   for (let i = 0; i < requiredProps.length; i++) {
@@ -49,12 +38,7 @@ export default function UserContent({
 
   return (
     <HomeContentDiv>
-      <SideInfo
-        fullName={FullName}
-        userName={UserName}
-        totalLikes={TotalLikes}
-        cakeDay={CakeDay}
-      />
+      <SideInfo fullName={FullName} userName={UserName} totalLikes={TotalLikes} cakeDay={CakeDay} />
       <MainFeed>
         <Feeds />
       </MainFeed>
