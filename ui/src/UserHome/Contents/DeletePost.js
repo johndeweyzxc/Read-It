@@ -1,57 +1,7 @@
-// Dependency imports
 import React from "react";
-import {useNavigate} from "react-router-dom";
-import styled from "styled-components";
-// App imports
-import {Header, Title as HeaderTitle, Footer} from "./NewPost";
-import {
-  EditPostDiv as EPostDiv,
-  SubmitUpdates,
-  ButtonContainer as BContainer,
-} from "./UpdatePost";
+import { useNavigate } from "react-router-dom";
 
-const DeletePostDiv = styled(EPostDiv)`
-  padding: 1rem;
-  @media screen and (max-width: 400px) {
-    padding: 0.5rem;
-  }
-`;
-
-const FooterDiv = styled(Footer)`
-  @media screen and (max-width: 400px) {
-    padding: 0.25rem;
-  }
-`;
-
-const Title = styled(HeaderTitle)`
-  font-size: 1rem;
-  @media screen and (max-width: 700px) {
-    font-size: 0.8rem;
-  }
-  @media screen and (max-width: 400px) {
-    font-size: 0.7rem;
-  }
-`;
-
-const Button = styled(SubmitUpdates)`
-  margin-right: 0;
-  font-size: 0.9rem;
-  @media screen and (max-width: 700px) {
-    font-size: 0.8rem;
-  }
-  @media screen and (max-width: 400px) {
-    font-size: 0.7rem;
-    padding-left: 0.8rem;
-    padding-right: 0.8rem;
-  }
-`;
-
-const ButtonContainer = styled(BContainer)`
-  width: 100%;
-  justify-content: space-evenly;
-`;
-
-export default function DeletePost({PostId, setFeedList, CancelDeletePost}) {
+export default function DeletePost({ PostId, setFeedList, CancelDeletePost }) {
   const navigate = useNavigate();
   const TOKEN_ID = "tokenId";
   let onGoingRequest = false;
@@ -123,20 +73,30 @@ export default function DeletePost({PostId, setFeedList, CancelDeletePost}) {
   };
 
   return (
-    <DeletePostDiv>
-      <Header>
-        <Title>Are you sure you want to delete this Post?</Title>
-      </Header>
-      <FooterDiv>
-        <ButtonContainer>
-          <Button type={"button"} onClick={CancelDeletePost}>
+    <div className="p-4 border-[1px] border-solid border-[#999999c5] rounded-sm shadow-sm bg-white phone:p-2">
+      <div className="p-2 flex">
+        <div className="text-base tablet:text-sm phone:text-xs text-black">
+          Are you sure you want to delete this Post?
+        </div>
+      </div>
+      <div className="p-2 flex justify-between phone:p-1">
+        <div className="flex w-full justify-evenly">
+          <button
+            className="p-2 pl-4 pr-4 tracking-wide bg-Cherry rounded-md text-white text-sm phone:text-xs"
+            type={"button"}
+            onClick={CancelDeletePost}
+          >
             Cancel
-          </Button>
-          <Button type={"button"} onClick={DelViewAndDataBase}>
+          </button>
+          <button
+            className="p-2 pl-4 pr-4 tracking-wide bg-Cherry rounded-md text-white text-sm phone:text-xs"
+            type={"button"}
+            onClick={DelViewAndDataBase}
+          >
             Delete
-          </Button>
-        </ButtonContainer>
-      </FooterDiv>
-    </DeletePostDiv>
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
