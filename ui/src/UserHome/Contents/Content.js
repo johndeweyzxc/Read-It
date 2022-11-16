@@ -1,63 +1,7 @@
-// Dependency imports
 import React from "react";
-import styled from "styled-components";
-// App imports
 import SideInfo from "./SideInfo";
 import Feed from "./Feed";
 import NewPost from "./NewPost";
-
-export const HomeContentDiv = styled.div`
-  margin: 0;
-  padding: 0;
-  height: auto;
-  padding-top: 15vh;
-  padding-left: 6rem;
-  padding-right: 6rem;
-  overflow-y: hidden;
-  filter: blur(0px);
-  @media screen and (max-width: 880px) {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-  @media screen and (max-width: 700px) {
-    padding-top: 10vh;
-  }
-  @media screen and (max-width: 600px) {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  display: flex;
-  flex-direction: row-reverse;
-  flex-wrap: wrap;
-  background-color: #c4c4c43f;
-`;
-
-export const MainFeed = styled.div`
-  margin: 0;
-  padding: 0;
-  margin-left: 2rem;
-  margin-right: 2rem;
-  flex-grow: 3;
-  @media screen and (max-width: 400px) {
-    margin-left: 1rem;
-    margin-right: 1rem;
-    flex-grow: 1;
-  }
-`;
-
-export const FeedList = styled.div`
-  margin: 0;
-  padding: 0;
-`;
-
-export const EmptyFeed = styled.div`
-  margin: 0;
-  padding: 2rem;
-  border: 1px solid #2525259d;
-  border-radius: 2px;
-  font-family: "JetBrains mono", monospace;
-  background-color: #fff;
-`;
 
 export default function HomeContent({
   feedList,
@@ -96,19 +40,29 @@ export default function HomeContent({
   // Create a list of feeds
   const Feeds = () => {
     if (feedList.length === 0) {
-      return <EmptyFeed>You have not yet created a post</EmptyFeed>;
+      return (
+        <div
+          className="p-8 border-[1px] border-solid border-[#2525259d] rounded-sm font-JetBrains
+          bg-white"
+        >
+          You have not yet created a post
+        </div>
+      );
     } else {
-      return <FeedList>{feedList.map(iterateFeed)}</FeedList>;
+      return <div>{feedList.map(iterateFeed)}</div>;
     }
   };
 
   return (
-    <HomeContentDiv>
+    <div
+      className="pt-[15vh] pl-24 pr-24 flex flex-row-reverse flex-wrap bg-[#c4c4c43f]
+      overflow-y-hidden tablet:pl-4 tablet:pr-4 tablet:pt-[10vh] stablet:pl-0 stablet:pr-0"
+    >
       <SideInfo fullName={FullName} userName={UserName} totalLikes={TotalLikes} cakeDay={CakeDay} />
-      <MainFeed>
+      <div className="ml-8 mr-8 flex-grow-[3] phone:ml-4 phone:mr-4 phone:flex-grow">
         <NewPost setFeedList={setFeedList} />
         <Feeds />
-      </MainFeed>
-    </HomeContentDiv>
+      </div>
+    </div>
   );
 }
