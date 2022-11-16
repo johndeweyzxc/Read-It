@@ -1,78 +1,22 @@
-// Dependency imports
-import React, {useRef} from "react";
-import {useNavigate} from "react-router-dom";
-import styled from "styled-components";
-// App imports
-import {
-  Header,
-  Title,
-  TextAreaDiv,
-  TextArea,
-  Footer,
-  SubmitPost,
-  Label,
-  Switch,
-  Input,
-  SwitchName,
-} from "./NewPost";
+import React, { useRef, useState } from "react";
+import Switch from "@mui/material/Switch";
+import { useNavigate } from "react-router-dom";
 
-export const EditPostDiv = styled.div`
-  border: 1px solid #999999c5;
-  border-radius: 2px;
-  box-shadow: 0 0 1px;
-  background: #fff;
-`;
-
-const LabelDiv = styled(Label)`
-  margin-right: 1rem;
-  @media screen and (max-width: 700px) {
-    margin-right: 0.8rem;
-  }
-`;
-
-export const SubmitUpdates = styled(SubmitPost)`
-  margin-right: 1rem;
-  @media screen and (max-width: 700px) {
-    margin-right: 0.8rem;
-    font-size: 0.7rem;
-  }
-`;
-const UpdateTextArea = styled(TextArea)`
-  width: 50vw;
-  @media screen and (max-width: 1000px) {
-    width: 70vw;
-  }
-`;
-
-export const ButtonContainer = styled.div`
-  display: flex;
-`;
-
-export default function UpdatePost({
-  updateInfo,
-  FeedList,
-  setFeedList,
-  CancelEditPost,
-}) {
+export default function UpdatePost({ updateInfo, FeedList, setFeedList, CancelEditPost }) {
   const navigate = useNavigate();
   const TOKEN_ID = "tokenId";
+  const [switchState, setSwitch] = useState(updateInfo.isPublic);
   let onGoingRequest = false;
-
   let postId = updateInfo.postId;
-  // Old value of the post data
-  let isPublic = updateInfo.isPublic;
   let content = updateInfo.content;
-
-  // This are the variable for the updates on the post.
   let textAreaRef = useRef();
-  let switchVal = isPublic;
 
   // Updates the post in the UI, effect happens only in client side.
   const UpdateUI = () => {
     const currentPost = [...FeedList];
     const post = currentPost.find((post) => post._id === postId);
     post.Content = textAreaRef.current.value;
-    post.ShowPublic = switchVal;
+    post.ShowPublic = switchState;
     setFeedList(currentPost);
     CancelEditPost();
   };
@@ -97,10 +41,10 @@ export default function UpdatePost({
     }
 
     let newContent = textAreaRef.current.value;
-    let newSwitchValue = switchVal;
+    let newSwitchValue = switchState;
 
     // If no changes have been made to the post
-    if (newContent === content && newSwitchValue === isPublic) {
+    if (newContent === content && newSwitchValue === updateInfo.isPublic) {
       alert("No changes have been made to the post");
       onGoingRequest = false;
       CancelEditPost();
@@ -117,7 +61,7 @@ export default function UpdatePost({
           PostId: postId,
           TokenId: storedToken,
           NewContent: textAreaRef.current.value,
-          ShowPublic: switchVal,
+          ShowPublic: switchState,
         }),
       });
     } catch (error) {
@@ -144,44 +88,39 @@ export default function UpdatePost({
     }
   };
 
-  // This toggle the switch animation to indicate on state or off state.
-  const ToggleSwitch = () => {
-    return (
-      <LabelDiv>
-        <SwitchName>Public</SwitchName>
-        <Input
-          type={"checkbox"}
-          onChange={() => {
-            switchVal = switchVal ? false : true;
-          }}
-          defaultChecked={isPublic}
-        />
-        <Switch />
-      </LabelDiv>
-    );
-  };
-
   return (
     <>
-      <EditPostDiv>
-        <Header>
-          <Title>Edit this Post</Title>
-        </Header>
-        <TextAreaDiv>
-          <UpdateTextArea defaultValue={content} ref={textAreaRef} />
-        </TextAreaDiv>
-        <Footer>
-          <ToggleSwitch />
-          <ButtonContainer>
-            <SubmitUpdates type={"button"} onClick={CancelEditPost}>
+      <div className="border-[1px] border-solid border-[#999999c5] rounded-sm shadow-sm bg-white">
+        <div className="p-2 flex">
+          <div className="text-white text-lg phone:text-sm">Edit this Post</div>
+        </div>
+        <div className="mt-2 mb-2 pr-2 pl-2 flex">
+          <textarea
+            className="w-[50vw] btablet:w-[70vw] p-1 flex-grow text-base font-JetBrains bg-white tablet:text-sm"
+            defaultValue={content}
+            ref={textAreaRef}
+          />
+        </div>
+        <div className="p-2 flex justify-between">
+          <Switch checked={switchState} onChange={(event) => setSwitch(event.target.checked)} />
+          <div className="flex">
+            <button
+              className="p-1 pl-4 pr-4 bg-Cherry rounded text-white text-sm phone:text-xs"
+              type={"button"}
+              onClick={CancelEditPost}
+            >
               Cancel
-            </SubmitUpdates>
-            <SubmitUpdates type={"button"} onClick={UpdateUIAndDataBase}>
+            </button>
+            <button
+              className="p-1 pl-4 pr-4 bg-Cherry rounded text-white text-sm phone:text-xs"
+              type={"button"}
+              onClick={UpdateUIAndDataBase}
+            >
               Update
-            </SubmitUpdates>
-          </ButtonContainer>
-        </Footer>
-      </EditPostDiv>
+            </button>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
