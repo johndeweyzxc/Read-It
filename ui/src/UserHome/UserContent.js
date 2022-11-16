@@ -1,7 +1,4 @@
-// Dependency imports
 import React from "react";
-// App imports
-import { HomeContentDiv, MainFeed, FeedList, EmptyFeed } from "./Contents/Content";
 import Feed from "./Contents/Feed";
 import SideInfo from "./Contents/SideInfo";
 
@@ -30,18 +27,28 @@ export default function UserContent({ feedList, UserName, FullName, TotalLikes, 
   // Creates a list of post created by that user
   const Feeds = () => {
     if (feedList.length === 0) {
-      return <EmptyFeed>This user has not yet created a post</EmptyFeed>;
+      return (
+        <div
+          className="p-8 border-[1px] border-solid border-[#2525259d] rounded-sm font-JetBrains
+          bg-white"
+        >
+          This user has not yet created a post
+        </div>
+      );
     } else {
-      return <FeedList>{feedList.map(iterateFeed)}</FeedList>;
+      return <div>{feedList.map(iterateFeed)}</div>;
     }
   };
 
   return (
-    <HomeContentDiv>
+    <div
+      className="pt-[15vh] pl-24 pr-24 flex flex-row-reverse flex-wrap bg-[#c4c4c43f]
+      overflow-y-hidden tablet:pl-4 tablet:pr-4 tablet:pt-[10vh] stablet:pl-0 stablet:pr-0"
+    >
       <SideInfo fullName={FullName} userName={UserName} totalLikes={TotalLikes} cakeDay={CakeDay} />
-      <MainFeed>
+      <div className="ml-8 mr-8 flex-grow-[3] phone:ml-4 phone:mr-4 phone:flex-grow">
         <Feeds />
-      </MainFeed>
-    </HomeContentDiv>
+      </div>
+    </div>
   );
 }
