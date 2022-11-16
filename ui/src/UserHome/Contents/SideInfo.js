@@ -1,95 +1,5 @@
 import React from "react";
-import styled from "styled-components";
 import DisplayPicture from "./Assets/dp-silhouette.jpg";
-
-const SideInfoDiv = styled.div`
-  margin: 0;
-  padding: 0;
-  margin-left: 2rem;
-  margin-right: 2rem;
-  margin-bottom: 1rem;
-  border: 1px solid #999999c5;
-  border-radius: 2px;
-  height: 40vh;
-  max-width: 20rem;
-  min-width: 15rem;
-  flex-grow: 3;
-  background-color: #fff;
-  box-shadow: 0 0 1px;
-  &:hover {
-    border: 1px solid #494949c5;
-  }
-  display: block;
-  @media screen and (max-width: 880px) {
-    display: none;
-  }
-`;
-
-const HeaderProfile = styled.div`
-  margin: 0;
-  padding: 0;
-  height: 35%;
-  background-image: linear-gradient(to left, #ff512f, #dd2476);
-`;
-
-const ProfilePicture = styled.div`
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ImagePicture = styled.img`
-  margin: 0;
-  padding: 0;
-  aspect-ratio: 1;
-  height: 4rem;
-  border: 2px solid #1f93ff;
-  border-radius: 50%;
-`;
-
-const UserInfo = styled.div`
-  margin: 0;
-  padding: 0;
-  margin-top: ${(props) => props.marginTop};
-  display: flex;
-  justify-content: ${(props) => props.justifyContent};
-  font-family: "JetBrains Mono", monospace;
-`;
-
-const UserInfoSection = styled.div`
-  margin: 0;
-  padding: 0;
-`;
-
-const FullnameInfo = styled.div`
-  margin: 0;
-  padding: 0;
-  font-size: 1rem;
-`;
-
-const UsernameInfo = styled.div`
-  margin: 0;
-  padding: 0;
-  font-size: 0.75rem;
-  color: #6d6d6dcc;
-  text-align: center;
-`;
-
-const InfoTitle = styled.div`
-  margin: 0;
-  padding: 0;
-  font-size: 0.85rem;
-`;
-
-const InfoBody = styled.div`
-  margin: 0;
-  padding: 0;
-  font-size: 0.75rem;
-  color: #6d6d6dcc;
-`;
 
 export default function SideInfo({ fullName, userName, totalLikes, cakeDay }) {
   const requiredProps = [fullName, userName, totalLikes, cakeDay];
@@ -104,51 +14,61 @@ export default function SideInfo({ fullName, userName, totalLikes, cakeDay }) {
 
   const TotalLikes = () => {
     return (
-      <UserInfoSection>
-        <InfoTitle>Total Likes</InfoTitle>
-        <InfoBody>{totalLikes}</InfoBody>
-      </UserInfoSection>
+      <div>
+        <div className="text-sm">Total Likes</div>
+        <div className="text-xs text-[#6d6d6dcc]">{totalLikes}</div>
+      </div>
     );
   };
 
   const CakeDay = () => {
     return (
-      <UserInfoSection>
-        <InfoTitle>Cake Day</InfoTitle>
-        <InfoBody>{cakeDay}</InfoBody>
-      </UserInfoSection>
+      <div>
+        <div className="text-sm">Cake Day</div>
+        <div className="text-xs text-[#6d6d6dcc]">{cakeDay}</div>
+      </div>
     );
   };
 
   const Profile = () => {
     return (
-      <HeaderProfile>
-        <ProfilePicture>
-          <ImagePicture src={DisplayPicture} />
-        </ProfilePicture>
-      </HeaderProfile>
+      <div className="h-[35%] bg-Cherry">
+        <div className="h-full flex content-center items-center justify-center">
+          <img
+            className="aspect-square h-16 border-[2px] border-solid border-[#1f93ff]
+            rounded-full"
+            src={DisplayPicture}
+            alt={"User round"}
+          />
+        </div>
+      </div>
     );
   };
 
   const Names = () => {
     return (
-      <UserInfoSection>
-        <FullnameInfo>{fullName}</FullnameInfo>
-        <UsernameInfo>@{userName}</UsernameInfo>
-      </UserInfoSection>
+      <div>
+        <div className="text-base">{fullName}</div>
+        <div className="text-xs text-[#6d6d6dcc] text-center">@{userName}</div>
+      </div>
     );
   };
 
   return (
-    <SideInfoDiv>
+    <div
+      className="
+      ml-8 mr-8 mb-4 border-[1px] border-solid border-[#999999c5] rounded-sm h-[40vh] 
+      max-w-[20rem] min-w-[15rem] flex-grow-[3] bg-white shadow-sm 
+      hover:border-[#494949c5] tablet:hidden"
+    >
       <Profile />
-      <UserInfo marginTop={"2.25rem"} justifyContent={"center"}>
+      <div className="mt-9 flex justify-center font-JetBrains">
         <Names />
-      </UserInfo>
-      <UserInfo marginTop={"1rem"} justifyContent={"space-around"}>
+      </div>
+      <div className="mt-4 flex justify-around font-JetBrains">
         <TotalLikes />
         <CakeDay />
-      </UserInfo>
-    </SideInfoDiv>
+      </div>
+    </div>
   );
 }
