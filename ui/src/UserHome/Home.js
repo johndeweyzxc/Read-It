@@ -1,49 +1,11 @@
-// Dependency imports
-import React, {useEffect, useRef, useState} from "react";
-import {useNavigate} from "react-router-dom";
-import styled from "styled-components";
-// App imports
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 import Header from "./Header/Header";
 import Content from "./Contents/Content";
 import UpdatePost from "./Contents/UpdatePost";
 import DeletePostView from "./Contents/DeletePost";
-import {SettingsButtons, Buttons} from "./Header/Settings";
-import {SubmitPost} from "./Contents/NewPost";
-import {HomeDiv, LoadingScreen, LoadingText} from "./GeneralStyles";
-
-const UpdatePostDiv = styled.div`
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  font-family: "JetBrains mono", monospace;
-  z-index: 3;
-  backdrop-filter: blur(5px);
-`;
-
-const DeletePostDiv = styled(UpdatePostDiv)``;
-
-// Menu settings for small screens
-const MobileMenuDiv = styled(UpdatePostDiv)`
-  display: none;
-`;
-const MobileButtonDiv = styled(SettingsButtons)`
-  border-top: 1px solid #7c7c7c;
-`;
-const MobileButton = styled(Buttons)`
-  border-bottom: 1px solid #999999c5;
-  width: 80vw;
-`;
-const BackButton = styled(SubmitPost)`
-  padding: 0.55rem;
-  padding-left: 1.55rem;
-  padding-right: 1.55rem;
-  align-self: center;
-  margin-bottom: 0.85rem;
-  margin-top: 0.85rem;
-`;
 
 // This is the main page component of a user. A user can modify user info and create, read, update a post.
 export default function Home() {
@@ -181,20 +143,6 @@ export default function Home() {
     updatePostRef.current.style.display = "none";
   }
 
-  // Header of home, this is where the search bar, settings and other navigations lives.
-  const HomeHeader = () => {
-    return (
-      <Header
-        showMessages={showMessages}
-        showSettings={showSettings}
-        showMenu={showMenu}
-        logoutAccount={logoutAccount}
-        settingsFloatRef={settingsFloatRef}
-        UserName={UserName}
-      />
-    );
-  };
-
   // Will only return when the user clicks the edit button on the feed
   const HomeUpdatePost = () => {
     if (updateInfo === undefined) {
@@ -211,74 +159,89 @@ export default function Home() {
     }
   };
 
-  // This is the main body of the home page, this is where the feed list lives.
-  const HomeContent = () => {
-    return (
-      <Content
-        feedList={FeedList}
-        setFeedList={setFeedList}
-        UserName={UserName}
-        FullName={FullName}
-        TotalLikes={TotalLikes}
-        CakeDay={CakeDay}
-        ShowDeletePost={ShowDeletePost}
-        ShowEditPost={ShowEditPost}
-      />
-    );
-  };
-
   // This is the menu navigation for small screen devices.
   const MobileMenu = () => {
     return (
-      <MobileMenuDiv ref={mobileMenuRef}>
-        <MobileButtonDiv>
-          <MobileButton to={"/UpdateProfile"}>Update Profile</MobileButton>
-          <MobileButton
+      <div
+        className="fixed w-screen h-screen hidden justify-center items-center font-JetBrains z-10 backdrop-blur-sm"
+        ref={mobileMenuRef}
+      >
+        <div className="flex flex-col bg-white border-t-[1px] border-t-solid border-t-[#7c7c7c]">
+          <Link
+            className="w-[80vw] pl-4 pr-4 pt-3 pb-3 text-base font-JetBrains border-b-[1px] border-b-solid border-b-[#999999c5] hover:cursor-pointer hover:bg-[#b4b4b477]"
+            to={"/UpdateProfile"}
+          />
+          <Link
+            className="w-[80vw] pl-4 pr-4 pt-3 pb-3 text-base font-JetBrains border-b-[1px] border-b-solid border-b-[#999999c5] hover:cursor-pointer hover:bg-[#b4b4b477]"
             to={"/Home"}
             onClick={() => {
               alert("This feature is under development");
             }}
-          >
-            Messages
-          </MobileButton>
-          <MobileButton to={"/Home"}>Logout</MobileButton>
-          <BackButton
+          />
+          <Link
+            className="w-[80vw] pl-4 pr-4 pt-3 pb-3 text-base font-JetBrains border-b-[1px] border-b-solid border-b-[#999999c5] hover:cursor-pointer hover:bg-[#b4b4b477]"
+            to={"/Home"}
+          />
+          <button
+            className="p-2 pl-6 pr-6 self-center mb-3 mt-3 bg-Cherry rounded text-white text-base"
             type={"button"}
             onClick={() => {
               mobileMenuRef.current.style.display = "none";
             }}
           >
             back
-          </BackButton>
-        </MobileButtonDiv>
-      </MobileMenuDiv>
+          </button>
+        </div>
+      </div>
     );
   };
 
   if (UserName === "") {
     // While fetching data from the database, show a loading screen
     return (
-      <LoadingScreen>
-        <LoadingText>Loading...</LoadingText>
-      </LoadingScreen>
+      <div className="absolute w-screen h-screen hidden justify-center items-center bg-white z-10">
+        <div className="text-2xl font-JetBrains tracking-wide underline">Loading...</div>
+      </div>
     );
   } else {
     return (
-      <HomeDiv>
-        <HomeHeader />
-        <UpdatePostDiv ref={updatePostRef}>
+      <div className="w-screen h-auto">
+        <Header
+          showMessages={showMessages}
+          showSettings={showSettings}
+          showMenu={showMenu}
+          logoutAccount={logoutAccount}
+          settingsFloatRef={settingsFloatRef}
+          UserName={UserName}
+        />
+        <div
+          className="fixed w-screen h-screen hidden justify-center items-center font-JetBrains z-10 backdrop-blur-sm"
+          ref={updatePostRef}
+        >
           <HomeUpdatePost />
-        </UpdatePostDiv>
+        </div>
         <MobileMenu />
-        <DeletePostDiv ref={deletePostRef}>
+        <div
+          className="fixed w-screen h-screen hidden justify-center items-center font-JetBrains z-10 backdrop-blur-sm"
+          ref={deletePostRef}
+        >
           <DeletePostView
             PostId={postId}
             setFeedList={setFeedList}
             CancelDeletePost={CancelDeletePost}
           />
-        </DeletePostDiv>
-        <HomeContent />
-      </HomeDiv>
+        </div>
+        <Content
+          feedList={FeedList}
+          setFeedList={setFeedList}
+          UserName={UserName}
+          FullName={FullName}
+          TotalLikes={TotalLikes}
+          CakeDay={CakeDay}
+          ShowDeletePost={ShowDeletePost}
+          ShowEditPost={ShowEditPost}
+        />
+      </div>
     );
   }
 }
