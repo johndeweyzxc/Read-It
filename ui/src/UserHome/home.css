@@ -27,7 +27,7 @@
         @apply p-1 rounded-sm h-8 aspect-square hover:bg-BgGrey;
     }
     .LinkButton {
-        @apply pl-4 pr-4 pt-3 pb-3 text-base font-JetBrains text-right hover:cursor-pointer
+        @apply pl-4 pr-4 pt-3 pb-3 text-base font-JetBrains text-center hover:cursor-pointer
         hover:bg-BgGrey;
     }
 }
