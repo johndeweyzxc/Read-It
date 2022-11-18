@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import "../DeletePost.css";
 
 export default function DeletePost({ PostId, setFeedList, CancelDeletePost }) {
   const navigate = useNavigate();
@@ -60,9 +61,7 @@ export default function DeletePost({ PostId, setFeedList, CancelDeletePost }) {
         navigate("/");
       } else if (response.status === 500) {
         navigate("/ServerError");
-      }
-      // The user successfully deleted a post
-      else {
+      } else {
         // Update the UI
         DeleteFromView();
         alert(message);
@@ -73,26 +72,16 @@ export default function DeletePost({ PostId, setFeedList, CancelDeletePost }) {
   };
 
   return (
-    <div className="p-4 border-[1px] border-solid border-[#999999c5] rounded-sm shadow-sm bg-white phone:p-2">
+    <div className="DeletePostDiv">
       <div className="p-2 flex">
-        <div className="text-base tablet:text-sm phone:text-xs text-black">
-          Are you sure you want to delete this Post?
-        </div>
+        <div className="DelConfirm">Are you sure you want to delete this Post?</div>
       </div>
       <div className="p-2 flex justify-between phone:p-1">
         <div className="flex w-full justify-evenly">
-          <button
-            className="p-2 pl-4 pr-4 tracking-wide bg-Cherry rounded-md text-white text-sm phone:text-xs"
-            type={"button"}
-            onClick={CancelDeletePost}
-          >
+          <button className="ButtonConfirm" onClick={CancelDeletePost}>
             Cancel
           </button>
-          <button
-            className="p-2 pl-4 pr-4 tracking-wide bg-Cherry rounded-md text-white text-sm phone:text-xs"
-            type={"button"}
-            onClick={DelViewAndDataBase}
-          >
+          <button className="ButtonConfirm" onClick={DelViewAndDataBase}>
             Delete
           </button>
         </div>
