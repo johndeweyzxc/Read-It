@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .ReadIt {
+        @apply mr-16 min-h-[5vh] text-2xl font-JetBrains text-Ponkan flex items-center tracking-wide
+        font-bold btablet:hidden; 
+    }
+    .UserName {
+        @apply text-lg hover:cursor-pointer underline phone:text-sm;
+    }
+    .HeaderDiv {
+        @apply pb-2 pt-2 pl-4 pr-4 w-screen flex border-b-[1px] border-solid border-[#999999c5]
+        bg-white stablet:justify-between;
+    }
+    .SearchDiv {
+        @apply h-8 mr-auto w-[30vw] self-center flex items-center bg-[#d8d8d83f] border-[1px]
+        border-solid border-[#d8d8d83f] rounded-md hover:border-[#238aff] btablet:w-[40vw]
+        btablet:mr-8 btablet:flex-grow stablet:mr-4;
+    }
+    .SearchInput {
+        @apply w-full h-full outline-none border-none bg-[#dbdbdb00] text-base font-JetBrains
+        placeholder:text-[#6d6d6dcc] placeholder:text-sm phone:text-sm phone:placeholder:text-xs;
+    }
+    .MenuImages {
+        @apply p-1 rounded-sm h-8 aspect-square hover:bg-BgGrey;
+    }
+    .MenuButton {
+        @apply pl-4 pr-4 pt-3 pb-3 text-base font-JetBrains text-center hover:cursor-pointer
+        hover:bg-BgGrey;
+    }
+}
