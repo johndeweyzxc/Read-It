@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Switch from "@mui/material/Switch";
-import "../updatePost.css";
+import "../UpdatePost.css";
 
 export default function UpdatePost({ updateInfo, FeedList, setFeedList, CancelEditPost }) {
   const navigate = useNavigate();
@@ -85,15 +85,15 @@ export default function UpdatePost({ updateInfo, FeedList, setFeedList, CancelEd
         <div className="text-lg phone:text-sm">Edit this Post</div>
       </div>
       <div className="mt-2 mb-2 pr-2 pl-2 flex">
-        <textarea className="TextArea" defaultValue={updateInfo.content} ref={textAreaRef} />
+        <textarea className="UpdateTextArea" defaultValue={updateInfo.content} ref={textAreaRef} />
       </div>
       <div className="p-2 flex justify-between">
         <Switch checked={switchState} onChange={(event) => setSwitch(event.target.checked)} />
         <div className="flex">
-          <button className="Button" type={"button"} onClick={CancelEditPost}>
+          <button className="UpdateButton" onClick={CancelEditPost}>
             Cancel
           </button>
-          <button className="Button" type={"button"} onClick={() => UpdateUIAndDataBase()}>
+          <button className="UpdateButton" onClick={() => UpdateUIAndDataBase()}>
             Update
           </button>
         </div>
