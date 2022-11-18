@@ -13,16 +13,6 @@ export default function HomeContent({
   ShowDeletePost,
   ShowEditPost,
 }) {
-  const requiredProps = [feedList, UserName, FullName, TotalLikes, CakeDay];
-
-  // Iterates through the props to check if some data is undefined
-  for (let i = 0; i < requiredProps.length; i++) {
-    if (requiredProps[i] === null || requiredProps[i] === undefined) {
-      alert("Fetch data error, some components might not render properly");
-      break;
-    }
-  }
-
   const iterateFeed = (feed) => {
     return (
       <Feed
@@ -32,7 +22,6 @@ export default function HomeContent({
         FullName={FullName}
         ShowDeletePost={ShowDeletePost}
         ShowEditPost={ShowEditPost}
-        AllowModifications={true}
       />
     );
   };
