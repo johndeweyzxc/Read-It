@@ -1,14 +1,12 @@
-// Dependency imports
-import {React, useEffect, useRef, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
-// App imports
-import Header from "./Header/Header";
+import { React, useEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
+import Header from "./Header";
 import UserContent from "./UserContent";
-import {HomeDiv, LoadingScreen, LoadingText} from "./GeneralStyles";
 
 // This a user page when a user wants to visit a profile of another user
 export default function User() {
-  const {Username} = useParams();
+  const { Username } = useParams();
   const navigate = useNavigate();
   const settingsFloatRef = useRef();
 
@@ -63,7 +61,7 @@ export default function User() {
           headers: {
             "Content-type": "application/json",
           },
-          body: JSON.stringify({TokenId: storedToken}),
+          body: JSON.stringify({ TokenId: storedToken }),
         });
       } catch (error) {
         console.log(error);
@@ -105,13 +103,13 @@ export default function User() {
 
   if (UserName === "") {
     return (
-      <LoadingScreen>
-        <LoadingText>Loading...</LoadingText>
-      </LoadingScreen>
+      <div className="absolute w-screen h-screen hidden justify-center items-center bg-white z-10">
+        <div className="text-2xl font-JetBrains tracking-wide underline">Loading...</div>
+      </div>
     );
   } else {
     return (
-      <HomeDiv>
+      <div className="w-screen h-auto">
         <HeaderAndMessages />
         <UserContent
           feedList={UserFeeds}
@@ -120,7 +118,7 @@ export default function User() {
           TotalLikes={TotalLikes}
           CakeDay={CakeDay}
         />
-      </HomeDiv>
+      </div>
     );
   }
 }
