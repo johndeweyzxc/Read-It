@@ -1,120 +1,55 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import Switch from "@mui/material/Switch";
 
-import Header from "./Header/Header";
+import ApiRequest from "./ApiFunctions";
+import Header from "./Header";
 import Content from "./Contents/Content";
-import UpdatePost from "./Contents/UpdatePost";
-import DeletePostView from "./Contents/DeletePost";
+import { MenuForPhone } from "./Responsive/PhoneScreen";
+import "./Home.css";
+import "./UpdatePost.css";
+import "./DeletePost.css";
 
 // This is the main page component of a user. A user can modify user info and create, read, update a post.
 export default function Home() {
+  const TOKEN_ID = "tokenId";
+  const storedToken = JSON.parse(localStorage.getItem(TOKEN_ID));
   const navigate = useNavigate();
+
   const deletePostRef = useRef();
   const updatePostRef = useRef();
-  const settingsFloatRef = useRef();
   const mobileMenuRef = useRef();
-
-  const TOKEN_ID = "tokenId";
 
   const [FeedList, setFeedList] = useState([]);
   const [UserName, setUserName] = useState("");
   const [FullName, setFullName] = useState("");
   const [TotalLikes, setTotalLikes] = useState(0);
   const [CakeDay, setCakeDay] = useState("");
+
   const [postId, setPostId] = useState();
+  const [isPublic, setIsPublic] = useState();
+  const [feedContent, setFeedContent] = useState();
 
-  const [updateInfo, setUpdateInfo] = useState();
-
-  let showedSettings = false;
-
-  // Hides settings
-  function hideAll() {
-    settingsFloatRef.current.style.display = "none";
-  }
-
-  // This shows the messages when user clicked the messages in the header, currently underdevelopment.
-  const showMessages = () => {
-    alert("This feature is currently not available");
-  };
-
-  // This shows the navigation settings when user clicked the settings in the header
-  const showSettings = () => {
-    hideAll();
-    if (showedSettings) {
-      hideAll();
-      showedSettings = false;
-    } else {
-      settingsFloatRef.current.style.display = "block";
-      showedSettings = true;
-    }
-  };
-
-  const logoutAccount = () => {
-    localStorage.removeItem(TOKEN_ID);
-    navigate("/");
-  };
-
-  // This is for small screen devices
-  let menuIsShowed = false;
-  const showMenu = () => {
-    menuIsShowed = true;
-    mobileMenuRef.current.style.display = "flex";
-  };
-
-  // When the user is using mobile device like android and clicks on a back button
-  window.addEventListener("popstate", () => {
-    if (menuIsShowed) {
-      menuIsShowed = false;
-      mobileMenuRef.current.style.display = "none";
-    }
-  });
-
-  // Run at first render to fetch data from the server
   useEffect(() => {
-    const apiFetchPosts = `http://${process.env.REACT_APP_REST_IP}:4000/Home`;
-    let response;
-    const storedToken = JSON.parse(localStorage.getItem(TOKEN_ID));
-
-    const getUserPosts = async () => {
-      try {
-        response = await fetch(apiFetchPosts, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            TokenId: storedToken,
-          }),
-        });
-      } catch (error) {
-        console.log(error);
-      }
-
-      if (response) {
-        const result = await response.json();
-        if (response.status === 201) {
-          // Set all the required data in the state
-          setFeedList(result.message);
-          setUserName(result.username);
-          setFullName(result.fullname);
-          setTotalLikes(result.totallikes);
-          setCakeDay(result.cakeday);
-        } else if (response.status === 401) {
-          alert(result.message);
-          localStorage.removeItem(TOKEN_ID);
-          navigate("/");
-        } else {
-          navigate("/ServerError");
-        }
+    console.log("UseEffect runs");
+    const FetchData = async () => {
+      const [StatusCode, Data] = await ApiRequest.getPosts();
+      if (StatusCode === 201) {
+        setFeedList(Data[0]);
+        setUserName(Data[1]);
+        setFullName(Data[2]);
+        setTotalLikes(Data[3]);
+        setCakeDay(Data[4]);
+      } else if (StatusCode === 401) {
+        alert(Data);
+        localStorage.removeItem(TOKEN_ID);
+        navigate("/");
+      } else {
+        navigate("/ServerError");
       }
     };
 
-    if (storedToken) {
-      getUserPosts();
-    } else {
-      navigate("/");
-    }
+    FetchData();
   }, [navigate]);
 
   // This shows a popped out message if the user really wants to delete a post.
@@ -123,74 +58,169 @@ export default function Home() {
     deletePostRef.current.style.display = "flex";
   }
 
-  // This hides the confimation message for deleting a post
-  function CancelDeletePost() {
-    deletePostRef.current.style.display = "none";
-  }
+  const DeletePostComponent = () => {
+    // Delete a post from the client side and sends the delete query to the database
+    const DelViewAndDataBase = async () => {
+      const apiServerDeletePost = `http://${process.env.REACT_APP_REST_IP}:4000/DeletePost`;
+      let response;
+
+      if (!storedToken) {
+        navigate("/");
+        return;
+      }
+
+      try {
+        response = await fetch(apiServerDeletePost, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            TokenId: storedToken,
+            PostId: postId,
+          }),
+        });
+      } catch (error) {
+        console.log(error);
+      }
+
+      if (response) {
+        const result = await response.json();
+        const message = result.message;
+
+        // This checks if there is an invalid post id or invalid token id or unauthorized deletion
+        if (response.status === 401) {
+          alert(message);
+          navigate("/");
+        } else if (response.status === 500) {
+          navigate("/ServerError");
+        } else {
+          // Update the UI
+          setFeedList((current) => {
+            return current.filter((post) => {
+              return post._id !== postId;
+            });
+          });
+          deletePostRef.current.style.display = "none";
+          alert(message);
+        }
+      }
+    };
+
+    return (
+      <div className="DeletePostDiv">
+        <div className="p-2 flex">
+          <div className="DelConfirm">Are you sure you want to delete this Post?</div>
+        </div>
+        <div className="p-2 flex justify-between phone:p-1">
+          <div className="flex w-full justify-evenly">
+            <button className="DelButton" onClick={() => (deletePostRef.current.style.display = "none")}>
+              Cancel
+            </button>
+            <button className="DelButton" onClick={DelViewAndDataBase}>
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   // This shows a popped out form and push the current data in the form.
   function ShowEditPost(PostId, IsPublic, FeedContent) {
-    let objectUpdate = {
-      postId: PostId,
-      isPublic: IsPublic,
-      content: FeedContent,
-    };
-    setUpdateInfo(objectUpdate);
+    setPostId(PostId);
+    setIsPublic(IsPublic);
+    setFeedContent(FeedContent);
     updatePostRef.current.style.display = "flex";
   }
 
-  function CancelEditPost() {
-    updatePostRef.current.style.display = "none";
-  }
+  const UpdatePostComponent = () => {
+    const [switchState, setSwitch] = useState(isPublic);
+    let textAreaRef = useRef();
 
-  // Will only return when the user clicks the edit button on the feed
-  const HomeUpdatePost = () => {
-    if (updateInfo === undefined) {
-      return null;
-    } else {
-      return (
-        <UpdatePost
-          updateInfo={updateInfo}
-          FeedList={FeedList}
-          setFeedList={setFeedList}
-          CancelEditPost={CancelEditPost}
-        />
-      );
-    }
-  };
+    // Updates the post data on the database and on the UI.
+    const UpdateUIAndDataBase = async () => {
+      const apiServerUpdatePost = `http://${process.env.REACT_APP_REST_IP}:4000/UpdatePost`;
+      let response;
 
-  // This is the menu navigation for small screen devices.
-  const MobileMenu = () => {
+      if (!storedToken) {
+        navigate("/");
+        return;
+      }
+
+      let newContent = textAreaRef.current.value;
+      let newSwitchValue = switchState;
+
+      // If no changes have been made to the post
+      if (newContent === feedContent && newSwitchValue === isPublic) {
+        alert("No changes have been made to the post");
+        updatePostRef.current.style.display = "none";
+        return;
+      }
+
+      try {
+        response = await fetch(apiServerUpdatePost, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            PostId: postId,
+            TokenId: storedToken,
+            NewContent: textAreaRef.current.value,
+            ShowPublic: switchState,
+          }),
+        });
+      } catch (error) {
+        console.log(error);
+      }
+
+      if (response) {
+        const result = await response.json();
+        const message = result.message;
+
+        // This checks if there is an invalid post id or invalid token id or unauthorized update.
+        if (response.status === 400 || response.status === 401) {
+          alert(message);
+          navigate("/");
+        } else if (response.status === 500) {
+          navigate("/ServerError");
+        }
+        // The user successfully deleted a post
+        else {
+          // Update the UI
+          const currentPost = [...FeedList];
+          const post = currentPost.find((post) => post._id === postId);
+          post.Content = textAreaRef.current.value;
+          post.ShowPublic = switchState;
+          setFeedList(currentPost);
+          updatePostRef.current.style.display = "none";
+          alert(message);
+        }
+      }
+    };
+
     return (
-      <div
-        className="fixed w-screen h-screen hidden justify-center items-center font-JetBrains z-10 backdrop-blur-sm"
-        ref={mobileMenuRef}
-      >
-        <div className="flex flex-col bg-white border-t-[1px] border-t-solid border-t-[#7c7c7c]">
-          <Link
-            className="w-[80vw] pl-4 pr-4 pt-3 pb-3 text-base font-JetBrains border-b-[1px] border-b-solid border-b-[#999999c5] hover:cursor-pointer hover:bg-[#b4b4b477]"
-            to={"/UpdateProfile"}
-          />
-          <Link
-            className="w-[80vw] pl-4 pr-4 pt-3 pb-3 text-base font-JetBrains border-b-[1px] border-b-solid border-b-[#999999c5] hover:cursor-pointer hover:bg-[#b4b4b477]"
-            to={"/Home"}
-            onClick={() => {
-              alert("This feature is under development");
-            }}
-          />
-          <Link
-            className="w-[80vw] pl-4 pr-4 pt-3 pb-3 text-base font-JetBrains border-b-[1px] border-b-solid border-b-[#999999c5] hover:cursor-pointer hover:bg-[#b4b4b477]"
-            to={"/Home"}
-          />
-          <button
-            className="p-2 pl-6 pr-6 self-center mb-3 mt-3 bg-Cherry rounded text-white text-base"
-            type={"button"}
-            onClick={() => {
-              mobileMenuRef.current.style.display = "none";
-            }}
-          >
-            back
-          </button>
+      <div className="UpdatePostDiv">
+        <div className="p-2 flex">
+          <div className="text-lg phone:text-sm">Edit this Post</div>
+        </div>
+        <div className="mt-2 mb-2 pr-2 pl-2 flex">
+          <textarea className="UpdateTextArea" defaultValue={feedContent} ref={textAreaRef} />
+        </div>
+        <div className="p-2 flex justify-between">
+          <Switch checked={switchState} onChange={(event) => setSwitch(event.target.checked)} />
+          <div className="flex">
+            <button
+              className="UpdateButton"
+              onClick={() => (updatePostRef.current.style.display = "none")}
+            >
+              Cancel
+            </button>
+            <button className="UpdateButton" onClick={() => UpdateUIAndDataBase()}>
+              Update
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -206,31 +236,20 @@ export default function Home() {
   } else {
     return (
       <div className="w-screen h-auto">
+        <div className="HomeUpdate" ref={updatePostRef}>
+          {feedContent === undefined ? null : <UpdatePostComponent />}
+        </div>
+        <div className="HomeDel" ref={deletePostRef}>
+          <DeletePostComponent />
+        </div>
+
         <Header
-          showMessages={showMessages}
-          showSettings={showSettings}
-          showMenu={showMenu}
-          logoutAccount={logoutAccount}
-          settingsFloatRef={settingsFloatRef}
+          showMessages={() => alert("This feature is currently not available")}
+          mobileMenuRef={mobileMenuRef}
           UserName={UserName}
         />
-        <div
-          className="fixed w-screen h-screen hidden justify-center items-center font-JetBrains z-10 backdrop-blur-sm"
-          ref={updatePostRef}
-        >
-          <HomeUpdatePost />
-        </div>
-        <MobileMenu />
-        <div
-          className="fixed w-screen h-screen hidden justify-center items-center font-JetBrains z-10 backdrop-blur-sm"
-          ref={deletePostRef}
-        >
-          <DeletePostView
-            PostId={postId}
-            setFeedList={setFeedList}
-            CancelDeletePost={CancelDeletePost}
-          />
-        </div>
+        <MenuForPhone mobileMenuRef={mobileMenuRef} />
+
         <Content
           feedList={FeedList}
           setFeedList={setFeedList}
