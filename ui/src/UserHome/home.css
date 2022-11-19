@@ -3,31 +3,23 @@
 @tailwind utilities;
 
 @layer components {
-    .TextHeader {
-        @apply mr-16 min-h-[5vh] text-2xl font-JetBrains text-Ponkan flex items-center tracking-wide
-        font-bold btablet:hidden;
+    .MobileMenuDiv {
+        @apply fixed w-screen h-screen hidden justify-center items-center font-JetBrains 
+        z-10 backdrop-blur-sm;
     }
-    .UserName {
-        @apply text-lg hover:cursor-pointer underline phone:text-sm;
+    .MobileMenuBtn {
+        @apply w-[80vw] pl-4 pr-4 pt-2 pb-2 text-base font-JetBrains border-b-[1px]
+        border-solid border-b-[#999999c5] text-center;
     }
-    .HeaderDiv {
-        @apply pb-2 pt-2 pl-4 pr-4 w-screen flex border-b-[1px] border-solid border-[#999999c5]
-        bg-white stablet:justify-between;
+    .MobileButtonBck {
+        @apply p-2 pl-6 pr-6 self-center mb-3 mt-3 bg-Cherry rounded text-white text-base;
     }
-    .SearchDiv {
-        @apply h-8 mr-auto w-[30vw] self-center flex items-center bg-[#d8d8d83f] border-[1px]
-        border-solid border-[#d8d8d83f] rounded-md hover:border-[#238aff] btablet:w-[40vw]
-        btablet:mr-8 btablet:flex-grow stablet:mr-4;
+    .HomeUpdate {
+        @apply fixed w-screen h-screen hidden justify-center items-center font-JetBrains z-10 
+        backdrop-blur-sm;
     }
-    .SearchInput {
-        @apply w-full h-full outline-none border-none bg-[#dbdbdb00] text-base font-JetBrains
-        placeholder:text-[#6d6d6dcc] placeholder:text-sm phone:text-sm phone:placeholder:text-xs;
-    }
-    .NavImage {
-        @apply p-1 rounded-sm h-8 aspect-square hover:bg-BgGrey;
-    }
-    .LinkButton {
-        @apply pl-4 pr-4 pt-3 pb-3 text-base font-JetBrains text-center hover:cursor-pointer
-        hover:bg-BgGrey;
+    .HomeDel {
+        @apply fixed w-screen h-screen hidden justify-center items-center font-JetBrains z-10 
+        backdrop-blur-sm;
     }
 }

@@ -3,36 +3,46 @@
 @tailwind utilities;
 
 @layer components {
+    .ContentDiv {
+        @apply pt-[15vh] pl-24 pr-24 flex flex-row-reverse flex-wrap bg-[#c4c4c43f]
+        overflow-y-hidden tablet:pl-4 tablet:pr-4 tablet:pt-[10vh] stablet:pl-0 
+        stablet:pr-0;
+    }
+    .NoPost {
+        @apply p-8 border-[1px] border-solid border-[#2525259d] rounded-sm font-JetBrains
+        bg-white;
+    }
+
     .FeedDiv {
         @apply mb-4 border-[1px] border-solid border-[#999999c5] rounded-sm font-JetBrains bg-white
         shadow hover:cursor-pointer hover:border-[#494949c5];
     }
-    .Header {
+    .FeedHeader {
         @apply p-2 flex justify-between border-b-[1px] border-solid border-[#999999c5] font-JetBrains;
     }
-    .UserName {
+    .FeedUserName {
         @apply mr-2 text-[#2525259d] text-xs self-center underline tablet:self-start;
     }
-    .StatusRight {
+    .FeedStatusRight {
         @apply mr-2 aspect-square h-4 self-center hidden tablet:block;
     }
-    .StatusLeft {
+    .FeedStatusLeft {
         @apply mr-2 aspect-square h-4 self-center tablet:hidden;
     }
-    .Content {
+    .FeedTextContent {
         @apply p-2 text-base font-JetBrains stablet:text-sm;
     }
-    .Footer {
+    .FeedFooter {
         @apply p-1 text-base flex justify-between border-t-[1px] border-solid border-[#999999c5]
         font-JetBrains;
     }
-    .FooterText {
+    .FeedFooterText {
         @apply ml-2 self-center flex text-[#2525259d] text-sm hover:text-[#238aff];
     }
-    .UpdateDel {
+    .FeedUpdateDel {
         @apply mr-2 self-center flex hover:text-[#238aff];
     }
-    .Icon {
+    .FeedIcon {
         @apply p-2 aspect-square h-8 self-center;
     }
 }
