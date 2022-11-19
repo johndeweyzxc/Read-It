@@ -13,39 +13,39 @@ export default function Feed({ feedInfo, UserName, FullName, ShowDeletePost, Sho
 
   return (
     <div className="FeedDiv">
-      <div className="Header">
+      <div className="FeedHeader">
         <div className="flex tablet:flex-col">
           <div className="flex">
             <div className="mr-2 text-black text-base self-center tablet:text-xs">{FullName}</div>
             <div className="text-[#2525259d] hidden tablet:block self-center">·</div>
             <img
-              className="StatusRight"
+              className="FeedStatusRight"
               src={showPublic ? GlobeIcon : LockIcon}
               alt={"Post privacy status"}
             />
           </div>
-          <div className="UserName">@{UserName}</div>
+          <div className="FeedUserName">@{UserName}</div>
           <div className="text-[#2525259d] tablet:hidden">·</div>
           <img
-            className="StatusLeft"
+            className="FeedStatusLeft"
             src={showPublic ? GlobeIcon : LockIcon}
             alt={"Post privacy status"}
           />
         </div>
       </div>
 
-      <div className="Content">{feedContent}</div>
+      <div className="FeedTextContent">{feedContent}</div>
 
-      <div className="Footer">
-        <div className="FooterText">
+      <div className="FeedFooter">
+        <div className="FeedFooterText">
           {feedLikes} {feedLikes > 1 ? "Likes" : "Like"}
         </div>
         <div className="mr-2 self-center flex hover:text-[#238aff]">
-          <div className="UpdateDel" onClick={() => ShowEditPost(feedId, showPublic, feedContent)}>
-            <img className="Icon" src={EditIcon} alt={"Edit this post"} />
+          <div className="FeedUpdateDel" onClick={() => ShowEditPost(feedId, showPublic, feedContent)}>
+            <img className="FeedIcon" src={EditIcon} alt={"Edit this post"} />
           </div>
-          <div className="UpdateDel" onClick={() => ShowDeletePost(feedId)}>
-            <img className="Icon" src={TrashIcon} alt={"Delete this post"} />
+          <div className="FeedUpdateDel" onClick={() => ShowDeletePost(feedId)}>
+            <img className="FeedIcon" src={TrashIcon} alt={"Delete this post"} />
           </div>
         </div>
       </div>
