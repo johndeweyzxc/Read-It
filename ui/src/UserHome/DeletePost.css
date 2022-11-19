@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .DeletePostDiv {
+        @apply p-4 border-[1px] border-solid border-[#999999c5] rounded-sm shadow-sm bg-white 
+        phone:p-2;
+    }
+    .DelConfirm {
+        @apply text-base tablet:text-sm phone:text-xs text-black;
+    }
+    .DelButton {
+        @apply p-2 pl-4 pr-4 tracking-wide bg-Cherry text-white rounded-md text-sm phone:text-xs;
+    }
+}

@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .UpdatePostDiv {
+        @apply border-[1px] border-solid border-[#999999c5] rounded-sm shadow-sm bg-white;
+    }
+    .UpdateTextArea {
+        @apply w-[50vw] btablet:w-[70vw] p-1 flex-grow text-base font-JetBrains bg-white 
+        tablet:text-sm border-[1px] border-solid border-[#999999c5];
+    }
+    .UpdateButton {
+        @apply p-1 pl-4 pr-4 mr-4 bg-Cherry rounded text-white text-sm phone:text-xs 
+        phone:pl-3 phone:pr-3;
+    }
+}
