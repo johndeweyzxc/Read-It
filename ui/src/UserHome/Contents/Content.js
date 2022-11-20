@@ -2,10 +2,13 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Switch from "@mui/material/Switch";
 
-import Feed from "./Feed";
+import DisplayPicture from "./Assets/dp-silhouette.jpg";
+import GlobeIcon from "./Assets/Globe-icon.png";
+import LockIcon from "./Assets/Lock-icon.png";
+import EditIcon from "./Assets/Edit-icon.png";
+import TrashIcon from "./Assets/Trash-icon.png";
 import "../Feed.css";
 import "../NewPost.css";
-import DisplayPicture from "./Assets/dp-silhouette.jpg";
 
 export default function HomeContent({
   feedList,
@@ -85,34 +88,60 @@ export default function HomeContent({
   };
 
   const iterateFeed = (feed) => {
-    return (
-      <Feed
-        key={feed._id}
-        feedInfo={feed}
-        UserName={UserName}
-        FullName={FullName}
-        ShowDeletePost={ShowDeletePost}
-        ShowEditPost={ShowEditPost}
-      />
-    );
-  };
+    const feedId = feed._id;
+    const feedContent = feed.Content;
+    const feedLikes = feed.NumberOfLikes;
+    const showPublic = feed.ShowPublic;
 
-  // Create a list of feeds
-  const Feeds = () => {
-    if (feedList.length === 0) {
-      return <div className="NoPost">You have not yet created a post</div>;
-    } else {
-      return <div>{feedList.map(iterateFeed)}</div>;
-    }
+    return (
+      <div className="FeedDiv" key={feedId}>
+        <div className="FeedHeader">
+          <div className="flex tablet:flex-col">
+            <div className="flex">
+              <div className="mr-2 text-black text-base self-center tablet:text-xs">{FullName}</div>
+              <div className="text-[#2525259d] hidden tablet:block self-center">·</div>
+              <img
+                className="FeedStatusRight"
+                src={showPublic ? GlobeIcon : LockIcon}
+                alt={"Post privacy status"}
+              />
+            </div>
+            <div className="FeedUserName">@{UserName}</div>
+            <div className="text-[#2525259d] tablet:hidden">·</div>
+            <img
+              className="FeedStatusLeft"
+              src={showPublic ? GlobeIcon : LockIcon}
+              alt={"Post privacy status"}
+            />
+          </div>
+        </div>
+
+        <div className="FeedTextContent">{feedContent}</div>
+
+        <div className="FeedFooter">
+          <div className="FeedFooterText">
+            {feedLikes} {feedLikes > 1 ? "Likes" : "Like"}
+          </div>
+          <div className="mr-2 self-center flex hover:text-[#238aff]">
+            <div className="FeedUpdateDel" onClick={() => ShowEditPost(feedId, showPublic, feedContent)}>
+              <img className="FeedIcon" src={EditIcon} alt={"Edit this post"} />
+            </div>
+            <div className="FeedUpdateDel" onClick={() => ShowDeletePost(feedId)}>
+              <img className="FeedIcon" src={TrashIcon} alt={"Delete this post"} />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   return (
     <div className="ContentDiv">
       <div
         className="
-      ml-8 mr-8 mb-4 border-[1px] border-solid border-[#999999c5] rounded-sm h-[40vh] 
-      max-w-[20rem] min-w-[15rem] flex-grow-[3] bg-white shadow-sm 
-      hover:border-[#494949c5] tablet:hidden"
+        ml-8 mr-8 mb-4 border-[1px] border-solid border-[#999999c5] rounded-sm h-[40vh] 
+        max-w-[20rem] min-w-[15rem] flex-grow-[3] bg-white shadow-sm 
+        hover:border-[#494949c5] tablet:hidden"
       >
         <div className="h-[35%] bg-Cherry">
           <div className="h-full flex content-center items-center justify-center">
@@ -162,7 +191,11 @@ export default function HomeContent({
             </button>
           </div>
         </div>
-        <Feeds />
+        {feedList.length === 0 ? (
+          <div className="NoPost">You have not yet created a post</div>
+        ) : (
+          <div>{feedList.map(iterateFeed)}</div>
+        )}
       </div>
     </div>
   );
