@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import Switch from "@mui/material/Switch";
 import { useNavigate } from "react-router-dom";
+import "../NewPost.css";
 
 export default function NewPost({ setFeedList }) {
   const navigate = useNavigate();
@@ -71,26 +72,19 @@ export default function NewPost({ setFeedList }) {
   };
 
   return (
-    <div className="mb-4 border-[1px] border-solid border-[#999999c5] rounded-sm bg-white shadow-sm font-JetBrains">
+    <div className="NewPostDiv">
       <div className="p-2 flex">
-        <div className="text-lg tablet:text-base phone:text-sm">Create New Post</div>
+        <div className="NewPostTitle">Create New Post</div>
       </div>
       <div className="mt-2 mb-2 pr-2 pl-2 flex">
-        <textarea
-          className="p-1 border-[1px] border-solid border-[#999999c5] resize-none flex-grow text-base font-JetBrains bg-white tablet:text-sm"
-          ref={textInputRef}
-        />
+        <textarea className="NewPostTextArea" ref={textInputRef} />
       </div>
       <div className="p-2 flex justify-between">
         <div className="flex items-center">
           <div>Public</div>
           <Switch checked={switchState} onChange={(event) => setSwitch(event.target.checked)} />
         </div>
-        <button
-          className="p-1 pl-4 pr-4 bg-Cherry rounded text-white text-sm phone:text-xs"
-          type={"button"}
-          onClick={createNewPost}
-        >
+        <button className="SubmitNewPost" type={"button"} onClick={createNewPost}>
           Submit
         </button>
       </div>

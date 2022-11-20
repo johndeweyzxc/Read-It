@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .NewPostDiv {
+        @apply mb-4 border-[1px] border-solid border-[#999999c5] rounded-sm bg-white 
+        shadow-sm font-JetBrains;
+    }
+    .NewPostTitle {
+        @apply text-lg tablet:text-base phone:text-sm;
+    }
+    .NewPostTextArea {
+        @apply p-1 border-[1px] border-solid border-[#999999c5] resize-none flex-grow 
+        text-base font-JetBrains bg-white tablet:text-sm;
+    }
+    .SubmitNewPost {
+        @apply p-1 pl-4 pr-4 bg-Cherry rounded text-white text-sm phone:text-xs;
+    }
+}
