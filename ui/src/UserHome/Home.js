@@ -10,7 +10,6 @@ import "./Home.css";
 import "./UpdatePost.css";
 import "./DeletePost.css";
 
-// This is the main page component of a user. A user can modify user info and create, read, update a post.
 export default function Home() {
   const TOKEN_ID = "tokenId";
   const storedToken = JSON.parse(localStorage.getItem(TOKEN_ID));
@@ -59,54 +58,6 @@ export default function Home() {
   }
 
   const DeletePostComponent = () => {
-    // Delete a post from the client side and sends the delete query to the database
-    const DelViewAndDataBase = async () => {
-      const apiServerDeletePost = `http://${process.env.REACT_APP_REST_IP}:4000/DeletePost`;
-      let response;
-
-      if (!storedToken) {
-        navigate("/");
-        return;
-      }
-
-      try {
-        response = await fetch(apiServerDeletePost, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            TokenId: storedToken,
-            PostId: postId,
-          }),
-        });
-      } catch (error) {
-        console.log(error);
-      }
-
-      if (response) {
-        const result = await response.json();
-        const message = result.message;
-
-        // This checks if there is an invalid post id or invalid token id or unauthorized deletion
-        if (response.status === 401) {
-          alert(message);
-          navigate("/");
-        } else if (response.status === 500) {
-          navigate("/ServerError");
-        } else {
-          // Update the UI
-          setFeedList((current) => {
-            return current.filter((post) => {
-              return post._id !== postId;
-            });
-          });
-          deletePostRef.current.style.display = "none";
-          alert(message);
-        }
-      }
-    };
-
     return (
       <div className="DeletePostDiv">
         <div className="p-2 flex">
@@ -117,7 +68,32 @@ export default function Home() {
             <button className="DelButton" onClick={() => (deletePostRef.current.style.display = "none")}>
               Cancel
             </button>
-            <button className="DelButton" onClick={DelViewAndDataBase}>
+            <button
+              className="DelButton"
+              onClick={async () => {
+                if (!storedToken) {
+                  navigate("/");
+                  return;
+                }
+
+                const [StatusCode, Data] = await ApiRequest.deletePost(storedToken, postId);
+                if (StatusCode === 401) {
+                  alert(Data);
+                } else if (StatusCode === 500) {
+                  navigate("/ServerError");
+                } else {
+                  // Update the UI to remove the post
+                  setFeedList((current) => {
+                    return current.filter((post) => {
+                      return post._id !== postId;
+                    });
+                  });
+
+                  deletePostRef.current.style.display = "none";
+                  alert(Data);
+                }
+              }}
+            >
               Delete
             </button>
           </div>

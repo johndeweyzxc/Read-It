@@ -28,6 +28,35 @@ const ApiRequest = {
       }
     }
   },
+  deletePost: async function (storedToken, postId) {
+    let response;
+
+    try {
+      response = await fetch(`http://${process.env.REACT_APP_REST_IP}:4000/DeletePost`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          TokenId: storedToken,
+          PostId: postId,
+        }),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    if (response) {
+      const result = await response.json();
+      if (response.status === 401) {
+        return [401, result.message];
+      } else if (response.status === 500) {
+        return [500];
+      } else {
+        return [201, result.message];
+      }
+    }
+  },
 };
 
 export default ApiRequest;
