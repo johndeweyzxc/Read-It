@@ -1,43 +1,39 @@
 import React from "react";
-import Feed from "./Contents/Feed";
+
 import DisplayPicture from "./Contents/Assets/dp-silhouette.jpg";
+import GlobeIcon from "./Contents/Assets/Globe-icon.png";
+import "./Feed.css";
 
 export default function UserContent({ feedList, UserName, FullName, TotalLikes, CakeDay }) {
-  const requiredProps = [feedList, UserName, FullName, TotalLikes, CakeDay];
-  // Iterate through the props to check if there is an undefined data
-  for (let i = 0; i < requiredProps.length; i++) {
-    if (requiredProps[i] === null || requiredProps[i] === undefined) {
-      alert("Fetch data error, some components might not render properly");
-      break;
-    }
-  }
-
   const iterateFeed = (feed) => {
-    return (
-      <Feed
-        key={feed._id}
-        feedInfo={feed}
-        UserName={UserName}
-        FullName={FullName}
-        AllowModifications={false}
-      />
-    );
-  };
+    const feedId = feed._id;
+    const feedContent = feed.Content;
+    const feedLikes = feed.NumberOfLikes;
 
-  // Creates a list of post created by that user
-  const Feeds = () => {
-    if (feedList.length === 0) {
-      return (
-        <div
-          className="p-8 border-[1px] border-solid border-[#2525259d] rounded-sm font-JetBrains
-          bg-white"
-        >
-          This user has not yet created a post
+    return (
+      <div className="FeedDiv" key={feedId}>
+        <div className="FeedHeader">
+          <div className="flex tablet:flex-col">
+            <div className="flex">
+              <div className="mr-2 text-black text-base self-center tablet:text-xs">{FullName}</div>
+              <div className="text-[#2525259d] hidden tablet:block self-center">·</div>
+              <img className="FeedStatusRight" src={GlobeIcon} alt={"Post privacy status"} />
+            </div>
+            <div className="FeedUserName">@{UserName}</div>
+            <div className="text-[#2525259d] tablet:hidden">·</div>
+            <img className="FeedStatusLeft" src={GlobeIcon} alt={"Post privacy status"} />
+          </div>
         </div>
-      );
-    } else {
-      return <div>{feedList.map(iterateFeed)}</div>;
-    }
+
+        <div className="FeedTextContent">{feedContent}</div>
+
+        <div className="FeedFooter">
+          <div className="FeedFooterText">
+            {feedLikes} {feedLikes > 1 ? "Likes" : "Like"}
+          </div>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -81,7 +77,11 @@ export default function UserContent({ feedList, UserName, FullName, TotalLikes, 
         </div>
       </div>
       <div className="ml-8 mr-8 flex-grow-[3] phone:ml-4 phone:mr-4 phone:flex-grow">
-        <Feeds />
+        {feedList.length === 0 ? (
+          <div className="NoPost">This user has not yet created a post</div>
+        ) : (
+          <div>{feedList.map(iterateFeed)}</div>
+        )}
       </div>
     </div>
   );
