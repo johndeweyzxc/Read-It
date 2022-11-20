@@ -114,68 +114,6 @@ export default function Home() {
     const [switchState, setSwitch] = useState(isPublic);
     let textAreaRef = useRef();
 
-    // Updates the post data on the database and on the UI.
-    const UpdateUIAndDataBase = async () => {
-      const apiServerUpdatePost = `http://${process.env.REACT_APP_REST_IP}:4000/UpdatePost`;
-      let response;
-
-      if (!storedToken) {
-        navigate("/");
-        return;
-      }
-
-      let newContent = textAreaRef.current.value;
-      let newSwitchValue = switchState;
-
-      // If no changes have been made to the post
-      if (newContent === feedContent && newSwitchValue === isPublic) {
-        alert("No changes have been made to the post");
-        updatePostRef.current.style.display = "none";
-        return;
-      }
-
-      try {
-        response = await fetch(apiServerUpdatePost, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            PostId: postId,
-            TokenId: storedToken,
-            NewContent: textAreaRef.current.value,
-            ShowPublic: switchState,
-          }),
-        });
-      } catch (error) {
-        console.log(error);
-      }
-
-      if (response) {
-        const result = await response.json();
-        const message = result.message;
-
-        // This checks if there is an invalid post id or invalid token id or unauthorized update.
-        if (response.status === 400 || response.status === 401) {
-          alert(message);
-          navigate("/");
-        } else if (response.status === 500) {
-          navigate("/ServerError");
-        }
-        // The user successfully deleted a post
-        else {
-          // Update the UI
-          const currentPost = [...FeedList];
-          const post = currentPost.find((post) => post._id === postId);
-          post.Content = textAreaRef.current.value;
-          post.ShowPublic = switchState;
-          setFeedList(currentPost);
-          updatePostRef.current.style.display = "none";
-          alert(message);
-        }
-      }
-    };
-
     return (
       <div className="UpdatePostDiv">
         <div className="p-2 flex">
@@ -193,7 +131,37 @@ export default function Home() {
             >
               Cancel
             </button>
-            <button className="UpdateButton" onClick={() => UpdateUIAndDataBase()}>
+            <button
+              className="UpdateButton"
+              onClick={async () => {
+                if (!storedToken) {
+                  navigate("/");
+                  return;
+                }
+
+                const [StatusCode, Data] = await ApiRequest.updatePost(
+                  storedToken,
+                  postId,
+                  textAreaRef.current.value,
+                  switchState
+                );
+                if (StatusCode === 400 || StatusCode === 401) {
+                  console.log(Data);
+                  alert(Data);
+                  navigate("/");
+                } else if (StatusCode === 500) {
+                  navigate("/ServerError");
+                } else {
+                  const currentPost = [...FeedList];
+                  const post = currentPost.find((post) => post._id === postId);
+                  post.Content = textAreaRef.current.value;
+                  post.ShowPublic = switchState;
+                  setFeedList(currentPost);
+                  updatePostRef.current.style.display = "none";
+                  alert(Data);
+                }
+              }}
+            >
               Update
             </button>
           </div>

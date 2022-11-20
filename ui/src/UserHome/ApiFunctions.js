@@ -57,6 +57,38 @@ const ApiRequest = {
       }
     }
   },
+  updatePost: async function (storedToken, postId, newContent, showPublic) {
+    let response;
+
+    try {
+      response = await fetch(`http://${process.env.REACT_APP_REST_IP}:4000/UpdatePost`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          PostId: postId,
+          TokenId: storedToken,
+          NewContent: newContent,
+          ShowPublic: showPublic,
+        }),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    if (response) {
+      const result = await response.json();
+
+      if (response.status === 400 || response.status === 401) {
+        return [response.status, result.message];
+      } else if (response.status === 500) {
+        return [500];
+      } else {
+        return [201, result.message];
+      }
+    }
+  },
 };
 
 export default ApiRequest;
