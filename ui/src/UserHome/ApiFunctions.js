@@ -116,11 +116,11 @@ const ApiRequest = {
       // This checks if there is an error on user inputs
       if (response.status === 400) {
         // The message is the errors in user inputs
-        return [response.status, message];
+        return [400, message];
       }
       // Invalid token or the user is not logged in
       else if (response.status === 401) {
-        return [response.status, message];
+        return [401, message];
       }
       // This is a server error
       else if (response.status === 500) {
