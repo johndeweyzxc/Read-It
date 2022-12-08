@@ -4,7 +4,7 @@ import Switch from "@mui/material/Switch";
 
 import ApiRequest from "./ApiFunctions";
 import Header from "./Header";
-import Content from "./Contents/Content";
+import Content from "./Content";
 import { MenuForPhone } from "./Responsive/PhoneScreen";
 import "./Home.css";
 import "./UpdatePost.css";
@@ -82,7 +82,7 @@ export default function Home() {
                 } else if (StatusCode === 500) {
                   navigate("/ServerError");
                 } else {
-                  // Update the UI to remove the post
+                  // Update the UI view to remove the post
                   setFeedList((current) => {
                     return current.filter((post) => {
                       return post._id !== postId;
@@ -152,6 +152,7 @@ export default function Home() {
                 } else if (StatusCode === 500) {
                   navigate("/ServerError");
                 } else {
+                  // Update the UI view
                   const currentPost = [...FeedList];
                   const post = currentPost.find((post) => post._id === postId);
                   post.Content = textAreaRef.current.value;

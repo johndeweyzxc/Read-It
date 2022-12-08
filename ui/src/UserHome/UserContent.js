@@ -1,7 +1,7 @@
 import React from "react";
 
-import DisplayPicture from "./Contents/Assets/dp-silhouette.jpg";
-import GlobeIcon from "./Contents/Assets/Globe-icon.png";
+import DisplayPicture from "./Assets/dp-silhouette.jpg";
+import GlobeIcon from "./Assets/Globe-icon.png";
 import "./Feed.css";
 
 export default function UserContent({ feedList, UserName, FullName, TotalLikes, CakeDay }) {

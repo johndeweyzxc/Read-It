@@ -7,8 +7,8 @@ import GlobeIcon from "./Assets/Globe-icon.png";
 import LockIcon from "./Assets/Lock-icon.png";
 import EditIcon from "./Assets/Edit-icon.png";
 import TrashIcon from "./Assets/Trash-icon.png";
-import "../Feed.css";
-import "../NewPost.css";
+import "./Feed.css";
+import "./NewPost.css";
 
 export default function HomeContent({
   feedList,
