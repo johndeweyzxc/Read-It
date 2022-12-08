@@ -9,6 +9,7 @@ import EditIcon from "./Assets/Edit-icon.png";
 import TrashIcon from "./Assets/Trash-icon.png";
 import "./Feed.css";
 import "./NewPost.css";
+import ApiRequest from "./ApiFunctions";
 
 export default function HomeContent({
   feedList,
@@ -28,8 +29,6 @@ export default function HomeContent({
 
   // Creates new post and sends to the backend server api
   const createNewPost = async () => {
-    let response;
-
     if (onGoingRequest === true) {
       // This checks if the post request is still processing
       alert("There is an on going post request. Please wait...");
@@ -37,53 +36,28 @@ export default function HomeContent({
     }
 
     const storedToken = JSON.parse(localStorage.getItem(TOKEN_ID));
-    const apiServerCreatePost = `http://${process.env.REACT_APP_REST_IP}:4000/CreatePost`;
     onGoingRequest = true;
 
     let textContent = textInputRef.current.value;
     if (!storedToken) {
       navigate("/");
     }
-    try {
-      response = await fetch(apiServerCreatePost, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          TokenId: storedToken,
-          PostContent: textContent,
-          ShowPublic: switchState,
-        }),
+    const [StatusCode, Data] = await ApiRequest.createPost(storedToken, textContent, switchState);
+
+    if (StatusCode === 400) {
+      alert(Data[Object.keys(Data)[0]]);
+    } else if (StatusCode === 401) {
+      alert(Data);
+    } else if (StatusCode === 500) {
+      navigate("/ServerError");
+    } else {
+      // The user successfully created a new post
+      let newPost = Data;
+      setFeedList((current) => {
+        return [newPost, ...current];
       });
-    } catch (error) {
-      console.log(error);
-    }
-    if (response) {
-      textInputRef.current.value = null;
-      const result = await response.json();
-      const message = result.message;
-      const firstMessage = Object.keys(message)[0];
-      // This checks if there is an error on user inputs
-      if (response.status === 400) {
-        alert(message[firstMessage]);
-      }
-      // Invalid token or the user is not logged in
-      else if (response.status === 401) {
-        alert(message);
-        navigate("/");
-      } else if (response.status === 500) {
-        navigate("/ServerError");
-      }
-      // The user successfully create a new post
-      else {
-        let newPost = message;
-        setFeedList((current) => {
-          return [newPost, ...current];
-        });
-        alert("You created a new post!");
-        onGoingRequest = false;
-      }
+      alert("You created a new post!");
+      onGoingRequest = false;
     }
   };
 
