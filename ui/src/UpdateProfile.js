@@ -1,5 +1,6 @@
-import React, {useRef} from "react";
-import {useNavigate} from "react-router-dom";
+import React, { useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 import "./Styles/register.css";
 
@@ -76,16 +77,13 @@ export default function UpdateProfile() {
     }
 
     try {
-      response = await fetch(
-        `http://${process.env.REACT_APP_REST_IP}:4000/UserUpdate`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updates),
-        }
-      );
+      response = await fetch(`http://${process.env.REACT_APP_REST_IP}:4000/UserUpdate`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updates),
+      });
     } catch (error) {
       console.log(error);
     }
@@ -110,43 +108,76 @@ export default function UpdateProfile() {
     }
   };
 
+  function RegisterInputs() {
+    const ListInputs = [
+      [
+        { Label: "First Name: ", Ref: fname, Type: "text", Pholder: "Your first name" },
+        { Label: "Last Name: ", Ref: lname, Type: "text", Pholder: "Your last name" },
+      ],
+      [
+        { Label: "Username: ", Ref: uname, Type: "text", Pholder: "Unique username" },
+        { Label: "Birthday: ", Ref: bday, Type: "date", Pholder: null },
+      ],
+      [
+        { Label: "Email: ", Ref: email, Type: "text", Pholder: "Email" },
+        { Label: "Phone Number: ", Ref: phone, Type: "text", Pholder: "Phone number" },
+      ],
+      [
+        { Label: "Password: ", Ref: pword, Type: "password", Pholder: "8 character password" },
+        {
+          Label: "Confirm Password: ",
+          Ref: confirmPword,
+          Type: "password",
+          Pholder: "Confirm your password",
+        },
+      ],
+    ];
+    return ListInputs.map((inputs) => (
+      <div key={uuidv4()} className="flex tablet:flex-col">
+        {inputs.map((data) => (
+          <div key={uuidv4()} className="flex flex-col ml-2 mr-4">
+            <label className="Register-Label">{data.Label}</label>
+            <input
+              className="Register-Input"
+              ref={data.Ref}
+              type={data.Type}
+              placeholder={data.Pholder}
+            />
+          </div>
+        ))}
+      </div>
+    ));
+  }
+
   const VerifyUser = () => {
     return (
-      <div className='Verify-UserDiv' ref={verifyUserRef}>
-        <div className='Verify-Form'>
-          <div className='flex flex-col'>
-            <label className='Verify-Label'>Current username: </label>
+      <div className="Verify-UserDiv" ref={verifyUserRef}>
+        <div className="Verify-Form">
+          <div className="flex flex-col">
+            <label className="Verify-Label">Current username: </label>
             <input
-              className='Verify-Input'
+              className="Verify-Input"
               ref={verifyUsernameRef}
               type={"text"}
               placeholder={"Username"}
             />
           </div>
 
-          <div className='flex flex-col'>
-            <label className='Verify-Label'>Current password: </label>
+          <div className="flex flex-col">
+            <label className="Verify-Label">Current password: </label>
             <input
-              className='Verify-Input'
+              className="Verify-Input"
               ref={verifyPasswordRef}
               type={"password"}
               placeholder={"Password"}
             />
           </div>
 
-          <div className='flex justify-evenly'>
-            <button
-              className='Verify-Button'
-              type={"button"}
-              onClick={showUpdateView}
-            >
+          <div className="flex justify-evenly">
+            <button className="Verify-Button" type={"button"} onClick={showUpdateView}>
               Back
             </button>
-            <button
-              className='Verify-Button'
-              type={"button"}
-              onClick={sendUpdate}
-            >
+            <button className="Verify-Button" type={"button"} onClick={sendUpdate}>
               Update
             </button>
           </div>
@@ -157,105 +188,15 @@ export default function UpdateProfile() {
 
   return (
     <>
-      <div className='Update-div' ref={updateProfileRef}>
-        <div className='Update-Title'>Update your profile</div>
-
-        <form className='flex flex-col self-center'>
-          <div className='flex tablet:flex-col'>
-            <div className='flex flex-col ml-2 mr-4'>
-              <label className='Register-Label'>First Name: </label>
-              <input
-                className='Register-Input'
-                ref={fname}
-                type={"text"}
-                placeholder={"John Dewey"}
-              />
-            </div>
-
-            <div className='flex flex-col ml-2 mr-4'>
-              <label className='Register-Label'>Last Name: </label>
-              <input
-                className='Register-Input'
-                ref={lname}
-                type={"text"}
-                placeholder={"Ventura"}
-              />
-            </div>
-          </div>
-
-          <div className='flex tablet:flex-col'>
-            <div className='flex flex-col ml-2 mr-4'>
-              <label className='Register-Label'>Username: </label>
-              <input
-                className='Register-Input'
-                ref={uname}
-                type={"text"}
-                placeholder={"johndewey112"}
-              />
-            </div>
-
-            <div className='flex flex-col ml-2 mr-4'>
-              <label className='Register-Label'>Birthday: </label>
-              <input className='Register-Input' ref={bday} type={"date"} />
-            </div>
-          </div>
-
-          <div className='flex tablet:flex-col'>
-            <div className='flex flex-col ml-2 mr-4'>
-              <label className='Register-Label'>Email: </label>
-              <input
-                className='Register-Input'
-                ref={email}
-                type={"text"}
-                placeholder={"johndewey22@gmail.com"}
-              />
-            </div>
-
-            <div className='flex flex-col ml-2 mr-4'>
-              <label className='Register-Label'>Phone Number: </label>
-              <input
-                className='Register-Input'
-                ref={phone}
-                type={"text"}
-                placeholder={"09993241123"}
-              />
-            </div>
-          </div>
-
-          <div className='flex tablet:flex-col'>
-            <div className='flex flex-col ml-2 mr-4'>
-              <label className='Register-Label'>Password: </label>
-              <input
-                className='Register-Input'
-                ref={pword}
-                type={"password"}
-                placeholder={"New Password"}
-              />
-            </div>
-            <div className='flex flex-col ml-2 mr-4'>
-              <label className='Register-Label'>Confirm Password: </label>
-              <input
-                className='Register-Input'
-                ref={confirmPword}
-                type={"password"}
-                placeholder={"Confirm New Password"}
-              />
-            </div>
-          </div>
-
-          <div className='w-full flex justify-evenly'>
-            <button
-              className='Register-Button'
-              type={"button"}
-              onClick={() => navigate("/Home")}
-            >
+      <div className="Update-div" ref={updateProfileRef}>
+        <div className="Update-Title">Update your profile</div>
+        <form className="flex flex-col self-center">
+          <RegisterInputs />
+          <div className="w-full flex justify-evenly">
+            <button className="Register-Button" type={"button"} onClick={() => navigate("/Home")}>
               Back
             </button>
-            <button
-              className='Register-Button'
-              type={"button"}
-              onClick={showVerify}
-            >
+            <button className="Register-Button" type={"button"} onClick={showVerify}>
               Next
             </button>
           </div>
