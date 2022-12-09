@@ -9,6 +9,117 @@ import "./Styles/Home.css";
 import "./Styles/UpdatePost.css";
 import "./Styles/DeletePost.css";
 
+function UpdatePostComponent({ isPublic, updatePostRef, feedContent, FeedList, postId, setFeedList }) {
+  const storedToken = JSON.parse(localStorage.getItem("tokenId"));
+  const navigate = useNavigate();
+  const [switchState, setSwitch] = useState(isPublic);
+  let textAreaRef = useRef();
+
+  return (
+    <div className="UpdatePostDiv">
+      <div className="p-2 flex">
+        <div className="text-lg phone:text-sm">Edit this Post</div>
+      </div>
+      <div className="mt-2 mb-2 pr-2 pl-2 flex">
+        <textarea className="UpdateTextArea" defaultValue={feedContent} ref={textAreaRef} />
+      </div>
+      <div className="p-2 flex justify-between">
+        <Switch checked={switchState} onChange={(event) => setSwitch(event.target.checked)} />
+        <div className="flex">
+          <button
+            className="UpdateButton"
+            onClick={() => (updatePostRef.current.style.display = "none")}
+          >
+            Cancel
+          </button>
+          <button
+            className="UpdateButton"
+            onClick={async () => {
+              if (!storedToken) {
+                navigate("/");
+                return;
+              }
+
+              const [StatusCode, Data] = await ApiRequest.updatePost(
+                storedToken,
+                postId,
+                textAreaRef.current.value,
+                switchState
+              );
+              if (StatusCode === 400 || StatusCode === 401) {
+                console.log(Data);
+                alert(Data);
+                navigate("/");
+              } else if (StatusCode === 500) {
+                navigate("/ServerError");
+              } else {
+                // Update the UI view
+                const currentPost = [...FeedList];
+                const post = currentPost.find((post) => post._id === postId);
+                post.Content = textAreaRef.current.value;
+                post.ShowPublic = switchState;
+                setFeedList(currentPost);
+                updatePostRef.current.style.display = "none";
+                alert(Data);
+              }
+            }}
+          >
+            Update
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DeletePostComponent({ deletePostRef, setFeedList, postId }) {
+  const storedToken = JSON.parse(localStorage.getItem("tokenId"));
+  const navigate = useNavigate();
+
+  return (
+    <div className="DeletePostDiv">
+      <div className="p-2 flex">
+        <div className="DelConfirm">Are you sure you want to delete this Post?</div>
+      </div>
+      <div className="p-2 flex justify-between phone:p-1">
+        <div className="flex w-full justify-evenly">
+          <button className="DelButton" onClick={() => (deletePostRef.current.style.display = "none")}>
+            Cancel
+          </button>
+          <button
+            className="DelButton"
+            onClick={async () => {
+              if (!storedToken) {
+                navigate("/");
+                return;
+              }
+
+              const [StatusCode, Data] = await ApiRequest.deletePost(storedToken, postId);
+              if (StatusCode === 401) {
+                alert(Data);
+              } else if (StatusCode === 500) {
+                navigate("/ServerError");
+              } else {
+                // Update the UI view to remove the post
+                setFeedList((current) => {
+                  return current.filter((post) => {
+                    return post._id !== postId;
+                  });
+                });
+
+                deletePostRef.current.style.display = "none";
+                alert(Data);
+              }
+            }}
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function MenuForPhone({ mobileMenuRef }) {
   // This is the menu navigation for small screen devices.
   const navigate = useNavigate();
@@ -42,8 +153,6 @@ function MenuForPhone({ mobileMenuRef }) {
 }
 
 export default function Home() {
-  const TOKEN_ID = "tokenId";
-  const storedToken = JSON.parse(localStorage.getItem(TOKEN_ID));
   const navigate = useNavigate();
 
   const deletePostRef = useRef();
@@ -72,7 +181,7 @@ export default function Home() {
         setCakeDay(Data[4]);
       } else if (StatusCode === 401) {
         alert(Data);
-        localStorage.removeItem(TOKEN_ID);
+        localStorage.removeItem("tokenId");
         navigate("/");
       } else {
         navigate("/ServerError");
@@ -88,51 +197,6 @@ export default function Home() {
     deletePostRef.current.style.display = "flex";
   }
 
-  const DeletePostComponent = () => {
-    return (
-      <div className="DeletePostDiv">
-        <div className="p-2 flex">
-          <div className="DelConfirm">Are you sure you want to delete this Post?</div>
-        </div>
-        <div className="p-2 flex justify-between phone:p-1">
-          <div className="flex w-full justify-evenly">
-            <button className="DelButton" onClick={() => (deletePostRef.current.style.display = "none")}>
-              Cancel
-            </button>
-            <button
-              className="DelButton"
-              onClick={async () => {
-                if (!storedToken) {
-                  navigate("/");
-                  return;
-                }
-
-                const [StatusCode, Data] = await ApiRequest.deletePost(storedToken, postId);
-                if (StatusCode === 401) {
-                  alert(Data);
-                } else if (StatusCode === 500) {
-                  navigate("/ServerError");
-                } else {
-                  // Update the UI view to remove the post
-                  setFeedList((current) => {
-                    return current.filter((post) => {
-                      return post._id !== postId;
-                    });
-                  });
-
-                  deletePostRef.current.style.display = "none";
-                  alert(Data);
-                }
-              }}
-            >
-              Delete
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   // This shows a popped out form and push the current data in the form.
   function ShowEditPost(PostId, IsPublic, FeedContent) {
     setPostId(PostId);
@@ -140,67 +204,6 @@ export default function Home() {
     setFeedContent(FeedContent);
     updatePostRef.current.style.display = "flex";
   }
-
-  const UpdatePostComponent = () => {
-    const [switchState, setSwitch] = useState(isPublic);
-    let textAreaRef = useRef();
-
-    return (
-      <div className="UpdatePostDiv">
-        <div className="p-2 flex">
-          <div className="text-lg phone:text-sm">Edit this Post</div>
-        </div>
-        <div className="mt-2 mb-2 pr-2 pl-2 flex">
-          <textarea className="UpdateTextArea" defaultValue={feedContent} ref={textAreaRef} />
-        </div>
-        <div className="p-2 flex justify-between">
-          <Switch checked={switchState} onChange={(event) => setSwitch(event.target.checked)} />
-          <div className="flex">
-            <button
-              className="UpdateButton"
-              onClick={() => (updatePostRef.current.style.display = "none")}
-            >
-              Cancel
-            </button>
-            <button
-              className="UpdateButton"
-              onClick={async () => {
-                if (!storedToken) {
-                  navigate("/");
-                  return;
-                }
-
-                const [StatusCode, Data] = await ApiRequest.updatePost(
-                  storedToken,
-                  postId,
-                  textAreaRef.current.value,
-                  switchState
-                );
-                if (StatusCode === 400 || StatusCode === 401) {
-                  console.log(Data);
-                  alert(Data);
-                  navigate("/");
-                } else if (StatusCode === 500) {
-                  navigate("/ServerError");
-                } else {
-                  // Update the UI view
-                  const currentPost = [...FeedList];
-                  const post = currentPost.find((post) => post._id === postId);
-                  post.Content = textAreaRef.current.value;
-                  post.ShowPublic = switchState;
-                  setFeedList(currentPost);
-                  updatePostRef.current.style.display = "none";
-                  alert(Data);
-                }
-              }}
-            >
-              Update
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  };
 
   if (UserName === "") {
     // While fetching data from the database, show a loading screen
@@ -213,10 +216,19 @@ export default function Home() {
     return (
       <div className="w-screen h-auto">
         <div className="HomeUpdate" ref={updatePostRef}>
-          {feedContent === undefined ? null : <UpdatePostComponent />}
+          {feedContent === undefined ? null : (
+            <UpdatePostComponent
+              isPublic={isPublic}
+              updatePostRef={updatePostRef}
+              feedContent={feedContent}
+              FeedList={FeedList}
+              postId={postId}
+              setFeedList={setFeedList}
+            />
+          )}
         </div>
         <div className="HomeDel" ref={deletePostRef}>
-          <DeletePostComponent />
+          <DeletePostComponent deletePostRef={deletePostRef} setFeedList={setFeedList} postId={postId} />
         </div>
 
         <Header
