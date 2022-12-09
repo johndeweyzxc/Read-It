@@ -1,5 +1,26 @@
-import React, {useEffect, useRef} from "react";
-import {useNavigate} from "react-router-dom";
+import React, { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+
+function Welcome() {
+  return (
+    <div className="mt-4 mb-4 flex justify-center items-center font-JetBrains">
+      <div className="ml-16 mr-8 laptop:ml-8">
+        <div
+          className="text-5xl font-extrabold tracking-wider text-Ponkan 
+        laptop:text-center stablet:text-3xl"
+        >
+          Read It
+        </div>
+        <div
+          className="text-base font-bold tracking-wide text-[#000] whitespace-nowrap
+        stablet:whitespace-normal text-center"
+        >
+          Express yourself and connect to your friends
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Login() {
   const navigate = useNavigate();
@@ -41,70 +62,47 @@ export default function Login() {
     }
   };
 
-  const TOKEN_ID = "tokenId";
-
   useEffect(() => {
     // Check if there exists a specific token on the local storage
-    const storedToken = JSON.parse(localStorage.getItem(TOKEN_ID));
+    const storedToken = JSON.parse(localStorage.getItem("tokenId"));
     if (storedToken) {
       navigate("/Home");
     }
   });
 
-  const Welcome = () => {
-    return (
-      <div className='mt-4 mb-4 flex justify-center items-center font-JetBrains'>
-        <div className='ml-16 mr-8 laptop:ml-8'>
-          <div
-            className='text-5xl font-extrabold tracking-wider text-Ponkan 
-          laptop:text-center stablet:text-3xl'
-          >
-            Read It
-          </div>
-          <div
-            className='text-base font-bold tracking-wide text-[#000] whitespace-nowrap
-          stablet:whitespace-normal text-center'
-          >
-            Express yourself and connect to your friends
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   const LoginForm = () => {
     return (
       <div
-        className='
+        className="
           h-[85vh] w-screen flex justify-center
-          items-center laptop:mt-8 laptop:items-start'
+          items-center laptop:mt-8 laptop:items-start"
       >
         <div
-          className='p-8 border-[1px] border-solid border-ShallowGrey 
-          rounded-lg flex flex-col shadow-xl'
+          className="p-8 border-[1px] border-solid border-ShallowGrey 
+          rounded-lg flex flex-col shadow-xl"
         >
           <input
-            className='w-[25vw] mb-4 border-2 border-solid border-Ponkan
+            className="w-[25vw] mb-4 border-2 border-solid border-Ponkan
             rounded-lg p-2 outline-none text-lg font-JetBrains laptop:w-[40vw]
-            laptop:text-base tablet:w-[60vw]'
+            laptop:text-base tablet:w-[60vw]"
             name={"userName"}
             type={"text"}
             placeholder={"Username"}
             ref={username}
           />
           <input
-            className='w-[25vw] mb-2 border-2 border-solid border-Ponkan
+            className="w-[25vw] mb-2 border-2 border-solid border-Ponkan
               rounded-lg p-2 outline-none text-lg font-JetBrains laptop:w-[40vw]
-              laptop:text-base tablet:w-[60vw]'
+              laptop:text-base tablet:w-[60vw]"
             name={"passWord"}
             type={"password"}
-            placeholder='Password'
+            placeholder="Password"
             ref={password}
           />
 
           <div
-            className='mb-4 p-2 text-center text-base font-JetBrains
-            underline hover:cursor-pointer laptop:text-sm'
+            className="mb-4 p-2 text-center text-base font-JetBrains
+            underline hover:cursor-pointer laptop:text-sm"
             onClick={() => {
               navigate("/PasswordReset");
             }}
@@ -112,21 +110,21 @@ export default function Login() {
             Forgot your password?
           </div>
           <button
-            className='w-[70%] p-2 text-base font-JetBrains font-bold tracking-wide
+            className="w-[70%] p-2 text-base font-JetBrains font-bold tracking-wide
               bg-Cherry border border-solid border-Cherry rounded-lg
-              text-white self-center hover:cursor-pointer shadow'
+              text-white self-center hover:cursor-pointer shadow"
             type={"button"}
             onClick={loginRequest}
           >
             Login
           </button>
 
-          <div className='mt-4 mb-4 w-full h-[1px] bg-ShallowGrey' />
+          <div className="mt-4 mb-4 w-full h-[1px] bg-ShallowGrey" />
 
           <button
-            className='w-[70%] p-2 text-base font-JetBrains font-medium tracking-wide
+            className="w-[70%] p-2 text-base font-JetBrains font-medium tracking-wide
           bg-black border border-solid border-black rounded-lg
-          text-white self-center hover:cursor-pointer shadow'
+          text-white self-center hover:cursor-pointer shadow"
             type={"button"}
             onClick={() => navigate("/Register")}
           >
@@ -138,13 +136,13 @@ export default function Login() {
   };
 
   return (
-    <div className='h-screen w-screen'>
-      <div className='h-[15vh] w-screen shadow-md bg-gradient-to-r from-Ponkan to-Cherry' />
-      <div className='h-[85vh] w-screen flex laptop:flex-col tablet:h-[95vh]'>
+    <div className="h-screen w-screen">
+      <div className="h-[15vh] w-screen shadow-md bg-gradient-to-r from-Ponkan to-Cherry" />
+      <div className="h-[85vh] w-screen flex laptop:flex-col tablet:h-[95vh]">
         <Welcome />
         <LoginForm />
       </div>
-      <div className='h-[25vh] w-screen bg-gradient-to-r from-Ponkan to-Cherry' />
+      <div className="h-[25vh] w-screen bg-gradient-to-r from-Ponkan to-Cherry" />
     </div>
   );
 }
