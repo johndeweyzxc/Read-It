@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import "./Header.css";
+import "./Styles/Header.css";
 import SearchIcon from "./Assets/search-icon.png";
 import MessagesIcon from "./Assets/message-icon.png";
 import LogoutIcon from "./Assets/logout-icon.png";

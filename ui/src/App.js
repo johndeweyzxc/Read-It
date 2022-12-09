@@ -3,8 +3,8 @@ import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 
 import "./Styles/login.css";
 import Login from "./Login";
-import Home from "./UserHome/Home";
-import User from "./UserHome/User";
+import Home from "./Home";
+import User from "./User";
 import Register from "./Register";
 import UpdateProfile from "./UpdateProfile";
 

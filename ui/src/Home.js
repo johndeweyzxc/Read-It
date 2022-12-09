@@ -5,9 +5,9 @@ import Switch from "@mui/material/Switch";
 import ApiRequest from "./ApiFunctions";
 import Header from "./Header";
 import Content from "./Content";
-import "./Home.css";
-import "./UpdatePost.css";
-import "./DeletePost.css";
+import "./Styles/Home.css";
+import "./Styles/UpdatePost.css";
+import "./Styles/DeletePost.css";
 
 function MenuForPhone({ mobileMenuRef }) {
   // This is the menu navigation for small screen devices.

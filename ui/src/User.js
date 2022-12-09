@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import DisplayPicture from "./Assets/dp-silhouette.jpg";
 import GlobeIcon from "./Assets/Globe-icon.png";
 import Header from "./Header";
-import "./Feed.css";
+import "./Styles/Feed.css";
 
 function UserContent({ feedList, UserName, FullName, TotalLikes, CakeDay }) {
   const iterateFeed = (feed) => {
