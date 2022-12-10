@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import DisplayPicture from "./Assets/dp-silhouette.jpg";
 import GlobeIcon from "./Assets/Globe-icon.png";
-import Header from "./Header";
+import { Header, MenuForPhone } from "./Home";
 import "./Styles/Feed.css";
 
 function SideInfo({ FullName, UserName, TotalLikes, CakeDay }) {
@@ -100,11 +100,11 @@ function UserContent({ feedList, UserName, FullName, TotalLikes, CakeDay }) {
 
 // This a user page when a user wants to visit a profile of another user
 export default function User() {
+  // Get the value of Username in http://localhost:3000/Username
   const { Username } = useParams();
-  const navigate = useNavigate();
-  const settingsFloatRef = useRef();
 
-  const TOKEN_ID = "tokenId";
+  const navigate = useNavigate();
+  const mobileMenuRef = useRef();
 
   const [UserFeeds, setUserFeeds] = useState([]);
   const [UserName, setUserName] = useState("");
@@ -112,15 +112,10 @@ export default function User() {
   const [TotalLikes, setTotalLikes] = useState(0);
   const [CakeDay, setCakeDay] = useState("");
 
-  const logoutAccount = () => {
-    localStorage.removeItem(TOKEN_ID);
-    navigate("/");
-  };
-
   // Run at first render to fetch data from the server
   useEffect(() => {
     const apiFetchUser = `http://${process.env.REACT_APP_REST_IP}:4000/User/${Username}`;
-    const storedToken = JSON.parse(localStorage.getItem(TOKEN_ID));
+    const storedToken = JSON.parse(localStorage.getItem("tokenId"));
     if (!storedToken) {
       navigate("/");
       return;
@@ -169,7 +164,8 @@ export default function User() {
   } else {
     return (
       <div className="w-screen h-auto">
-        <Header logoutAccount={logoutAccount} settingsFloatRef={settingsFloatRef} UserName={UserName} />
+        <Header mobileMenuRef={mobileMenuRef} UserName={UserName} />
+        <MenuForPhone mobileMenuRef={mobileMenuRef} />
         <UserContent
           feedList={UserFeeds}
           UserName={UserName}
