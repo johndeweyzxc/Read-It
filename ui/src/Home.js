@@ -7,12 +7,13 @@ import Content from "./Content";
 import "./Styles/Home.css";
 import "./Styles/UpdatePost.css";
 import "./Styles/DeletePost.css";
-import "./Styles/Header.css";
+
 import SearchIcon from "./Assets/search-icon.png";
 import MessagesIcon from "./Assets/message-icon.png";
 import LogoutIcon from "./Assets/logout-icon.png";
 import MenuIcon from "./Assets/menu-icon.png";
 import UserIcon from "./Assets/user-icon.png";
+import "./Styles/Header.css";
 
 export function Header({ mobileMenuRef, UserName }) {
   const navigate = useNavigate();
@@ -85,22 +86,29 @@ export function Header({ mobileMenuRef, UserName }) {
   );
 }
 
-function UpdatePostComponent({ isPublic, updatePostRef, feedContent, FeedList, postId, setFeedList }) {
+function UpdatePostComponent({ updatePostRef, FeedList, postId, setFeedList }) {
   const storedToken = JSON.parse(localStorage.getItem("tokenId"));
   const navigate = useNavigate();
-  const [switchState, setSwitch] = useState(isPublic);
-  let textAreaRef = useRef();
+  const [TextAreaVal, setText] = useState("");
+  const [switchState, setSwitch] = useState(false);
 
   return (
     <div className="UpdatePostDiv">
       <div className="p-2 flex">
-        <div className="text-lg phone:text-sm">Edit this Post</div>
+        <div className="text-lg phone:text-sm">Edit Post</div>
       </div>
       <div className="mt-2 mb-2 pr-2 pl-2 flex">
-        <textarea className="UpdateTextArea" defaultValue={feedContent} ref={textAreaRef} />
+        <textarea
+          className="UpdateTextArea"
+          placeholder={"Type in your new comment here"}
+          onChange={(event) => setText(event.target.value)}
+        />
       </div>
       <div className="p-2 flex justify-between">
-        <Switch checked={switchState} onChange={(event) => setSwitch(event.target.checked)} />
+        <div className="flex">
+          <div className="self-center">Public</div>
+          <Switch checked={switchState} onChange={(event) => setSwitch(event.target.checked)} />
+        </div>
         <div className="flex">
           <button
             className="UpdateButton"
@@ -119,12 +127,11 @@ function UpdatePostComponent({ isPublic, updatePostRef, feedContent, FeedList, p
               const [StatusCode, Data] = await ApiRequest.updatePost(
                 storedToken,
                 postId,
-                textAreaRef.current.value,
+                TextAreaVal,
                 switchState
               );
               if (StatusCode === 400 || StatusCode === 401) {
-                console.log(Data);
-                alert(Data);
+                alert(Data.Content);
                 navigate("/");
               } else if (StatusCode === 500) {
                 navigate("/ServerError");
@@ -132,7 +139,7 @@ function UpdatePostComponent({ isPublic, updatePostRef, feedContent, FeedList, p
                 // Update the UI view
                 const currentPost = [...FeedList];
                 const post = currentPost.find((post) => post._id === postId);
-                post.Content = textAreaRef.current.value;
+                post.Content = TextAreaVal;
                 post.ShowPublic = switchState;
                 setFeedList(currentPost);
                 updatePostRef.current.style.display = "none";
@@ -242,11 +249,9 @@ export function Home() {
   const [CakeDay, setCakeDay] = useState("");
 
   const [postId, setPostId] = useState();
-  const [isPublic, setIsPublic] = useState();
   const [feedContent, setFeedContent] = useState();
 
   useEffect(() => {
-    console.log("UseEffect runs");
     const FetchData = async () => {
       const [StatusCode, Data] = await ApiRequest.getPosts();
       if (StatusCode === 201) {
@@ -274,9 +279,8 @@ export function Home() {
   }
 
   // This shows a popped out form and push the current data in the form.
-  function ShowEditPost(PostId, IsPublic, FeedContent) {
+  function ShowEditPost(PostId, FeedContent) {
     setPostId(PostId);
-    setIsPublic(IsPublic);
     setFeedContent(FeedContent);
     updatePostRef.current.style.display = "flex";
   }
@@ -294,7 +298,6 @@ export function Home() {
         <div className="HomeUpdate" ref={updatePostRef}>
           {feedContent === undefined ? null : (
             <UpdatePostComponent
-              isPublic={isPublic}
               updatePostRef={updatePostRef}
               feedContent={feedContent}
               FeedList={FeedList}

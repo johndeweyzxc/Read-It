@@ -97,7 +97,7 @@ export default function HomeContent({
             {feedLikes} {feedLikes > 1 ? "Likes" : "Like"}
           </div>
           <div className="mr-2 self-center flex hover:text-[#238aff]">
-            <div className="FeedUpdateDel" onClick={() => ShowEditPost(feedId, showPublic, feedContent)}>
+            <div className="FeedUpdateDel" onClick={() => ShowEditPost(feedId, feedContent)}>
               <img className="FeedIcon" src={EditIcon} alt={"Edit this post"} />
             </div>
             <div className="FeedUpdateDel" onClick={() => ShowDeletePost(feedId)}>
