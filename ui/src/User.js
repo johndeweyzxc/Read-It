@@ -47,12 +47,11 @@ function SideInfo({ FullName, UserName, TotalLikes, CakeDay }) {
 }
 
 function Feed({ feed, UserName, FullName }) {
-  const feedId = feed._id;
   const feedContent = feed.Content;
   const feedLikes = feed.NumberOfLikes;
 
   return (
-    <div className="FeedDiv" key={feedId}>
+    <div className="FeedDiv">
       <div className="FeedHeader">
         <div className="flex tablet:flex-col">
           <div className="flex">
@@ -79,7 +78,7 @@ function Feed({ feed, UserName, FullName }) {
 
 function UserContent({ feedList, UserName, FullName, TotalLikes, CakeDay }) {
   const iterateFeed = (feed) => {
-    return <Feed feed={feed} UserName={UserName} FullName={FullName} />;
+    return <Feed key={feed._id} feed={feed} UserName={UserName} FullName={FullName} />;
   };
 
   return (
@@ -92,7 +91,7 @@ function UserContent({ feedList, UserName, FullName, TotalLikes, CakeDay }) {
         {feedList.length === 0 ? (
           <div className="NoPost">This user has not yet created a post</div>
         ) : (
-          <div>{feedList.map(iterateFeed)}</div>
+          feedList.map(iterateFeed)
         )}
       </div>
     </div>
