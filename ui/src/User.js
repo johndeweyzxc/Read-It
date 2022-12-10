@@ -113,27 +113,6 @@ export default function User() {
   const [TotalLikes, setTotalLikes] = useState(0);
   const [CakeDay, setCakeDay] = useState("");
 
-  let showedSettings = false;
-
-  function hideAll() {
-    settingsFloatRef.current.style.display = "none";
-  }
-
-  const showMessages = () => {
-    alert("This feature is currently not available");
-  };
-
-  const showSettings = () => {
-    hideAll();
-    if (showedSettings) {
-      hideAll();
-      showedSettings = false;
-    } else {
-      settingsFloatRef.current.style.display = "block";
-      showedSettings = true;
-    }
-  };
-
   const logoutAccount = () => {
     localStorage.removeItem(TOKEN_ID);
     navigate("/");
@@ -191,13 +170,7 @@ export default function User() {
   } else {
     return (
       <div className="w-screen h-auto">
-        <Header
-          showMessages={showMessages}
-          showSettings={showSettings}
-          logoutAccount={logoutAccount}
-          settingsFloatRef={settingsFloatRef}
-          UserName={UserName}
-        />
+        <Header logoutAccount={logoutAccount} settingsFloatRef={settingsFloatRef} UserName={UserName} />
         <UserContent
           feedList={UserFeeds}
           UserName={UserName}
