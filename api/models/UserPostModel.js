@@ -16,13 +16,6 @@ const UserPostModel = new mongoose.Schema({
     required: true,
     default: false,
   },
-
-  // Server will take care of this information
-  LikedByCreator: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
   UserObjectId: {
     type: String,
     required: false,
@@ -31,12 +24,6 @@ const UserPostModel = new mongoose.Schema({
     type: Number,
     required: false,
     default: 0,
-  },
-  Likes: {
-    // User object id in string
-    type: [String],
-    required: false,
-    default: [],
   },
   PostedAt: {
     type: String,
