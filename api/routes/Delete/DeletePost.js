@@ -1,7 +1,8 @@
-// Dependency imports
+// Route for deleting a post
+
 const express = require("express");
 const deletePost = express.Router();
-// App imports
+
 const userPost = require("../../models/UserPostModel");
 const users = require("../../models/UserModel");
 

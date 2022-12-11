@@ -1,28 +1,28 @@
-// Dependency imports
+// This is the route when the user logs in, it takes the username and password.
+
 const express = require("express");
 const login = express.Router();
 const crypto = require("crypto");
-// App imports
+
 const users = require("../../models/UserModel");
 
 function persistentTokens() {
   return crypto.randomBytes(16).toString("base64");
 }
 
-// Login user using its username and password
 async function loginUser(username, password) {
   const InvalidCredentials = {
     statusCode: 401,
     message: "Invalid username or password",
   };
-  // Generate a random bytes to use as a token id for other authentication
+  // Generate a random bytes to use as a token.
   let newPersistentToken = persistentTokens();
   let user;
 
   try {
     user = await users.findOne({ UserName: username });
   } catch (error) {
-    return { statusCode: 500, message: error.message };
+    return { statusCode: 500, message: error };
   }
 
   if (user === null) {
@@ -39,7 +39,7 @@ async function loginUser(username, password) {
     await user.save();
     return { statusCode: 201, message: { token: newPersistentToken } };
   } catch (error) {
-    return { statusCode: 500, message: error.message };
+    return { statusCode: 500, message: error };
   }
 }
 
@@ -52,7 +52,7 @@ login.post("/", async (req, res) => {
   let message = loggedIn.message;
 
   if (statusCode === 500) {
-    console.log(user.message);
+    console.log(loggedIn.message);
     return res.status(500).json({ message: "Internal server error" });
   } else {
     return res.status(statusCode).json({ message: message });

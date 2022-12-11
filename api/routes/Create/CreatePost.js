@@ -1,7 +1,8 @@
-// Dependency imports
+// Route for creating a post
+
 const express = require("express");
 const createPost = express.Router();
-// App imports
+
 const userPost = require("../../models/UserPostModel");
 const newDate = require("../../tools/DateCreator");
 const users = require("../../models/UserModel");
@@ -12,6 +13,7 @@ async function createNewPost(tokenid, showpublic, postcontent) {
   let savedPost;
   let currentPosts;
 
+  // This checks if the token that the user submitted is on the database.
   try {
     user = await users.findOne({ PersistentId: tokenid });
   } catch (error) {
@@ -19,7 +21,6 @@ async function createNewPost(tokenid, showpublic, postcontent) {
   }
 
   if (user === null) {
-    // Invalid token id, returns a 401 status
     return {
       statusCode: 401,
       message: "Cannot create a new post, invalid token",
@@ -44,6 +45,7 @@ async function createNewPost(tokenid, showpublic, postcontent) {
     savedPost = await newUserPost.save();
   } catch (error) {
     // The user might violate the model schema for the user post model.
+    // Returns all validation error
     if (error.name === "ValidationError") {
       let invalidInputs = {};
       Object.keys(error.errors).forEach((key) => {
@@ -55,21 +57,21 @@ async function createNewPost(tokenid, showpublic, postcontent) {
     return { statusCode: 500, message: error };
   }
 
-  // unShift means add the post id to the list of created post of the user
+  // Add the post id to the list of created post of the user
   currentPosts.unshift(savedPost._id);
   try {
     user.set({ CreatedPosts: currentPosts });
     await user.save();
 
-    // Respond with a new created post
+    // Return the data of the new post
     return { statusCode: 201, message: savedPost };
   } catch (error) {
-    return { statusCode: 500, message: error.message };
+    return { statusCode: 500, message: error };
   }
 }
 
-// The user must have the same token id in the database
-// otherwise it is an invalid request
+// The user must have the same token id in the client and the database
+// otherwise the user fails to to create a new post.
 createPost.post("/", async (req, res) => {
   let tokenId = req.body.TokenId;
   let postContent = req.body.PostContent;
@@ -80,7 +82,6 @@ createPost.post("/", async (req, res) => {
   let message = newPost.message;
 
   if (statusCode === 500) {
-    // Do not send the specific error message
     console.log(newPost.message);
     return res.status(500).json({ message: "Internal server error" });
   } else {

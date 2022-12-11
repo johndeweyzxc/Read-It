@@ -1,17 +1,16 @@
-// Dependency imports
+// This is the route for updating a user's post.
+
 const express = require("express");
 const updatePost = express.Router();
-// App imports
+
 const users = require("../../models/UserModel");
 const userPosts = require("../../models/UserPostModel");
 const newDate = require("../../tools/DateCreator");
 
-// Update user post info
 async function updateUserPost(tokenid, postid, newContent, showPublic) {
   let userPost;
   let user;
 
-  // Fetch the user post
   try {
     userPost = await userPosts.findById(postid);
   } catch (error) {
@@ -25,7 +24,6 @@ async function updateUserPost(tokenid, postid, newContent, showPublic) {
     };
   }
 
-  // Fetch the user
   try {
     user = await users.findOne({ PersistentId: tokenid });
   } catch (error) {
@@ -39,14 +37,13 @@ async function updateUserPost(tokenid, postid, newContent, showPublic) {
     };
   }
 
-  // Verify the user if it has access to the post.
+  // Verify the user if it is authorized to modify the post.
   if (userPost.UserObjectId === user.id) {
     // Update the post with the new corresponding value
     userPost.set({ UpdatedAt: newDate.create() });
     userPost.set({ Content: newContent });
     userPost.set({ ShowPublic: showPublic });
   } else {
-    // The user is trying to tamper to another post made by different user.
     return { statusCode: 401, message: "Unauthorized to update this post" };
   }
 
@@ -57,7 +54,7 @@ async function updateUserPost(tokenid, postid, newContent, showPublic) {
       message: "Successfully updated the post",
     };
   } catch (error) {
-    // If the user violates schema validation, return all violation as json.
+    // If the user violates the user post model schema then return all the validation error.
     if (error.name === "ValidationError") {
       let errors = {};
 

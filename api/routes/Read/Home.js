@@ -1,7 +1,9 @@
-// Dependency imports
+// Route for fetching users's post, in the client side when the user redirects to home page
+// it always fetch data in the first render to show all the post.
+
 const express = require("express");
 const home = express.Router();
-// App imports
+
 const users = require("../../models/UserModel");
 const userPosts = require("../../models/UserPostModel");
 const date = require("../../tools/FormatDate");
@@ -18,7 +20,7 @@ async function fetchAllPost(postIds) {
     try {
       userPost = await userPosts.findOne({ _id: postIds[i] });
     } catch (error) {
-      return { statusCode: 500, message: error.message };
+      return { statusCode: 500, message: error };
     }
 
     // If post are either removed or have wrong id
@@ -45,7 +47,7 @@ async function fetchUserPost(tokenid) {
   try {
     user = await users.findOne({ PersistentId: tokenid });
   } catch (error) {
-    return { statusCode: 500, message: error.message };
+    return { statusCode: 500, message: error };
   }
 
   if (user === null) {
@@ -60,7 +62,7 @@ async function fetchUserPost(tokenid) {
   try {
     postObjects = await fetchAllPost(posts);
   } catch (error) {
-    return { statusCode: 500, message: error.message };
+    return { statusCode: 500, message: error };
   }
 
   if (postObjects.undefinedPosts.length > 0) {

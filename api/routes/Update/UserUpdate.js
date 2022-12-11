@@ -1,7 +1,9 @@
-// Dependency imports
+// This the route when the user wants to modify the information of its profile such as username,\
+// birthday, password, username and etc.
+
 const express = require("express");
 const userUpdate = express.Router();
-// App imports
+
 const users = require("../../models/UserModel");
 const newDate = require("../../tools/DateCreator");
 
@@ -11,7 +13,6 @@ async function updateUser(usernameVerify, passwordVerify, changes) {
   // User cannot modify any information if it belongs inside this array
   const doNotUpdate = ["CreatedPosts", "PersistentId", "CreatedAt", "UpdatedAt"];
 
-  // Checks if the username is already in the database
   try {
     if (!(changes.UserName === undefined)) {
       if (!(usernameVerify === changes.UserName)) {
@@ -59,7 +60,7 @@ async function updateUser(usernameVerify, passwordVerify, changes) {
   } catch (error) {
     let errors = {};
 
-    // The user might violate the model schema for the user model.
+    // If the user violates the user model schema then return all the validation error.
     if (error.name === "ValidationError") {
       Object.keys(error.errors).forEach((key) => {
         errors[key] = error.errors[key].message;
@@ -67,7 +68,6 @@ async function updateUser(usernameVerify, passwordVerify, changes) {
       return { statusCode: 400, message: errors };
     }
 
-    // In this case the user input is not the problem
     return { statusCode: 500, message: error };
   }
 }

@@ -72,7 +72,6 @@ const UserModel = new mongoose.Schema({
   },
   // Server will take care of this information
   CreatedPosts: {
-    // User post object id in string
     type: [String],
     required: false,
   },
