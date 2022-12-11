@@ -1,3 +1,5 @@
+// This is the home page when a user successfully logged in.
+
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Switch from "@mui/material/Switch";
@@ -22,6 +24,8 @@ import TrashIcon from "./Assets/Trash-icon.png";
 import "./Styles/Feed.css";
 import "./Styles/NewPost.css";
 
+// Header used by the home page and the user page, it contains a search bar, a button to update
+// user profile, a button to show messages and a logout button.
 export function Header({ mobileMenuRef, UserName }) {
   const navigate = useNavigate();
   const UnderDev = () => {
@@ -68,6 +72,10 @@ export function Header({ mobileMenuRef, UserName }) {
           </div>
 
           <div className="mr-4 hover:cursor-pointer stablet:hidden">
+            {/* When the user logs out we remove the item from the local storage because this
+              token is used by the user to create, delete or update a feed, it also serves 
+              as a way so that the user does not need to relogin everytime it visits the 
+              site. */}
             <img
               className="HeaderMenuImages"
               src={LogoutIcon}
@@ -78,7 +86,6 @@ export function Header({ mobileMenuRef, UserName }) {
               }}
             />
           </div>
-
           <div className="hidden stablet:block">
             <img
               className="p1 rounded-sm h-6 aspect-square"
@@ -93,6 +100,7 @@ export function Header({ mobileMenuRef, UserName }) {
   );
 }
 
+// This is the main body of the home page, it contains the feed created by the user and the side info.
 function HomeContent({
   feedList,
   setFeedList,
@@ -108,10 +116,10 @@ function HomeContent({
   const [switchState, setSwitch] = useState(false);
   let onGoingRequest = false;
 
-  // Creates new post and sends to the backend server api
+  // Creates new post and sends the new post to the backend server.
   const createNewPost = async () => {
     if (onGoingRequest === true) {
-      // This checks if the post request is still processing
+      // This checks if the post request is still processing.
       alert("There is an on going post request. Please wait...");
       return;
     }
@@ -120,9 +128,12 @@ function HomeContent({
     onGoingRequest = true;
 
     let textContent = textInputRef.current.value;
+    // Here we check if the user has a token stored locally, if it doesn't then we redirect them to the
+    // login page.
     if (!storedToken) {
       navigate("/");
     }
+    // Tell the server about the new post created by the user.
     const [StatusCode, Data] = await ApiRequest.createPost(storedToken, textContent, switchState);
 
     if (StatusCode === 400) {
@@ -132,7 +143,8 @@ function HomeContent({
     } else if (StatusCode === 500) {
       navigate("/ServerError");
     } else {
-      // The user successfully created a new post
+      // If the status code is 200 then the user successfully created a new feed and now we update
+      // the client ui.
       let newPost = Data;
       setFeedList((current) => {
         return [newPost, ...current];
@@ -142,6 +154,7 @@ function HomeContent({
     }
   };
 
+  // This is the component that each feed created by the user will use.
   const iterateFeed = (feed) => {
     const feedId = feed._id;
     const feedContent = feed.Content;
@@ -192,6 +205,9 @@ function HomeContent({
 
   return (
     <div className="ContentDiv">
+      {/* This is the side info it contains information about the user such as when was the account
+      created, total number of likes, full name and username. */}
+
       <div
         className="
         ml-8 mr-8 mb-4 border-[1px] border-solid border-[#999999c5] rounded-sm h-[40vh] 
@@ -228,6 +244,7 @@ function HomeContent({
         </div>
       </div>
 
+      {/* This is where the user's feed is shown */}
       <div className="ml-8 mr-8 flex-grow-[3] phone:ml-4 phone:mr-4 phone:flex-grow">
         <div className="NewPostDiv">
           <div className="p-2 flex">
@@ -247,8 +264,10 @@ function HomeContent({
           </div>
         </div>
         {feedList.length === 0 ? (
+          // If there is no feed created by the user
           <div className="NoPost">You have not yet created a post</div>
         ) : (
+          // Otherwise create a list of feed
           <div>{feedList.map(iterateFeed)}</div>
         )}
       </div>
@@ -256,6 +275,9 @@ function HomeContent({
   );
 }
 
+// This is the component that shows up above the UI and blurs the background when the editing button
+// is clicked on the feed. The editing button is on the right side corner of each feed, you will see
+// a pencil or pen-like symbol.
 function UpdatePostComponent({ updatePostRef, FeedList, postId, setFeedList }) {
   const storedToken = JSON.parse(localStorage.getItem("tokenId"));
   const navigate = useNavigate();
@@ -294,6 +316,7 @@ function UpdatePostComponent({ updatePostRef, FeedList, postId, setFeedList }) {
                 return;
               }
 
+              // Tell the server about the update of the feed
               const [StatusCode, Data] = await ApiRequest.updatePost(
                 storedToken,
                 postId,
@@ -306,7 +329,9 @@ function UpdatePostComponent({ updatePostRef, FeedList, postId, setFeedList }) {
               } else if (StatusCode === 500) {
                 navigate("/ServerError");
               } else {
-                // Update the UI view
+                // If the server successfully updates the feed in database then
+                // update the UI to show the updated feed.
+
                 const currentPost = [...FeedList];
                 const post = currentPost.find((post) => post._id === postId);
                 post.Content = TextAreaVal;
@@ -325,6 +350,9 @@ function UpdatePostComponent({ updatePostRef, FeedList, postId, setFeedList }) {
   );
 }
 
+// This is the component that shows up above the UI and blurs the background when the delete button
+// is clicked on the feed. The delete button is on the right side corner of each feed, you will see
+// a trash symbol.
 function DeletePostComponent({ deletePostRef, setFeedList, postId }) {
   const storedToken = JSON.parse(localStorage.getItem("tokenId"));
   const navigate = useNavigate();
@@ -347,13 +375,15 @@ function DeletePostComponent({ deletePostRef, setFeedList, postId }) {
                 return;
               }
 
+              // Tell the rest api to delete this feed
               const [StatusCode, Data] = await ApiRequest.deletePost(storedToken, postId);
               if (StatusCode === 401) {
                 alert(Data);
               } else if (StatusCode === 500) {
                 navigate("/ServerError");
               } else {
-                // Update the UI view to remove the post
+                // The server returns a status code of 200 and it successfully deleted the feed, we then
+                // update the client ui to reflect the new change on the feed list.
                 setFeedList((current) => {
                   return current.filter((post) => {
                     return post._id !== postId;
@@ -373,8 +403,8 @@ function DeletePostComponent({ deletePostRef, setFeedList, postId }) {
   );
 }
 
+// This is the menu navigation for small screen devices, this component is used by the user page.
 export function MenuForPhone({ mobileMenuRef }) {
-  // This is the menu navigation for small screen devices.
   const navigate = useNavigate();
 
   return (
@@ -387,6 +417,11 @@ export function MenuForPhone({ mobileMenuRef }) {
           className="MobileMenuBtn"
           to={"/Home"}
           onClick={() => {
+            // When the user logs out we remove the item from the local storage because this
+            // token is used by the user to create, delete or update a feed, it also serves
+            // as a way so that the user does not need to relogin everytime it visits the
+            // site.
+
             localStorage.removeItem("tokenId");
             navigate("/");
           }}
@@ -419,10 +454,11 @@ export function Home() {
   const [CakeDay, setCakeDay] = useState("");
 
   const [postId, setPostId] = useState();
-  const [feedContent, setFeedContent] = useState();
 
+  // Run at first render
   useEffect(() => {
     const FetchData = async () => {
+      // Fetch all user post from ther server
       const [StatusCode, Data] = await ApiRequest.getPosts();
       if (StatusCode === 201) {
         setFeedList(Data[0]);
@@ -431,6 +467,9 @@ export function Home() {
         setTotalLikes(Data[3]);
         setCakeDay(Data[4]);
       } else if (StatusCode === 401) {
+        // If it returns a status code of 401 that means, the user's token must have been expired so
+        // the user needs to relogin, to gain a token to be use to create, read, update or delete a
+        // feed.
         alert(Data);
         localStorage.removeItem("tokenId");
         navigate("/");
@@ -442,18 +481,21 @@ export function Home() {
     FetchData();
   }, [navigate]);
 
-  // This shows a popped out message if the user really wants to delete a post.
+  // This shows a popped out message if the user really wants to delete a feed.
   function ShowDeletePost(PostId) {
     setPostId(PostId);
     deletePostRef.current.style.display = "flex";
   }
 
   // This shows a popped out form and push the current data in the form.
-  function ShowEditPost(PostId, FeedContent) {
+  function ShowEditPost(PostId) {
     setPostId(PostId);
-    setFeedContent(FeedContent);
     updatePostRef.current.style.display = "flex";
   }
+
+  // In ShowDeletePost and ShowEditPost function we set the feed id from the value of the parameter
+  // PostId, because when the user clicks the edit or delete button, the feed calls this function and
+  // sets its unique identifier in PostId, so we know which feed to delete or update from the list.
 
   if (UserName === "") {
     // While fetching data from the database, show a loading screen
@@ -466,21 +508,19 @@ export function Home() {
     return (
       <div className="w-screen h-auto">
         <div className="HomeUpdate" ref={updatePostRef}>
-          {feedContent === undefined ? null : (
-            <UpdatePostComponent
-              updatePostRef={updatePostRef}
-              feedContent={feedContent}
-              FeedList={FeedList}
-              postId={postId}
-              setFeedList={setFeedList}
-            />
-          )}
+          <UpdatePostComponent
+            updatePostRef={updatePostRef}
+            FeedList={FeedList}
+            postId={postId}
+            setFeedList={setFeedList}
+          />
         </div>
         <div className="HomeDel" ref={deletePostRef}>
           <DeletePostComponent deletePostRef={deletePostRef} setFeedList={setFeedList} postId={postId} />
         </div>
 
         <Header mobileMenuRef={mobileMenuRef} UserName={UserName} />
+        {/* This is the nav menu in the top right corner of the site, it only shows when client screen is small. */}
         <MenuForPhone mobileMenuRef={mobileMenuRef} />
 
         <HomeContent

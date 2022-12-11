@@ -1,3 +1,5 @@
+// This is the login page where the user is ask if it wants to register or log in.
+
 import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -27,7 +29,7 @@ export default function Login() {
   const username = useRef();
   const password = useRef();
 
-  // API post request to the server to login will happen here.
+  // Sends the username and the password data from the input text to the server
   const loginRequest = async () => {
     const apiServerLogin = `http://${process.env.REACT_APP_REST_IP}:4000/Login`;
     let response;
@@ -52,9 +54,9 @@ export default function Login() {
       const token = result.message.token;
 
       if (response.status === 201) {
-        // Store the token in the local storage, we will use this token for some authentication
+        // Store the token in the local storage, this token will be use to read, update or delete a feed.
+        // It can also be use to prove that the user recently login.
         localStorage.setItem("tokenId", JSON.stringify(token));
-
         navigate("/Home");
       } else {
         alert("Wrong username or password");
@@ -62,8 +64,9 @@ export default function Login() {
     }
   };
 
+  // Run at first render
   useEffect(() => {
-    // Check if there exists a specific token on the local storage
+    // Check if there exists a token on the local storage
     const storedToken = JSON.parse(localStorage.getItem("tokenId"));
     if (storedToken) {
       navigate("/Home");

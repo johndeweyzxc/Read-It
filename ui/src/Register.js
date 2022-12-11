@@ -1,5 +1,7 @@
-import React, {useRef} from "react";
-import {useNavigate} from "react-router-dom";
+// This is the register page
+
+import React, { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "./Styles/register.css";
 
@@ -17,7 +19,6 @@ export default function Register() {
   const phoneRef = useRef();
   const confirmPasswordRef = useRef();
 
-  // API post request to the server will happen here
   const sendForm = async () => {
     let response;
 
@@ -27,24 +28,21 @@ export default function Register() {
     }
 
     try {
-      response = await fetch(
-        `http://${process.env.REACT_APP_REST_IP}:4000/Register`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            FirstName: firstNameRef.current.value,
-            LastName: lastNameRef.current.value,
-            Birthday: birthDayRef.current.value,
-            UserName: userNameRef.current.value,
-            Password: passWordRef.current.value,
-            Email: emailRef.current.value,
-            PhoneNumber: phoneRef.current.value,
-          }),
-        }
-      );
+      response = await fetch(`http://${process.env.REACT_APP_REST_IP}:4000/Register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          FirstName: firstNameRef.current.value,
+          LastName: lastNameRef.current.value,
+          Birthday: birthDayRef.current.value,
+          UserName: userNameRef.current.value,
+          Password: passWordRef.current.value,
+          Email: emailRef.current.value,
+          PhoneNumber: phoneRef.current.value,
+        }),
+      });
     } catch (error) {
       console.log(error);
     }
@@ -54,13 +52,13 @@ export default function Register() {
       const message = result.message;
       const firstItem = Object.keys(message)[0];
 
-      // This checks if there is an error on user inputs
+      // This checks if there is an error on user inputs.
       if (response.status === 400 || response.status === 401) {
         alert(message[firstItem]);
       } else if (response.status === 500) {
         navigate("/ServerError");
       } else {
-        // Store token received from the server in the local storage
+        // Store token on local storage received from the server.
         localStorage.setItem(TOKEN_ID, JSON.stringify(message[firstItem]));
         navigate("/Home");
       }
@@ -69,97 +67,87 @@ export default function Register() {
 
   return (
     <div
-      className='w-screen h-screen tablet:h-auto flex flex-col
-    justify-center'
+      className="w-screen h-screen tablet:h-auto flex flex-col
+    justify-center"
     >
       <div
-        className='mt-8 mb-8 pl-8 pr-8 pb-2 text-3xl text-JetBrains 
+        className="mt-8 mb-8 pl-8 pr-8 pb-2 text-3xl text-JetBrains 
         self-center border-b-[1px] border-solid border-black phone:text-2xl
-        sphone:text-lg'
+        sphone:text-lg"
       >
         Create A New Account
       </div>
 
       <div
-        className='w-screen h-screen flex flex-col justify-center 
-        items-center tablet:h-auto btablet:justify-start'
+        className="w-screen h-screen flex flex-col justify-center 
+        items-center tablet:h-auto btablet:justify-start"
       >
-        <div className='flex tablet:flex-col'>
-          <div className='flex flex-col ml-2 mr-4'>
-            <label className='Register-Label'>First Name: </label>
+        <div className="flex tablet:flex-col">
+          <div className="flex flex-col ml-2 mr-4">
+            <label className="Register-Label">First Name: </label>
             <input
-              className='Register-Input'
+              className="Register-Input"
               ref={firstNameRef}
               type={"text"}
               placeholder={"John Dewey"}
             />
           </div>
 
-          <div className='flex flex-col ml-2 mr-4'>
-            <label className='Register-Label'>Last Name: </label>
-            <input
-              className='Register-Input'
-              ref={lastNameRef}
-              type={"text"}
-              placeholder={"Ventura"}
-            />
+          <div className="flex flex-col ml-2 mr-4">
+            <label className="Register-Label">Last Name: </label>
+            <input className="Register-Input" ref={lastNameRef} type={"text"} placeholder={"Ventura"} />
           </div>
         </div>
 
-        <div className='flex tablet:flex-col'>
-          <div className='flex flex-col ml-2 mr-4'>
-            <label className='Register-Label'>Username: </label>
+        <div className="flex tablet:flex-col">
+          <div className="flex flex-col ml-2 mr-4">
+            <label className="Register-Label">Username: </label>
             <input
-              className='Register-Input'
+              className="Register-Input"
               ref={userNameRef}
               type={"text"}
               placeholder={"johndewey112"}
             />
           </div>
 
-          <div className='flex flex-col ml-2 mr-4'>
-            <label className='Register-Label'>Birthday: </label>
-            <input className='Register-Input' ref={birthDayRef} type={"date"} />
+          <div className="flex flex-col ml-2 mr-4">
+            <label className="Register-Label">Birthday: </label>
+            <input className="Register-Input" ref={birthDayRef} type={"date"} />
           </div>
         </div>
 
-        <div className='flex tablet:flex-col'>
-          <div className='flex flex-col ml-2 mr-4'>
-            <label className='Register-Label'>Email: </label>
+        <div className="flex tablet:flex-col">
+          <div className="flex flex-col ml-2 mr-4">
+            <label className="Register-Label">Email: </label>
             <input
-              className='Register-Input'
+              className="Register-Input"
               ref={emailRef}
               type={"text"}
               placeholder={"johndewey22@gmail.com"}
             />
           </div>
 
-          <div className='flex flex-col ml-2 mr-4'>
-            <label className='Register-Label'>Phone Number: </label>
-            <input
-              className='Register-Input'
-              ref={phoneRef}
-              type={"text"}
-              placeholder={"09993241123"}
-            />
+          <div className="flex flex-col ml-2 mr-4">
+            <label className="Register-Label">Phone Number: </label>
+            <input className="Register-Input" ref={phoneRef} type={"text"} placeholder={"09993241123"} />
           </div>
         </div>
 
-        <div className='flex tablet:flex-col'>
-          <div className='flex flex-col ml-2 mr-4'>
-            <label className='Register-Label'>Password: </label>
+        <div className="flex tablet:flex-col">
+          <div className="flex flex-col ml-2 mr-4">
+            <label className="Register-Label">Password: </label>
             <input
-              className='Register-Input'
+              className="Register-Input"
               ref={passWordRef}
               type={"password"}
               placeholder={"New Password"}
             />
           </div>
 
-          <div className='flex flex-col ml-2 mr-4'>
-            <label className='Register-Label'>Confirm Password: </label>
+          <div className="flex flex-col ml-2 mr-4">
+            <label className="Register-Label">Confirm Password: </label>
             <input
-              className='Register-Input'
+              className="Register-Input"
               ref={confirmPasswordRef}
               type={"password"}
               placeholder={"Confirm New Password"}
@@ -167,7 +155,7 @@ export default function Register() {
           </div>
         </div>
 
-        <button className='Register-Button' type={"button"} onClick={sendForm}>
+        <button className="Register-Button" type={"button"} onClick={sendForm}>
           Register
         </button>
       </div>

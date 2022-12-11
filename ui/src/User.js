@@ -1,3 +1,6 @@
+// This is the user page when the user wants to visit other user's profile, this user page shows
+// post that are marked public by the owner of the post.
+
 import { React, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -6,6 +9,8 @@ import GlobeIcon from "./Assets/Globe-icon.png";
 import { Header, MenuForPhone } from "./Home";
 import "./Styles/Feed.css";
 
+// This is the side info it contains information about the user such as when was the account
+// created, total number of likes, full name and username.
 function SideInfo({ FullName, UserName, TotalLikes, CakeDay }) {
   return (
     <div
@@ -46,6 +51,7 @@ function SideInfo({ FullName, UserName, TotalLikes, CakeDay }) {
   );
 }
 
+// This is the component that each feed created by the user will use.
 function Feed({ feed, UserName, FullName }) {
   const feedContent = feed.Content;
   const feedLikes = feed.NumberOfLikes;
@@ -76,6 +82,7 @@ function Feed({ feed, UserName, FullName }) {
   );
 }
 
+// This is the main body of the user page, it contains the feed created by the user and the side info.
 function UserContent({ feedList, UserName, FullName, TotalLikes, CakeDay }) {
   const iterateFeed = (feed) => {
     return <Feed key={feed._id} feed={feed} UserName={UserName} FullName={FullName} />;
@@ -98,7 +105,6 @@ function UserContent({ feedList, UserName, FullName, TotalLikes, CakeDay }) {
   );
 }
 
-// This a user page when a user wants to visit a profile of another user
 export default function User() {
   // Get the value of Username in http://localhost:3000/Username
   const { Username } = useParams();
@@ -116,6 +122,7 @@ export default function User() {
   useEffect(() => {
     const apiFetchUser = `http://${process.env.REACT_APP_REST_IP}:4000/User/${Username}`;
     const storedToken = JSON.parse(localStorage.getItem("tokenId"));
+    // Here you cannot view the other user's profile without an account.
     if (!storedToken) {
       navigate("/");
       return;
@@ -143,7 +150,7 @@ export default function User() {
           setFullName(result.fullname);
           setTotalLikes(result.totallikes);
           setCakeDay(result.cakeday);
-        } else if (response.status === 401) {
+        } else if (response.status === 400) {
           alert(result.message);
           navigate("/");
         } else {

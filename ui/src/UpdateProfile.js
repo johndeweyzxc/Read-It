@@ -1,3 +1,5 @@
+// This is the update profile page
+
 import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
@@ -38,7 +40,6 @@ export default function UpdateProfile() {
     verify.display = "none";
   };
 
-  // API post request to the server will happen here
   const sendUpdate = async () => {
     let response;
 
@@ -76,6 +77,7 @@ export default function UpdateProfile() {
       return;
     }
 
+    // Tell the server about the update of the user's profile
     try {
       response = await fetch(`http://${process.env.REACT_APP_REST_IP}:4000/UserUpdate`, {
         method: "PATCH",
@@ -97,6 +99,8 @@ export default function UpdateProfile() {
         alert("Invalid username or password");
         showVerify();
       } else if (response.status === 400) {
+        // Returning a status code of 400 means that the information that the user supplied is not allowed
+        // or invalid.
         alert(message[firstItem]);
         showUpdateView();
       } else if (response.status === 500) {
@@ -133,6 +137,7 @@ export default function UpdateProfile() {
       ],
     ];
     return ListInputs.map((inputs) => (
+      // Return a list of user inputs
       <div key={uuidv4()} className="flex tablet:flex-col">
         {inputs.map((data) => (
           <div key={uuidv4()} className="flex flex-col ml-2 mr-4">
@@ -149,6 +154,9 @@ export default function UpdateProfile() {
     ));
   }
 
+  // This is the component that will be use to verify the user. If the user wants to change something
+  // on its profile such as password, email or username, then it must verify itself by supplying
+  // the correct username and password.
   const VerifyUser = () => {
     return (
       <div className="Verify-UserDiv" ref={verifyUserRef}>

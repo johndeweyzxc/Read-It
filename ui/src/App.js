@@ -8,6 +8,7 @@ import User from "./User";
 import Register from "./Register";
 import UpdateProfile from "./UpdateProfile";
 
+// This is the Password reset page
 function PasswordReset() {
   return (
     <div className="w-screen h-screen tablet:h-auto flex flex-col justify-center">
@@ -54,10 +55,12 @@ function PasswordReset() {
   );
 }
 
+// Error not found page
 function NotFound() {
   return <div className="m-4">404 Error not found</div>;
 }
 
+// Page for telling the user that there is a server error
 function ServerError() {
   return <div className="m-4">500 Internal Server Error, contact the administrator</div>;
 }
