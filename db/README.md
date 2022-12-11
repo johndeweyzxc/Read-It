@@ -1,9 +1,9 @@
-## How to run the Database
+## How to run the Database server
 
 1. Create a mongodb.config to store database configuration
 
 ```
-## Specify IP address, listens only to localhost and not on LAN.
+## Specify IP address
 bind_ip = localhost
 
 ## Specify PORT

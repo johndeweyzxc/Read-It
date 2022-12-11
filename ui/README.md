@@ -1,11 +1,10 @@
-## How to run UI
+## How to run UI server
 
-1. Create an ip.js file on src directory, this is where you store the LAN IP Address of the REST API server.
+1. Create a .env file
 
-```javascript
-// LAN IP Address of REST API server
-// The localIP must be same with api/ip.js
-export const localIP = "192.168.1.1";
+```
+// IP Address of the backend server
+REACT_APP_REST_IP="192.168.1.2"
 ```
 
 2. Run the UI server

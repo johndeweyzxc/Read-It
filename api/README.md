@@ -1,13 +1,20 @@
-## How to run the API
+## How to run the backend server
 
-1. Create an ip.js file, this is where you store the LAN IP of your computer.
+1. Create a .env file
 
-```javascript
-// LAN IP Address of your computer, this is just an example
-module.exports = "192.168.1.1";
+```
+// Url of the database server
+DATABASE_URL=mongodb://localhost:5000/ReadIt
+
+// IP Address that are allowed by cors
+ALLOWED_IP="http://192.168.1.2:3000"
+ALLOWED_LOCALHOST="http://localhost:3000"
+
+// IP Address of the backend server
+SERVER_URL="http://192.168.1.2:4000"
 ```
 
-2. Run the REST API server
+2. Run the backend server
 
 ```
 $ npm start
