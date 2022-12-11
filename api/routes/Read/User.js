@@ -123,6 +123,7 @@ user.post("/:UserName", async (req, res) => {
   const user = await getUser(userName, tokenid);
 
   if (user.statusCode === 500) {
+    console.log(user.message);
     return res.status(500).json({ message: "Internal server error" });
   } else if (user.statusCode === 201) {
     return res.status(201).json({

@@ -57,6 +57,7 @@ deletePost.delete("/", async (req, res) => {
   let message = deletedPost.message;
 
   if (statusCode === 500) {
+    console.log(deletePost.message);
     return res.status(500).json({ message: "Internal server error" });
   } else {
     return res.status(statusCode).json({ message: message });

@@ -77,16 +77,12 @@ updatePost.patch("/", async (req, res) => {
   let newContent = req.body.NewContent;
   let showPublic = req.body.ShowPublic;
 
-  const newUpdate = await updateUserPost(
-    tokenId,
-    postId,
-    newContent,
-    showPublic
-  );
+  const newUpdate = await updateUserPost(tokenId, postId, newContent, showPublic);
   const statusCode = newUpdate.statusCode;
   const message = newUpdate.message;
 
   if (newUpdate === 500) {
+    console.log(newUpdate.message);
     return res.status(500).json({ message: "Internal server error" });
   } else {
     return res.status(statusCode).json({ message: message });

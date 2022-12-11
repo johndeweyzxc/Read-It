@@ -52,6 +52,7 @@ login.post("/", async (req, res) => {
   let message = loggedIn.message;
 
   if (statusCode === 500) {
+    console.log(user.message);
     return res.status(500).json({ message: "Internal server error" });
   } else {
     return res.status(statusCode).json({ message: message });

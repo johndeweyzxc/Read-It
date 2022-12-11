@@ -13,9 +13,9 @@ async function createNewPost(tokenid, showpublic, postcontent) {
   let currentPosts;
 
   try {
-    user = await users.findOne({PersistentId: tokenid});
+    user = await users.findOne({ PersistentId: tokenid });
   } catch (error) {
-    return {statusCode: 500, message: error};
+    return { statusCode: 500, message: error };
   }
 
   if (user === null) {
@@ -49,22 +49,22 @@ async function createNewPost(tokenid, showpublic, postcontent) {
       Object.keys(error.errors).forEach((key) => {
         invalidInputs[key] = error.errors[key].message;
       });
-      return {statusCode: 400, message: invalidInputs};
+      return { statusCode: 400, message: invalidInputs };
     }
 
-    return {statusCode: 500, message: error};
+    return { statusCode: 500, message: error };
   }
 
   // unShift means add the post id to the list of created post of the user
   currentPosts.unshift(savedPost._id);
   try {
-    user.set({CreatedPosts: currentPosts});
+    user.set({ CreatedPosts: currentPosts });
     await user.save();
 
     // Respond with a new created post
-    return {statusCode: 201, message: savedPost};
+    return { statusCode: 201, message: savedPost };
   } catch (error) {
-    return {statusCode: 500, message: error.message};
+    return { statusCode: 500, message: error.message };
   }
 }
 
@@ -81,10 +81,10 @@ createPost.post("/", async (req, res) => {
 
   if (statusCode === 500) {
     // Do not send the specific error message
-    return res.status(500).json({message: "Internal server error"});
+    console.log(newPost.message);
+    return res.status(500).json({ message: "Internal server error" });
   } else {
-    console.log(message);
-    return res.status(statusCode).json({message: message});
+    return res.status(statusCode).json({ message: message });
   }
 });
 
