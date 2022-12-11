@@ -19,4 +19,4 @@ $ npm start
 ```
 
 <h3>Read It App</h3>
-![Read It App](https://user-images.githubusercontent.com/107840996/206892314-06dde24c-ec2a-4813-ba41-2780792aa19b.jpg)
+<img src="https://user-images.githubusercontent.com/107840996/206892314-06dde24c-ec2a-4813-ba41-2780792aa19b.jpg" />
