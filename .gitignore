@@ -1,5 +1,7 @@
 .prettierrc
 
+img/
+
 ui/node_modules
 ui/.env
 
